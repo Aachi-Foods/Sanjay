@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e8cd9a"/>
-      <stop offset="60%" stop-color="#cda45e"/>
-      <stop offset="100%" stop-color="#a9793c"/>
+      <stop offset="0%" stop-color="#d8bb84"/>
+      <stop offset="60%" stop-color="#b9925a"/>
+      <stop offset="100%" stop-color="#8c6b34"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="10" fill="#08070a"/>
+  <rect width="64" height="64" rx="10" fill="#0b3a33"/>
   <text x="32" y="41" font-family="Georgia, 'Playfair Display', serif" font-size="26" font-weight="600" text-anchor="middle" fill="url(#g)">BnR</text>
 </svg>
