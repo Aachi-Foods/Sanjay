@@ -169,8 +169,10 @@
     items.forEach((item) => {
       item.addEventListener("click", () => {
         const caption = item.getAttribute("data-caption") || "";
+        const poster = item.getAttribute("data-poster") || "";
         lightboxCaption.innerHTML = caption;
-        lightboxImage.className = "lightbox-image ph-gradient " + [...item.classList].find((c) => c.startsWith("ph-g"));
+        lightboxImage.src = poster;
+        lightboxImage.alt = item.getAttribute("aria-label") || caption;
         lightbox.classList.add("active");
         lightbox.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";

@@ -30,24 +30,35 @@ npx serve .
 
 Then open `http://localhost:8080`.
 
-## Replacing placeholder imagery
+## Imagery — AI-generated, hotlinked (swap for self-hosted before launch)
 
-The site currently uses elegant CSS gradient panels (`.ph-gradient` /
-`.ph-*` classes) as stand-ins for photography, so the layout, grid, and
-lightbox all work out of the box. To swap in real photos:
+The about portrait, all 6 gallery pieces, and all 4 testimonial
+backgrounds are AI-generated stills animated into short looping videos
+(subtle candle flicker, breeze, light shimmer — no people). Each
+`<video>` has a `poster` image and plays muted/looped/inline so it works
+as a background-video replacement for the old CSS gradient placeholders.
 
-1. Add optimized images (WebP or JPG, 1600–2400px wide for hero/about,
-   1200px for gallery/testimonials) to `images/hero/`, `images/gallery/`,
-   and `images/testimonials/`.
-2. In `index.html`, replace each element carrying a `ph-gradient` class
-   with an `<img>` (or set it as a CSS `background-image`) — the elements
-   to target are:
-   - `.about-image` — about section portrait
-   - `.gallery-item` (×6) — portfolio grid
-   - `.kb-slide` (×4) — testimonial Ken Burns background slides
-3. Update `og:image` / `twitter:image` in the `<head>` to a real
+**Important:** these assets are currently hotlinked from the generation
+service's CDN (`d8j0ntlcm91z4.cloudfront.net`), not stored in this repo.
+That's fine for previewing, but is not durable for production — the
+generation service does not guarantee those URLs stay live indefinitely.
+Before launch:
+
+1. Download each `<source src="...">` and `poster="..."` URL referenced
+   in `index.html` (11 images + 11 videos — about, 6 gallery, 4
+   testimonial).
+2. Save them into `images/about/`, `images/gallery/`, and
+   `images/testimonials/` (create a matching `videos/` folder, or keep
+   video files alongside their poster images).
+3. Update the `src`/`poster` attributes in `index.html` to point at the
+   local paths instead of the CDN URLs.
+4. If you'd rather use real photography instead of AI-generated imagery,
+   replace the same `<video>`/`poster` pairs with your own `<img>` tags
+   or video files — the CSS (`object-fit: cover` on `.about-image`,
+   `.gallery-item video`, `.kb-slide video`) works the same either way.
+5. Update `og:image` / `twitter:image` in the `<head>` to a real
    1200×630 cover image at `images/hero/og-cover.jpg`.
-4. Replace `images/favicon.svg` with your final brand mark if desired
+6. Replace `images/favicon.svg` with your final brand mark if desired
    (keep a square SVG or 32×32/180×180 PNG for best results).
 
 Keep existing `alt`/`aria-label` text as a template — write descriptive,
