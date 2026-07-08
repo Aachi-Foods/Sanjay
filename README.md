@@ -80,12 +80,20 @@ This is a static site — deploy the project root as-is to any static host:
 - **Any traditional host:** upload the contents of this folder via
   FTP/SFTP to your web root.
 
-Update the following before going live:
-- `<link rel="canonical">` and all Open Graph / Twitter URLs in
-  `index.html` `<head>` — replace `https://www.bnreventplanners.com/`
-  with the real domain.
-- Contact details in the Contact and Footer sections (email, phone).
-- Social links in the footer (`Instagram`, `Pinterest`, `Facebook`).
+Live domain/contact details already wired in:
+- Canonical URL, Open Graph, and Twitter tags use `https://www.bnreventplanners.com/`.
+- Phone: `+91 89396 27959` (Contact section, footer, `tel:` link, and
+  `schema.org` `telephone`).
+- Social links: Instagram (`bellsnringsevents`) and Facebook are live in
+  the footer and in the JSON-LD `sameAs` array. Add a Pinterest link the
+  same way once that profile exists.
+
+Still to update before going live:
+- **Inquiry email** — the Contact and footer sections currently show
+  "Coming soon" in place of an email address. Once you have a dedicated
+  inbox (e.g. `hello@bnreventplanners.com`), replace the `Coming soon`
+  text in `index.html` with a `mailto:` link in both the Contact details
+  block and the footer.
 - `schema.org` JSON-LD block in `<head>` — add real address/geo data if
   you operate from a fixed studio location.
 
