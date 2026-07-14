@@ -41,7 +41,7 @@ export default function StorySection() {
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
       >
         <Image
-          src="https://placehold.co/1200x1500/1a2e1a/faf6ef?text=Our+Story"
+          src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=80"
           alt="Placeholder — BnR team reviewing an event floor plan"
           fill
           loading="lazy"

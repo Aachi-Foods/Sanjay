@@ -42,12 +42,12 @@ specific milestones worth mentioning.
 All four team members (names, roles, bios) are placeholders:
 
 - Bhavani Raman — Founder & Creative Director
-- Ramesh Krishnan — Lead Event Planner
-- Anitha Suresh — Operations Director
-- Vignesh Pillai — Design & Styling Lead
+- Anitha Suresh — Lead Event Planner
+- Ramesh Krishnan — Operations Director
+- Kavitha Pillai — Design & Styling Lead
 
 Replace with real team member names, titles, short bios, and headshots
-(currently placehold.co initial tiles).
+(currently generic free Unsplash stock headshots, not real BnR staff).
 
 ## Testimonials — `src/lib/content.ts` (`TESTIMONIALS`)
 
@@ -57,18 +57,29 @@ once collected — or remove entries you don't have permission to publish.
 
 ## Gallery — `src/lib/content.ts` (`GALLERY_ITEMS`)
 
-All nine gallery entries are placehold.co color tiles labelled with a
-category and a South Indian city (Chennai, Madurai, Bengaluru, Kochi,
-Hyderabad, Coimbatore, Mysuru, Puducherry). Replace each `image` with real
-event photography, and update `title`, `location`, and `description` to
-match the real event. Add or remove entries freely — the grid and lightbox
-adapt to any number of items.
+All nine gallery entries currently use free, general-purpose Unsplash stock
+photos (weddings, receptions, corporate events — not literal photos of real
+BnR events) labelled with a category and a South Indian city (Chennai,
+Madurai, Bengaluru, Kochi, Hyderabad, Coimbatore, Mysuru, Puducherry).
+Replace each `image` with real event photography, and update `title`,
+`location`, and `description` to match the real event. Add or remove
+entries freely — the grid and lightbox adapt to any number of items.
 
 ## Service photography — `src/lib/content.ts` (`SERVICES`)
 
-Each of the 8 services has a placehold.co stub image. Swap in real photos
-once available (the exact wording of each service's title and description
-should **not** change — it was specified in the project brief).
+Each of the 8 services currently uses a free Unsplash stock photo as a
+stand-in. Swap in real photos once available (the exact wording of each
+service's title and description should **not** change — it was specified
+in the project brief).
+
+## Stock photography licensing note
+
+Every photo currently in the site (services, gallery, team headshots,
+Instagram strip, page banners, hero background, About/Story images) is
+sourced from Unsplash under the [Unsplash License](https://unsplash.com/license) —
+free for commercial use, no attribution required. They are generic stock
+photography, not real BnR events or staff, so treat every one as a
+placeholder to be swapped before launch.
 
 ## Social icons
 
@@ -79,7 +90,7 @@ should **not** change — it was specified in the project brief).
 
 ## Hero imagery
 
-The hero (`src/components/home/Hero.tsx`) uses a solid gradient background
-by design (no photo), matching the reference site's minimalist look. No
-image is needed here unless BnR wants to add a background photo behind the
-gradient later.
+The hero (`src/components/home/Hero.tsx`) uses a dimmed free stock photo
+behind the forest-green gradient (kept subtle so the ring and heading stay
+legible). Swap it for a real event photo once available, or remove the
+`<Image>` entirely to go back to a pure gradient background.

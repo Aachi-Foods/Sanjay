@@ -8,7 +8,7 @@ export default function AboutTeaser() {
     <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 sm:px-8 md:grid-cols-2 md:items-center md:gap-16">
       <Reveal className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl">
         <Image
-          src="https://placehold.co/1200x1500/1a2e1a/faf6ef?text=BnR+Planning+Team"
+          src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80"
           alt="Placeholder — BnR planning team styling a celebration"
           fill
           loading="lazy"

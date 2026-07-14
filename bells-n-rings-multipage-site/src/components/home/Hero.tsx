@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
 import SpinningRing from "../ui/SpinningRing";
@@ -8,7 +9,20 @@ import { SITE_NAME_PRIMARY, SITE_SUBHEADING, HERO_RING_TEXT } from "@/lib/consta
 export default function Hero() {
   return (
     <section className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep">
+      {/* Dimmed background photo — kept subtle so the ring and heading stay legible */}
+      <Image
+        src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80"
+        alt="Placeholder — hero background, ornate mandap decorated with flowers"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover opacity-25"
+      />
       {/* Deep forest-green gradient backdrop with a soft radial glow behind the ring */}
+      <div
+        className="absolute inset-0 bg-rose-gold-deep/80"
+        aria-hidden="true"
+      />
       <div
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(201,168,76,0.16),_transparent_60%)]"
         aria-hidden="true"
