@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
 import SpinningRing from "../ui/SpinningRing";
-import { SITE_NAME_PRIMARY, SITE_SUBHEADING, HERO_RING_TEXT } from "@/lib/constants";
+import { SITE_NAME_PRIMARY, HERO_RING_TEXT } from "@/lib/constants";
 
 export default function Hero() {
   return (
@@ -33,32 +33,24 @@ export default function Hero() {
       />
 
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex min-h-[310px] items-center justify-center sm:min-h-[430px]">
           <SpinningRing
             text={HERO_RING_TEXT}
-            size={380}
+            size={430}
             className="absolute inset-0 m-auto hidden sm:block"
           />
           <SpinningRing
             text={HERO_RING_TEXT}
-            size={280}
+            size={310}
             className="absolute inset-0 m-auto sm:hidden"
           />
 
           <div className="relative flex flex-col items-center gap-4 px-10 py-10 sm:px-16 sm:py-16">
-            <motion.span
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="font-sans text-xs tracking-[0.4em] text-gold-soft uppercase sm:text-sm"
-            >
-              {SITE_SUBHEADING}
-            </motion.span>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-              className="font-display text-7xl leading-none text-ivory sm:text-8xl md:text-9xl"
+              className="font-display text-8xl leading-none text-ivory sm:text-9xl md:text-[9.5rem]"
             >
               {SITE_NAME_PRIMARY}
             </motion.h1>
@@ -69,7 +61,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-          className="prose-measure mt-4 font-sans text-base text-blush-soft sm:text-lg"
+          className="prose-measure mt-6 font-sans text-base text-blush-soft sm:mt-8 sm:text-lg"
         >
           From temple-town traditions to modern celebrations — we plan every
           detail so you can simply be present.

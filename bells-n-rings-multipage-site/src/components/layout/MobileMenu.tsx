@@ -2,9 +2,10 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
-import { NAV_LINKS, SITE_NAME_PRIMARY, SITE_NAME_SECONDARY } from "@/lib/constants";
+import { NAV_LINKS, SITE_NAME_FULL } from "@/lib/constants";
 
 export default function MobileMenu({
   open,
@@ -39,12 +40,13 @@ export default function MobileMenu({
             transition={{ type: "spring", stiffness: 320, damping: 34 }}
           >
             <div className="flex items-center justify-between">
-              <span className="font-display text-xl text-charcoal">
-                {SITE_NAME_PRIMARY}
-                <span className="block font-sans text-[0.6rem] tracking-[0.3em] text-rose-text uppercase">
-                  {SITE_NAME_SECONDARY}
-                </span>
-              </span>
+              <Image
+                src="/brand/bnr-logo.png"
+                alt={SITE_NAME_FULL}
+                width={1400}
+                height={863}
+                className="h-10 w-auto object-contain"
+              />
               <button
                 type="button"
                 onClick={onClose}

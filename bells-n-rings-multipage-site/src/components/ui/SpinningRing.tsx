@@ -12,7 +12,7 @@ import { useId } from "react";
 export default function SpinningRing({
   text,
   size = 340,
-  repeat = 3,
+  repeat = 2,
   durationSeconds = 18,
   className = "",
 }: {
@@ -55,25 +55,13 @@ export default function SpinningRing({
               },0 a ${radius},${radius} 0 1,1 -${radius * 2},0`}
             />
           </defs>
-          <circle
-            cx={center}
-            cy={center}
-            r={radius + 10}
-            className="stroke-gold/50"
-            strokeWidth="1"
-            fill="none"
-          />
-          <circle
-            cx={center}
-            cy={center}
-            r={radius - 10}
-            className="stroke-gold/25"
-            strokeWidth="1"
-            fill="none"
-          />
           <text
             className="fill-gold font-sans uppercase"
-            style={{ fontSize: size * 0.048, letterSpacing: "0.3em" }}
+            style={{
+              fontSize: size * 0.052,
+              letterSpacing: "0.28em",
+              filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.45))",
+            }}
           >
             <textPath href={`#${pathId}`} startOffset="0%">
               {text.repeat(repeat)}

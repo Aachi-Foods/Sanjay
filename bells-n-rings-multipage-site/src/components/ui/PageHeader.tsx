@@ -16,7 +16,7 @@ export default function PageHeader({
   imageAlt: string;
 }) {
   return (
-    <section className="relative flex h-[46vh] min-h-[320px] w-full items-center justify-center overflow-hidden">
+    <section className="relative flex h-[50vh] min-h-[360px] w-full items-center justify-center overflow-hidden pt-28 sm:pt-32">
       <Image
         src={image}
         alt={imageAlt}
