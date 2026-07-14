@@ -8,7 +8,7 @@ import Reveal from "@/components/shared/Reveal";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Enquire with Bells n Rings Event Planners about your wedding, corporate event, birthday, or destination celebration.",
+    "Enquire with BnR Event Planners about your wedding, traditional ceremony, reception, or corporate event.",
 };
 
 export default function ContactPage() {

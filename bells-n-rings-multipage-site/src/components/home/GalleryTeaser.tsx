@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PORTFOLIO_ITEMS } from "@/lib/content";
+import { GALLERY_ITEMS } from "@/lib/content";
 import Reveal from "../shared/Reveal";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
 
-// Asymmetric editorial layout (Shaadi Squad style) — the first tile spans
-// two columns and two rows, the rest fill in around it.
+// Asymmetric editorial layout — the first tile spans two columns and two
+// rows, the rest fill in around it.
 const SPAN_CLASSES = [
   "sm:col-span-2 sm:row-span-2",
   "",
@@ -15,16 +15,16 @@ const SPAN_CLASSES = [
   "",
 ];
 
-export default function PortfolioPreview() {
-  const featured = PORTFOLIO_ITEMS.slice(0, 5);
+export default function GalleryTeaser() {
+  const featured = GALLERY_ITEMS.slice(0, 5);
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
       <Reveal>
         <SectionHeading
           eyebrow="Our Work"
-          title="A Portfolio of Beautifully Executed Moments"
-          description="A glimpse at the weddings, galas, birthdays, and destination celebrations we've had the honor of bringing to life."
+          title="Moments We've Brought to Life"
+          description="A glimpse at the weddings, receptions, traditional ceremonies, and corporate events we've had the honor of planning."
           className="mb-14"
         />
       </Reveal>
@@ -36,7 +36,7 @@ export default function PortfolioPreview() {
             delay={i * 0.06}
             className={`group relative overflow-hidden rounded-2xl ${SPAN_CLASSES[i] ?? ""}`}
           >
-            <Link href={`/portfolio#${item.slug}`} className="relative block h-full w-full">
+            <Link href={`/gallery#${item.slug}`} className="relative block h-full w-full">
               <Image
                 src={item.image}
                 alt={item.imageAlt}
@@ -58,8 +58,8 @@ export default function PortfolioPreview() {
       </div>
 
       <div className="mt-14 flex justify-center">
-        <Button href="/portfolio" variant="outline">
-          See Full Portfolio
+        <Button href="/gallery" variant="outline">
+          See Full Gallery
         </Button>
       </div>
     </section>

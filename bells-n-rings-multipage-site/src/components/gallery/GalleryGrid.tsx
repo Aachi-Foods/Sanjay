@@ -5,25 +5,25 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import {
-  PORTFOLIO_FILTERS,
-  PORTFOLIO_ITEMS,
-  type EventTypeSlug,
+  GALLERY_FILTERS,
+  GALLERY_ITEMS,
+  type GalleryCategorySlug,
 } from "@/lib/content";
 import Reveal from "../shared/Reveal";
 
-export default function PortfolioGallery() {
-  const [filter, setFilter] = useState<EventTypeSlug | "all">("all");
+export default function GalleryGrid() {
+  const [filter, setFilter] = useState<GalleryCategorySlug | "all">("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filtered = useMemo(
     () =>
       filter === "all"
-        ? PORTFOLIO_ITEMS
-        : PORTFOLIO_ITEMS.filter((item) => item.category === filter),
+        ? GALLERY_ITEMS
+        : GALLERY_ITEMS.filter((item) => item.category === filter),
     [filter],
   );
 
-  // Deep-link support: /portfolio#slug (used by Home page preview tiles)
+  // Deep-link support: /gallery#slug (used by Home page preview tiles)
   // opens straight to that item's lightbox. This has to be an effect —
   // window.location isn't available during server render or static export —
   // so the set-state-in-effect lint rule's usual "derive it during render
@@ -31,7 +31,7 @@ export default function PortfolioGallery() {
   useEffect(() => {
     const slug = window.location.hash.replace("#", "");
     if (!slug) return;
-    const index = PORTFOLIO_ITEMS.findIndex((item) => item.slug === slug);
+    const index = GALLERY_ITEMS.findIndex((item) => item.slug === slug);
     if (index >= 0) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setFilter("all");
@@ -51,11 +51,11 @@ export default function PortfolioGallery() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxIndex(null);
       if (e.key === "ArrowRight") {
-        setLightboxIndex((i) => (i === null ? i : (i + 1) % PORTFOLIO_ITEMS.length));
+        setLightboxIndex((i) => (i === null ? i : (i + 1) % GALLERY_ITEMS.length));
       }
       if (e.key === "ArrowLeft") {
         setLightboxIndex((i) =>
-          i === null ? i : (i - 1 + PORTFOLIO_ITEMS.length) % PORTFOLIO_ITEMS.length,
+          i === null ? i : (i - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length,
         );
       }
     };
@@ -63,12 +63,12 @@ export default function PortfolioGallery() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [lightboxIndex]);
 
-  const activeItem = lightboxIndex !== null ? PORTFOLIO_ITEMS[lightboxIndex] : null;
+  const activeItem = lightboxIndex !== null ? GALLERY_ITEMS[lightboxIndex] : null;
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
-      <div className="mb-12 flex flex-wrap items-center justify-center gap-3" role="group" aria-label="Filter portfolio by event type">
-        {PORTFOLIO_FILTERS.map((f) => {
+      <div className="mb-12 flex flex-wrap items-center justify-center gap-3" role="group" aria-label="Filter gallery by category">
+        {GALLERY_FILTERS.map((f) => {
           const active = filter === f.value;
           return (
             <button
@@ -90,7 +90,7 @@ export default function PortfolioGallery() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((item) => {
-          const globalIndex = PORTFOLIO_ITEMS.findIndex((i) => i.slug === item.slug);
+          const globalIndex = GALLERY_ITEMS.findIndex((i) => i.slug === item.slug);
           return (
             <Reveal key={item.slug} className="group">
               <button
@@ -147,7 +147,7 @@ export default function PortfolioGallery() {
               onClick={(e) => {
                 e.stopPropagation();
                 setLightboxIndex((i) =>
-                  i === null ? i : (i - 1 + PORTFOLIO_ITEMS.length) % PORTFOLIO_ITEMS.length,
+                  i === null ? i : (i - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length,
                 );
               }}
               aria-label="Previous image"
@@ -159,7 +159,7 @@ export default function PortfolioGallery() {
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((i) => (i === null ? i : (i + 1) % PORTFOLIO_ITEMS.length));
+                setLightboxIndex((i) => (i === null ? i : (i + 1) % GALLERY_ITEMS.length));
               }}
               aria-label="Next image"
               className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-ivory hover:bg-ivory/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ivory sm:right-6"

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-// Shared interior-page banner used by About, Services, Portfolio,
-// Testimonials, and Contact so every page opens with the same rhythm.
+// Shared interior-page banner used by About, Services, and Gallery so
+// every page opens with the same rhythm.
 export default function PageHeader({
   eyebrow,
   title,

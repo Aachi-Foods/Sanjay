@@ -2,60 +2,77 @@
 
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
-import AnimatedImageCarousel from "../shared/AnimatedImageCarousel";
-import { HERO_SLIDES } from "@/lib/content";
-import { SITE_TAGLINE } from "@/lib/constants";
+import SpinningRing from "../ui/SpinningRing";
+import { SITE_NAME_PRIMARY, SITE_SUBHEADING, HERO_RING_TEXT } from "@/lib/constants";
 
 export default function Hero() {
   return (
-    <section className="relative flex h-[100dvh] min-h-[560px] w-full items-center justify-center overflow-hidden">
-      <AnimatedImageCarousel
-        slides={HERO_SLIDES}
-        priority
-        className="absolute inset-0 h-full w-full"
-      />
-      {/* Legibility scrim over the slideshow */}
+    <section className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep">
+      {/* Deep forest-green gradient backdrop with a soft radial glow behind the ring */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/35 to-charcoal/60"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(201,168,76,0.16),_transparent_60%)]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-charcoal/30 via-transparent to-charcoal/60"
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-script text-3xl text-blush sm:text-4xl"
-        >
-          Bells n Rings
-        </motion.span>
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-          className="font-display text-4xl leading-tight text-ivory sm:text-5xl md:text-6xl"
-        >
-          Luxury Weddings &amp; Events,
-          <br className="hidden sm:block" /> Designed to Feel Like a Dream
-        </motion.h1>
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
+        <div className="relative flex items-center justify-center">
+          <SpinningRing
+            text={HERO_RING_TEXT}
+            size={380}
+            className="absolute inset-0 m-auto hidden sm:block"
+          />
+          <SpinningRing
+            text={HERO_RING_TEXT}
+            size={280}
+            className="absolute inset-0 m-auto sm:hidden"
+          />
+
+          <div className="relative flex flex-col items-center gap-4 px-10 py-10 sm:px-16 sm:py-16">
+            <motion.span
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="font-sans text-xs tracking-[0.4em] text-gold-soft uppercase sm:text-sm"
+            >
+              {SITE_SUBHEADING}
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
+              className="font-display text-7xl leading-none text-ivory sm:text-8xl md:text-9xl"
+            >
+              {SITE_NAME_PRIMARY}
+            </motion.h1>
+          </div>
+        </div>
+
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="prose-measure font-sans text-base text-blush-soft sm:text-lg"
+          transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
+          className="prose-measure mt-4 font-sans text-base text-blush-soft sm:text-lg"
         >
-          {SITE_TAGLINE} From intimate ceremonies to destination
-          celebrations, we plan every detail so you can simply be present.
+          From temple-town traditions to modern celebrations — we plan every
+          detail so you can simply be present.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
-          className="mt-2 flex flex-wrap items-center justify-center gap-4"
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          className="mt-8 flex flex-wrap items-center justify-center gap-4"
         >
-          <Button href="/contact">Begin Your Story</Button>
-          <Button href="/portfolio" variant="outline" className="!text-ivory !border-ivory hover:!bg-ivory/10">
-            View Our Work
+          <Button href="/services">Explore Our Services</Button>
+          <Button
+            href="/contact"
+            variant="outline"
+            className="!border-ivory !text-ivory hover:!bg-ivory/10"
+          >
+            Get In Touch
           </Button>
         </motion.div>
       </div>

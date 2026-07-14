@@ -34,7 +34,7 @@ export default function InstagramStrip() {
           >
             <Image
               src={src}
-              alt="Placeholder — Bells n Rings Instagram highlight"
+              alt="Placeholder — BnR Instagram gallery highlight"
               fill
               loading="lazy"
               sizes="(min-width: 640px) 16vw, 33vw"

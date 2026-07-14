@@ -1,5 +1,5 @@
 import { SERVICES } from "@/lib/content";
-import Card from "../ui/Card";
+import ServiceCard from "../services/ServiceCard";
 import Reveal from "../shared/Reveal";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
@@ -11,24 +11,15 @@ export default function ServicesGrid() {
         <Reveal>
           <SectionHeading
             eyebrow="What We Do"
-            title="Celebrations, Curated"
-            description="Four event types, one standard of care — every celebration is planned with the same precision and warmth."
+            title="Celebrations, Planned With Devotion"
+            description="Eight services, one standard of care — from the first concept to the final send-off."
             className="mb-14"
           />
         </Reveal>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((service, i) => (
-            <Reveal key={service.slug} delay={i * 0.08}>
-              <Card
-                image={service.image}
-                imageAlt={service.imageAlt}
-                eyebrow="Service"
-                title={service.title}
-                description={service.shortDescription}
-                href={`/services#${service.slug}`}
-              />
-            </Reveal>
+            <ServiceCard key={service.slug} service={service} delay={i * 0.06} />
           ))}
         </div>
 

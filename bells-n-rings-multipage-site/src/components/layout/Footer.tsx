@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { CONTACT, NAV_LINKS, SITE_NAME_PRIMARY, SITE_NAME_SECONDARY } from "@/lib/constants";
+import {
+  CONTACT,
+  NAV_LINKS,
+  SITE_NAME_PRIMARY,
+  SITE_NAME_SECONDARY,
+  SITE_TAGLINE,
+} from "@/lib/constants";
 import GoldDivider from "../ui/GoldDivider";
-import { FacebookIcon, InstagramIcon } from "../ui/SocialIcons";
+import { FacebookIcon, InstagramIcon, YoutubeIcon } from "../ui/SocialIcons";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -18,16 +24,15 @@ export default function Footer() {
                 {SITE_NAME_SECONDARY}
               </span>
             </Link>
-            <p className="prose-measure font-sans text-sm text-charcoal-soft">
-              Luxury wedding and event planning for celebrations that feel as
-              beautiful to host as they are to attend.
+            <p className="prose-measure font-sans text-sm italic text-charcoal-soft">
+              {SITE_TAGLINE}
             </p>
             <div className="mt-2 flex items-center gap-3">
               <a
                 href={CONTACT.instagram}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="Bells n Rings on Instagram"
+                aria-label="BnR on Instagram"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
               >
                 <InstagramIcon className="h-5 w-5" />
@@ -36,10 +41,19 @@ export default function Footer() {
                 href={CONTACT.facebook}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="Bells n Rings on Facebook"
+                aria-label="BnR on Facebook"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
               >
                 <FacebookIcon className="h-5 w-5" />
+              </a>
+              <a
+                href={CONTACT.youtube}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="BnR on YouTube"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
+              >
+                <YoutubeIcon className="h-5 w-5" />
               </a>
             </div>
           </div>

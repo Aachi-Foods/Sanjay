@@ -1,6 +1,6 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
-import { FacebookIcon, InstagramIcon } from "../ui/SocialIcons";
+import { FacebookIcon, InstagramIcon, YoutubeIcon } from "../ui/SocialIcons";
 import ContactMap from "./ContactMap";
 
 export default function ContactInfo() {
@@ -10,6 +10,16 @@ export default function ContactInfo() {
         <InfoRow icon={Phone}>
           <a href={CONTACT.phoneHref} className="hover:text-rose-text">
             {CONTACT.phone}
+          </a>
+        </InfoRow>
+        <InfoRow icon={MessageCircle}>
+          <a
+            href={CONTACT.whatsappHref}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="hover:text-rose-text"
+          >
+            Chat on WhatsApp
           </a>
         </InfoRow>
         <InfoRow icon={Mail}>
@@ -33,7 +43,7 @@ export default function ContactInfo() {
           href={CONTACT.instagram}
           target="_blank"
           rel="noreferrer noopener"
-          aria-label="Bells n Rings on Instagram"
+          aria-label="BnR on Instagram"
           className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
         >
           <InstagramIcon className="h-5 w-5" />
@@ -42,10 +52,19 @@ export default function ContactInfo() {
           href={CONTACT.facebook}
           target="_blank"
           rel="noreferrer noopener"
-          aria-label="Bells n Rings on Facebook"
+          aria-label="BnR on Facebook"
           className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
         >
           <FacebookIcon className="h-5 w-5" />
+        </a>
+        <a
+          href={CONTACT.youtube}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label="BnR on YouTube"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
+        >
+          <YoutubeIcon className="h-5 w-5" />
         </a>
       </div>
 

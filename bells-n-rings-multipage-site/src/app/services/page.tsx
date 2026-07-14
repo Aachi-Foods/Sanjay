@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/ui/PageHeader";
-import ServiceDetail from "@/components/services/ServiceDetail";
+import ServiceCard from "@/components/services/ServiceCard";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
-import { SERVICES } from "@/lib/content";
+import KolamDivider from "@/components/ui/KolamDivider";
+import { SERVICES, PAGE_HEADER_IMAGES } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Full-service wedding, corporate event, birthday, and destination event planning from Bells n Rings Event Planners.",
+    "Full-service event planning from BnR Event Planners — event planning, venue selection, decoration & design, photography & videography, catering & beverages, entertainment, guest management, and logistics & support.",
 };
 
 export default function ServicesPage() {
@@ -16,17 +17,20 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="What We Do"
         title="Celebrations, Planned With Devotion"
-        description="Four event types, one standard of care. Explore how we approach each celebration below."
-        image="https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1920&q=80"
-        imageAlt="Placeholder — celebration lighting and event styling detail"
+        description="Eight services, one standard of care. Tap any card below to read the full details."
+        image={PAGE_HEADER_IMAGES.services}
+        imageAlt="Placeholder — services page banner"
       />
 
-      <div className="divide-y divide-gold-soft/30">
-        {SERVICES.map((service, i) => (
-          <ServiceDetail key={service.slug} service={service} reversed={i % 2 === 1} />
-        ))}
-      </div>
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((service, i) => (
+            <ServiceCard key={service.slug} service={service} delay={i * 0.06} />
+          ))}
+        </div>
+      </section>
 
+      <KolamDivider />
       <InvitationTeaser />
     </>
   );
