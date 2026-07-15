@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-blush pt-32 pb-16 sm:pt-40">
+      <section className="relative overflow-hidden bg-blush pt-36 pb-16 sm:pt-44">
         <FloralAccent className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 text-rose-gold-deep/40 sm:h-64 sm:w-64" />
         <FloralAccent
           flip
