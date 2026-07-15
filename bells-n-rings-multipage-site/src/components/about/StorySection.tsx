@@ -42,7 +42,7 @@ export default function StorySection() {
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
       >
         <Image
-          src="https://images.unsplash.com/photo-wGi9dQZCP0s?auto=format&fit=crop&w=1200&q=80"
+          src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=80"
           alt="Placeholder — BnR team reviewing an event floor plan"
           fill
           loading="lazy"

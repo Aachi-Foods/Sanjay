@@ -3,13 +3,14 @@
 //
 // IMAGE NOTE: every image below is a free-to-use Unsplash photo (Unsplash
 // License — free for commercial use, no attribution required), hotlinked by
-// ID so nothing needs downloading to preview. They're real Indian wedding/
-// event photography (not literal BnR events), chosen to represent Hindu,
-// Muslim, Sikh, and Christian ceremonies rather than skewing toward one
-// tradition — but still placeholders: swap every `src` value for real BnR
-// event photography whenever it's ready. Nothing else needs to change since
-// every image goes through next/image. See CONTENT.md for the full list of
-// what the client needs to supply.
+// ID so nothing needs downloading to preview. These are generic event/
+// wedding stock photography — not literal photos of the ceremony type named
+// in each title/description, and not real BnR events — so treat them as
+// placeholders: swap every `src` value for real event photography whenever
+// it's ready. The titles/descriptions are intentionally spread across
+// Hindu, Muslim, Sikh, and Christian ceremonies (see CONTENT.md); match that
+// spread with real photos of each tradition once they're available. Nothing
+// else needs to change since every image goes through next/image.
 
 function unsplash(id: string, w = 1600) {
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
@@ -43,8 +44,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Concept to execution",
     longDescription:
       "Complete event planning from the first concept through schedules, vendors, production, coordination, and final execution.",
-    image: unsplash("photo-wGi9dQZCP0s"),
-    imageAlt: "Placeholder — event planning team coordinating around a table",
+    image: unsplash("photo-1519671482749-fd09be7ccebf"),
+    imageAlt: "Placeholder — event planning stage design and coordination",
   },
   {
     slug: "venue-selection",
@@ -52,8 +53,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Perfect place for your occasion",
     longDescription:
       "Assistance with researching, shortlisting, visiting, comparing, and finalizing the right venue for the celebration.",
-    image: unsplash("photo-BEdxXAiRfRM"),
-    imageAlt: "Placeholder — venue interior with gold and white floral ceiling decor",
+    image: unsplash("photo-1465495976277-4387d4b0b4c6"),
+    imageAlt: "Placeholder — outdoor garden venue under a floral arch",
   },
   {
     slug: "decoration-design",
@@ -70,8 +71,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Capture every moment",
     longDescription:
       "Coordination of professional photography, traditional videography, candid coverage, cinematic films, and event memories.",
-    image: unsplash("photo-BDWH_GDKVCI"),
-    imageAlt: "Placeholder — close-up photography of bride and groom's hands with mehndi",
+    image: unsplash("photo-1519741497674-611481863552"),
+    imageAlt: "Placeholder — close-up wedding detail photography",
   },
   {
     slug: "catering-beverages",
@@ -79,8 +80,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Delicious food, happy guests",
     longDescription:
       "Menu planning, caterer coordination, traditional and contemporary cuisine, live counters, refreshments, beverages, and guest dining management.",
-    image: unsplash("photo-tfY3TUYJaXg"),
-    imageAlt: "Placeholder — guests celebrating at a wedding reception",
+    image: unsplash("photo-1509927083803-4bd519298ac4"),
+    imageAlt: "Placeholder — reception dining setting",
   },
   {
     slug: "entertainment",
@@ -88,8 +89,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Music, hosts & performances",
     longDescription:
       "Coordination of music, DJs, live performers, hosts, traditional entertainment, stage programs, and guest experiences.",
-    image: unsplash("photo-EKKJ3MvQlsE"),
-    imageAlt: "Placeholder — large crowd enjoying a live stage performance",
+    image: unsplash("photo-1530103862676-de8c9debad1d"),
+    imageAlt: "Placeholder — outdoor celebration at golden hour",
   },
   {
     slug: "guest-management",
@@ -97,8 +98,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Invites, RSVP & coordination",
     longDescription:
       "Invitation coordination, RSVP tracking, guest communication, hospitality, seating support, travel guidance, and event-day assistance.",
-    image: unsplash("photo-TcaXNeJciaE"),
-    imageAlt: "Placeholder — guests joining hands in celebration",
+    image: unsplash("photo-1527529482837-4698179dc6ce"),
+    imageAlt: "Placeholder — guest table styling",
   },
   {
     slug: "logistics-support",
@@ -106,8 +107,8 @@ export const SERVICES: Service[] = [
     shortDescription: "On-ground management",
     longDescription:
       "Vendor movement, timelines, transport, setup supervision, technical coordination, event-day operations, and on-ground problem solving.",
-    image: unsplash("photo-AsxOJcsaR4g"),
-    imageAlt: "Placeholder — event stage and production crew during a live program",
+    image: unsplash("photo-1606800052052-a08af7148866"),
+    imageAlt: "Placeholder — event stage setup and production crew",
   },
 ];
 
@@ -133,8 +134,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Silk & Jasmine Hindu Wedding",
     category: "weddings",
     location: "Chennai, Tamil Nadu",
-    image: unsplash("photo-vl46kNcTihA", 1200),
-    imageAlt: "Placeholder — traditional Hindu wedding ceremony, bride and groom's hands with flowers",
+    image: unsplash("photo-1465495976277-4387d4b0b4c6", 1200),
+    imageAlt: "Placeholder — traditional wedding ceremony styling",
     description:
       "A traditional Hindu ceremony styled with jasmine garlands, banana-leaf motifs, and a gold-accented mandap.",
   },
@@ -153,8 +154,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Nikah Reception",
     category: "receptions",
     location: "Bengaluru, Karnataka",
-    image: unsplash("photo-tfY3TUYJaXg", 1200),
-    imageAlt: "Placeholder — Muslim wedding reception celebration",
+    image: unsplash("photo-1509927083803-4bd519298ac4", 1200),
+    imageAlt: "Placeholder — evening wedding reception styling",
     description:
       "A joyful nikah reception styled with antique-gold drapery, candlelight, and a curated regional menu.",
   },
@@ -163,8 +164,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Kochi Christian Wedding",
     category: "weddings",
     location: "Kochi, Kerala",
-    image: unsplash("photo-2XXQkrL0k-Q", 1200),
-    imageAlt: "Placeholder — Christian wedding couple in traditional attire",
+    image: unsplash("photo-1522673607200-164d1b6ce486", 1200),
+    imageAlt: "Placeholder — waterfront wedding ceremony",
     description:
       "A Syro-Malabar church wedding followed by a waterside reception, with a multi-day itinerary for out-of-town guests.",
   },
@@ -173,8 +174,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Leadership Summit",
     category: "corporate",
     location: "Hyderabad, Telangana",
-    image: unsplash("photo-AsxOJcsaR4g", 1200),
-    imageAlt: "Placeholder — corporate summit stage and speaker",
+    image: unsplash("photo-1511578314322-379afb476865", 1200),
+    imageAlt: "Placeholder — corporate summit stage and seating",
     description:
       "A 300-guest leadership summit with custom stage design, AV production, and delegate hospitality.",
   },
@@ -183,8 +184,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Anand Karaj & Sangeet Night",
     category: "receptions",
     location: "Coimbatore, Tamil Nadu",
-    image: unsplash("photo-8ZeDzzHoYik", 1200),
-    imageAlt: "Placeholder — Sikh wedding celebration crowd around a stage",
+    image: unsplash("photo-1530103862676-de8c9debad1d", 1200),
+    imageAlt: "Placeholder — sangeet night stage and lighting",
     description:
       "A Sikh Anand Karaj followed by a high-energy sangeet, with a custom stage, dynamic lighting, and a live performance lineup.",
   },
@@ -193,8 +194,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Palace Grounds Wedding",
     category: "weddings",
     location: "Mysuru, Karnataka",
-    image: unsplash("photo-BHlJI-Rg0MM", 1200),
-    imageAlt: "Placeholder — heritage venue wedding, couple in traditional Indian attire",
+    image: unsplash("photo-1519225421980-715cb0215aed", 1200),
+    imageAlt: "Placeholder — heritage venue wedding styling",
     description:
       "A heritage-venue Hindu wedding styled with marigold and jasmine, honoring the grandeur of the setting.",
   },
@@ -203,8 +204,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Product Launch Gala",
     category: "corporate",
     location: "Chennai, Tamil Nadu",
-    image: unsplash("photo-wGi9dQZCP0s", 1200),
-    imageAlt: "Placeholder — product launch team coordination",
+    image: unsplash("photo-1606800052052-a08af7148866", 1200),
+    imageAlt: "Placeholder — product launch stage and branding",
     description:
       "A brand product launch with immersive stage branding, live demo zones, and press hospitality.",
   },
@@ -213,8 +214,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Seaside Reception",
     category: "receptions",
     location: "Puducherry",
-    image: unsplash("photo-c5szA-zveJE", 1200),
-    imageAlt: "Placeholder — bride in traditional attire at a seaside celebration",
+    image: unsplash("photo-1519167758481-83f550bb49b3", 1200),
+    imageAlt: "Placeholder — seaside reception dinner setting",
     description:
       "A breezy seaside reception styled for an interfaith couple, with string lighting, a curated coastal menu, and live acoustic music.",
   },
@@ -321,17 +322,17 @@ export const TEAM_MEMBERS: TeamMember[] = [
 ];
 
 export const INSTAGRAM_STRIP_IMAGES = [
-  unsplash("photo-vl46kNcTihA", 600),
-  unsplash("photo-BDWH_GDKVCI", 600),
-  unsplash("photo-tfY3TUYJaXg", 600),
-  unsplash("photo-AsxOJcsaR4g", 600),
-  unsplash("photo-BEdxXAiRfRM", 600),
-  unsplash("photo-c5szA-zveJE", 600),
+  unsplash("photo-1519741497674-611481863552", 600),
+  unsplash("photo-1527529482837-4698179dc6ce", 600),
+  unsplash("photo-1530103862676-de8c9debad1d", 600),
+  unsplash("photo-1511578314322-379afb476865", 600),
+  unsplash("photo-1522673607200-164d1b6ce486", 600),
+  unsplash("photo-1464366400600-7168b8af9bc3", 600),
 ];
 
 // Interior page banner imagery (About, Services, Gallery, Contact).
 export const PAGE_HEADER_IMAGES = {
-  services: unsplash("photo-AsxOJcsaR4g", 1920),
-  gallery: unsplash("photo-vl46kNcTihA", 1920),
-  about: unsplash("photo-wGi9dQZCP0s", 1920),
+  services: unsplash("photo-1478146059778-26028b07395a", 1920),
+  gallery: unsplash("photo-1530103862676-de8c9debad1d", 1920),
+  about: unsplash("photo-1511285560929-80b456fea0bc", 1920),
 };

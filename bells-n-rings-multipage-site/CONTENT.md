@@ -61,16 +61,18 @@ one tradition.
 ## Gallery — `src/lib/content.ts` (`GALLERY_ITEMS`)
 
 All nine gallery entries currently use free, general-purpose Unsplash stock
-photos of real Indian weddings/events (not literal photos of real BnR
-events) labelled with a category and a South Indian city (Chennai, Madurai,
-Bengaluru, Kochi, Hyderabad, Coimbatore, Mysuru, Puducherry). The set is
-intentionally multi-faith — Hindu (Silk & Jasmine Wedding, Temple Town
-Muhurtham, Palace Grounds Wedding), Muslim (Nikah Reception), Sikh (Anand
-Karaj & Sangeet Night), Christian (Kochi Christian Wedding), plus corporate
-and secular receptions — so the site doesn't read as serving one religion
-only. Replace each `image` with real event photography, and update `title`,
-`location`, and `description` to match the real event; keep the religious
-spread when adding or removing entries.
+photos (weddings, receptions, corporate events — not literal photos of the
+ceremony type named, and not real BnR events) labelled with a category and
+a South Indian city (Chennai, Madurai, Bengaluru, Kochi, Hyderabad,
+Coimbatore, Mysuru, Puducherry). The **titles and descriptions** are
+intentionally multi-faith — Hindu (Silk & Jasmine Hindu Wedding, Temple
+Town Muhurtham, Palace Grounds Wedding), Muslim (Nikah Reception), Sikh
+(Anand Karaj & Sangeet Night), Christian (Kochi Christian Wedding), plus
+corporate and secular receptions — so the site reads as serving every
+faith, not one. The **photos themselves are still generic stock** (not
+matched to each faith), so this is the highest-priority place to drop in
+real photography once available — match each entry's real photo to the
+ceremony type already named in its title.
 
 ## Service photography — `src/lib/content.ts` (`SERVICES`)
 
@@ -84,11 +86,12 @@ in the project brief).
 Every photo currently in the site (services, gallery, team headshots,
 Instagram strip, page banners, hero background, About/Story images) is
 sourced from Unsplash under the [Unsplash License](https://unsplash.com/license) —
-free for commercial use, no attribution required. They are real Indian
-wedding/event stock photography chosen to represent Hindu, Muslim, Sikh, and
-Christian celebrations rather than one tradition, but they are not real BnR
-events or staff — treat every one as a placeholder to be swapped before
-launch, and keep the multi-faith spread when replacing them.
+free for commercial use, no attribution required. They are generic event/
+wedding stock photography, not matched to any specific faith and not real
+BnR events or staff — treat every one as a placeholder. Because the
+gallery's titles now name specific traditions (Hindu, Muslim, Sikh,
+Christian) that the generic photos don't actually depict, replacing gallery
+images with real, matching photography is the top priority once available.
 
 ## Social icons
 
