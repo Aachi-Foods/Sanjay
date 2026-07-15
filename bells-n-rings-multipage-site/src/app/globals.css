@@ -39,6 +39,10 @@
   --font-sans: var(--font-dm-sans);
 }
 
+html {
+  background: #000;
+}
+
 body {
   background: var(--color-ivory);
   color: var(--color-charcoal);
