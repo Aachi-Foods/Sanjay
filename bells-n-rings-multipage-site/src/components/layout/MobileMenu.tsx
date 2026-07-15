@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
-import { NAV_LINKS, SITE_NAME_FULL } from "@/lib/constants";
+import { HEADER_NAV_LINKS, SITE_NAME_FULL } from "@/lib/constants";
 import bnrLogo from "@/assets/bnr-logo.png";
 
 export default function MobileMenu({
@@ -57,7 +57,7 @@ export default function MobileMenu({
             </div>
 
             <nav aria-label="Mobile" className="flex flex-col gap-1">
-              {NAV_LINKS.map((link) => {
+              {HEADER_NAV_LINKS.map((link) => {
                 const active = pathname === link.href;
                 return (
                   <Link

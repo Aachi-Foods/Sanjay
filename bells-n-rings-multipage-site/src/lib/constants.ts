@@ -42,3 +42,9 @@ export const NAV_LINKS: NavLink[] = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
+
+// Header/mobile nav omit "Contact" since the Enquire button already links
+// there — the Footer's quick-links list still uses the full NAV_LINKS.
+export const HEADER_NAV_LINKS: NavLink[] = NAV_LINKS.filter(
+  (link) => link.href !== "/contact",
+);

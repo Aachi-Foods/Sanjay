@@ -9,18 +9,18 @@ import { SITE_NAME_PRIMARY, HERO_RING_TEXT } from "@/lib/constants";
 export default function Hero() {
   return (
     <section className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep">
-      {/* Dimmed background photo — kept subtle so the ring and heading stay legible */}
+      {/* Dimmed background photo — visible enough to read as a real backdrop, while the ring and heading stay legible */}
       <Image
         src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80"
         alt="Placeholder — hero background, ornate mandap decorated with flowers"
         fill
         priority
         sizes="100vw"
-        className="object-cover opacity-25"
+        className="object-cover opacity-45"
       />
       {/* Deep forest-green gradient backdrop with a soft radial glow behind the ring */}
       <div
-        className="absolute inset-0 bg-rose-gold-deep/80"
+        className="absolute inset-0 bg-rose-gold-deep/60"
         aria-hidden="true"
       />
       <div
@@ -33,15 +33,15 @@ export default function Hero() {
       />
 
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
-        <div className="relative flex min-h-[310px] items-center justify-center sm:min-h-[430px]">
+        <div className="relative flex min-h-[290px] items-center justify-center sm:min-h-[400px]">
           <SpinningRing
             text={HERO_RING_TEXT}
-            size={430}
+            size={400}
             className="absolute inset-0 m-auto hidden sm:block"
           />
           <SpinningRing
             text={HERO_RING_TEXT}
-            size={310}
+            size={290}
             className="absolute inset-0 m-auto sm:hidden"
           />
 
