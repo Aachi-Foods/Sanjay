@@ -63,8 +63,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
           className="prose-measure mt-6 font-sans text-base text-blush-soft sm:mt-8 sm:text-lg"
         >
-          From temple-town traditions to modern celebrations — we plan every
-          detail so you can simply be present.
+          Hindu, Muslim, Sikh, Christian, or interfaith — we plan every
+          celebration with the same devotion to tradition and detail.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 16 }}

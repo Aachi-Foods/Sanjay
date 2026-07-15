@@ -51,19 +51,26 @@ Replace with real team member names, titles, short bios, and headshots
 
 ## Testimonials — `src/lib/content.ts` (`TESTIMONIALS`)
 
-All five client quotes are illustrative placeholders (names, event types,
-cities, and quotes are all invented). Replace with real client testimonials
-once collected — or remove entries you don't have permission to publish.
+All six client quotes are illustrative placeholders (names, event types,
+cities, and quotes are all invented). They're deliberately spread across
+Hindu, Muslim, Sikh, and Christian ceremonies plus corporate events, to
+reflect that BnR plans celebrations across every faith — keep that spread
+when replacing them with real testimonials, rather than defaulting back to
+one tradition.
 
 ## Gallery — `src/lib/content.ts` (`GALLERY_ITEMS`)
 
 All nine gallery entries currently use free, general-purpose Unsplash stock
-photos (weddings, receptions, corporate events — not literal photos of real
-BnR events) labelled with a category and a South Indian city (Chennai,
-Madurai, Bengaluru, Kochi, Hyderabad, Coimbatore, Mysuru, Puducherry).
-Replace each `image` with real event photography, and update `title`,
-`location`, and `description` to match the real event. Add or remove
-entries freely — the grid and lightbox adapt to any number of items.
+photos of real Indian weddings/events (not literal photos of real BnR
+events) labelled with a category and a South Indian city (Chennai, Madurai,
+Bengaluru, Kochi, Hyderabad, Coimbatore, Mysuru, Puducherry). The set is
+intentionally multi-faith — Hindu (Silk & Jasmine Wedding, Temple Town
+Muhurtham, Palace Grounds Wedding), Muslim (Nikah Reception), Sikh (Anand
+Karaj & Sangeet Night), Christian (Kochi Christian Wedding), plus corporate
+and secular receptions — so the site doesn't read as serving one religion
+only. Replace each `image` with real event photography, and update `title`,
+`location`, and `description` to match the real event; keep the religious
+spread when adding or removing entries.
 
 ## Service photography — `src/lib/content.ts` (`SERVICES`)
 
@@ -77,9 +84,11 @@ in the project brief).
 Every photo currently in the site (services, gallery, team headshots,
 Instagram strip, page banners, hero background, About/Story images) is
 sourced from Unsplash under the [Unsplash License](https://unsplash.com/license) —
-free for commercial use, no attribution required. They are generic stock
-photography, not real BnR events or staff, so treat every one as a
-placeholder to be swapped before launch.
+free for commercial use, no attribution required. They are real Indian
+wedding/event stock photography chosen to represent Hindu, Muslim, Sikh, and
+Christian celebrations rather than one tradition, but they are not real BnR
+events or staff — treat every one as a placeholder to be swapped before
+launch, and keep the multi-faith spread when replacing them.
 
 ## Social icons
 

@@ -21,11 +21,12 @@ export default function StorySection() {
           </p>
           <p>
             What started as a small team coordinating intimate ceremonies
-            across Tamil Nadu has grown into a full-service studio covering
-            event planning, venue selection, décor and design, photography,
-            catering, entertainment, guest management, and on-ground
-            logistics — without ever losing the personal, tradition-first
-            touch we started with.
+            across Tamil Nadu has grown into a full-service studio for Hindu,
+            Muslim, Sikh, Christian, and interfaith celebrations alike —
+            covering event planning, venue selection, décor and design,
+            photography, catering, entertainment, guest management, and
+            on-ground logistics, without ever losing the personal,
+            tradition-first touch we started with.
           </p>
           <p>
             Today, we bring the same devotion to a 500-guest wedding as we do
@@ -41,7 +42,7 @@ export default function StorySection() {
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
       >
         <Image
-          src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=80"
+          src="https://images.unsplash.com/photo-wGi9dQZCP0s?auto=format&fit=crop&w=1200&q=80"
           alt="Placeholder — BnR team reviewing an event floor plan"
           fill
           loading="lazy"
