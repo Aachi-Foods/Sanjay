@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { NAV_LINKS, SITE_NAME_FULL } from "@/lib/constants";
+import bnrLogo from "@/assets/bnr-logo.png";
 
 export default function MobileMenu({
   open,
@@ -41,10 +42,8 @@ export default function MobileMenu({
           >
             <div className="flex items-center justify-between">
               <Image
-                src="/brand/bnr-logo.png"
+                src={bnrLogo}
                 alt={SITE_NAME_FULL}
-                width={1400}
-                height={863}
                 className="h-10 w-auto object-contain"
               />
               <button

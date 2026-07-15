@@ -47,8 +47,8 @@ export default function Hero() {
 
           <div className="relative flex flex-col items-center gap-4 px-10 py-10 sm:px-16 sm:py-16">
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
               className="font-display text-8xl leading-none text-ivory sm:text-9xl md:text-[9.5rem]"
             >

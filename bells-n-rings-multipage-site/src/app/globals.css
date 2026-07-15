@@ -84,16 +84,3 @@ body {
 .animate-spin-ring {
   animation: spin-ring 18s linear infinite;
 }
-
-/* Custom cursor — hide the native arrow on fine-pointer devices once
-   CursorFollower mounts, but keep the native text-beam on form fields since
-   the replacement is a plain dot with no caret equivalent. */
-.custom-cursor-active {
-  cursor: none;
-}
-
-.custom-cursor-active input,
-.custom-cursor-active textarea,
-.custom-cursor-active select {
-  cursor: text;
-}
