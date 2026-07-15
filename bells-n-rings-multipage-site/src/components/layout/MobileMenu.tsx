@@ -44,7 +44,7 @@ export default function MobileMenu({
               <Image
                 src={bnrLogo}
                 alt={SITE_NAME_FULL}
-                className="h-14 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
               <button
                 type="button"

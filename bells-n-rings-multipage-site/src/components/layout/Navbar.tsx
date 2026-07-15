@@ -52,12 +52,12 @@ export default function Navbar() {
       >
         {/* Row 1: centered logo, with the mobile menu trigger pinned to the right */}
         <div className="relative flex items-center justify-center px-6 py-3 sm:px-8">
-          <Link href="/" className="relative block h-16 w-auto sm:h-20">
+          <Link href="/" className="relative block h-20 w-auto sm:h-24">
             <Image
               src={bnrLogo}
               alt={SITE_NAME_FULL}
               priority
-              className="h-16 w-auto object-contain sm:h-20"
+              className="h-20 w-auto object-contain sm:h-24"
             />
           </Link>
 
