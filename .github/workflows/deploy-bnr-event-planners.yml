@@ -14,7 +14,7 @@ name: Deploy BNR Event Planners to GitHub Pages
 
 on:
   push:
-    branches: ["claude/bnr-event-planners-site-vdb0dv"]
+    branches: ["claude/bnr-event-planners-site-vdb0dv", "BnR-test-web-3"]
     paths: ["bnr-event-planners/**"]
   workflow_dispatch:
 
