@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | BNR Event Planners — Weddings, Corporate &amp; Festival Photography</title>
+  <meta name="description" content="Browse BNR Event Planners' portfolio of South Indian weddings, corporate events and temple festivals across Tamil Nadu and Telangana.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bnreventplanners.com/gallery.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BNR Event Planners">
+  <meta property="og:title" content="Gallery | BNR Event Planners">
+  <meta property="og:description" content="A look back at the weddings, corporate events and festivals we've had the honor of planning.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&amp;w=1200&amp;auto=format&amp;fit=crop">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (typeof tailwind !== "undefined") {
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: { DEFAULT: '#8B0000', dark: '#5c0000', light: '#a83232' },
+            gold: { DEFAULT: '#D4AF37', light: '#e8cc6c', dark: '#a9832a' },
+            cream: '#FFF8DC', ivory: '#FFFDF6',
+          },
+          fontFamily: {
+            heading: ['"Playfair Display"', 'serif'],
+            body: ['"Poppins"', 'sans-serif'],
+          },
+        },
+      },
+    };
+    }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body class="font-body bg-ivory text-[var(--color-text)]">
+
+  <div class="page-transition" aria-hidden="true"></div>
+
+  <!-- ============================== NAVIGATION ============================== -->
+  <nav class="site-nav">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <a href="index.html" class="flex items-baseline gap-1 font-heading text-2xl font-bold nav-logo-text">
+        BNR <span class="text-gradient-gold text-lg font-medium">Event Planners</span>
+      </a>
+      <div class="desktop-nav-links items-center gap-8">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="desktop-nav-links items-center">
+        <a href="contact.html" class="btn btn-primary text-sm py-2.5 px-6">Plan Your Event</a>
+      </div>
+      <button class="hamburger-btn nav-logo-text" aria-label="Open menu" aria-expanded="false">
+        <span class="hamburger"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu-overlay"></div>
+  <aside class="mobile-menu" aria-label="Mobile navigation">
+    <nav class="flex flex-col gap-7">
+      <a href="index.html" class="text-white text-2xl font-heading">Home</a>
+      <a href="about.html" class="text-white text-2xl font-heading">About</a>
+      <a href="services.html" class="text-white text-2xl font-heading">Services</a>
+      <a href="gallery.html" class="text-white text-2xl font-heading">Gallery</a>
+      <a href="contact.html" class="text-white text-2xl font-heading">Contact</a>
+      <a href="contact.html" class="btn btn-outline mt-4">Plan Your Event</a>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- ============================== PAGE HERO ============================== -->
+    <section class="page-hero" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1600&auto=format&fit=crop');">
+      <div class="hero-overlay"></div>
+      <div class="relative z-10 max-w-4xl mx-auto text-center px-6 py-28">
+        <span class="section-eyebrow hero-anim-sub" data-hero-sub>Our Portfolio</span>
+        <h1 class="fluid-h1 font-heading font-bold mt-6 hero-anim-title" data-hero-title>Moments We've Had the Honor to Create</h1>
+      </div>
+    </section>
+
+    <!-- ============================== FILTER BAR ============================== -->
+    <section class="pt-16 px-6">
+      <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-3" data-reveal="fade-up">
+        <button class="filter-btn is-active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="weddings">Weddings</button>
+        <button class="filter-btn" data-filter="corporate">Corporate</button>
+        <button class="filter-btn" data-filter="festivals">Festivals</button>
+      </div>
+    </section>
+
+    <!-- ============================== GALLERY GRID ============================== -->
+    <section class="py-16 px-6">
+      <div class="max-w-7xl mx-auto gallery-grid" id="galleryGrid">
+
+        <!-- Weddings (12) -->
+        <div class="gallery-item" data-category="weddings" data-caption="Bride at the muhurtham mandap, Chennai">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=700&auto=format&fit=crop" alt="Bride at the muhurtham mandap" data-full="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w1/700/900';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w1/1600/1200';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Muhurtham Mandap — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Reception stage florals, Coimbatore">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=700&h=500&auto=format&fit=crop" alt="Reception stage florals" data-full="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w2/700/500';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w2/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Reception Florals — Coimbatore</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Banquet table setting, Chennai wedding">
+          <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=700&h=850&auto=format&fit=crop" alt="Banquet table setting" data-full="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w3/700/850';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w3/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Banquet Styling — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Jasmine and marigold entrance decor">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700&h=600&auto=format&fit=crop" alt="Jasmine and marigold entrance decor" data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w4/700/600';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w4/1600/1200';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Entrance Decor — Madurai</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Evening reception string lights">
+          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=700&h=950&auto=format&fit=crop" alt="Evening reception string lights" data-full="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w5/700/950';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w5/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Reception Lighting — Trichy</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Post-wedding celebration confetti">
+          <img src="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=700&h=520&auto=format&fit=crop" alt="Post-wedding celebration confetti" data-full="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w6/700/520';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w6/1600/1000';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Send-off Celebration — Salem</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Wedding rings on a bed of flowers">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=700&h=520&auto=format&fit=crop&sat=-20" alt="Wedding rings on flowers" data-full="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w7/700/520';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w7/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Ring Ceremony Detail — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Reception hall florals and drapery">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=700&h=880&auto=format&fit=crop&sat=10" alt="Reception hall florals and drapery" data-full="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w8/700/880';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w8/1600/1250';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Hall Drapery — Vellore</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Buffet counter arrangement">
+          <img src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=700&h=560&auto=format&fit=crop&sat=-10" alt="Buffet counter arrangement" data-full="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w9/700/560';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w9/1600/1200';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Sadya Buffet Styling — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Mandap floral canopy detail">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700&h=900&auto=format&fit=crop&sat=15" alt="Mandap floral canopy detail" data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w10/700/900';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w10/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Mandap Canopy — Hyderabad</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Golden hour couple portrait">
+          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=700&h=500&auto=format&fit=crop&sat=-15" alt="Golden hour couple portrait" data-full="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w11/700/500';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w11/1600/1150';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Golden Hour — Coimbatore</p></div>
+        </div>
+        <div class="gallery-item" data-category="weddings" data-caption="Kolam-lined entrance walkway">
+          <img src="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=700&h=860&auto=format&fit=crop&sat=10" alt="Kolam-lined entrance walkway" data-full="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-w12/700/860';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-w12/1600/1250';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Kolam Walkway — Madurai</p></div>
+        </div>
+
+        <!-- Corporate (12) -->
+        <div class="gallery-item" data-category="corporate" data-caption="Product launch main stage">
+          <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=700&h=520&auto=format&fit=crop" alt="Product launch main stage" data-full="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c1/700/520';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c1/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Product Launch — Hyderabad</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Conference delegate hall">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=700&h=900&auto=format&fit=crop" alt="Conference delegate hall" data-full="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c2/700/900';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c2/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Annual Conference — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Award night red carpet">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=700&h=560&auto=format&fit=crop" alt="Award night red carpet" data-full="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c3/700/560';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c3/1600/1150';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Award Night — Bengaluru</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Panel discussion at conference">
+          <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=700&h=880&auto=format&fit=crop&sat=-15" alt="Panel discussion at conference" data-full="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c4/700/880';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c4/1600/1250';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Panel Discussion — Hyderabad</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Gala dinner table settings">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=700&h=500&auto=format&fit=crop&sat=10" alt="Gala dinner table settings" data-full="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c5/700/500';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c5/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Gala Dinner — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Brand activation booth">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=700&h=900&auto=format&fit=crop&sat=-10" alt="Brand activation booth" data-full="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c6/700/900';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c6/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Brand Activation — Hyderabad</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Keynote speaker on stage">
+          <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=700&h=560&auto=format&fit=crop&sat=15" alt="Keynote speaker on stage" data-full="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c7/700/560';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c7/1600/1150';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Keynote Address — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Networking reception">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=700&h=850&auto=format&fit=crop&sat=-5" alt="Networking reception" data-full="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c8/700/850';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c8/1600/1250';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Networking Reception — Bengaluru</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Trophy presentation moment">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=700&h=520&auto=format&fit=crop&sat=20" alt="Trophy presentation moment" data-full="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c9/700/520';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c9/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Awards Ceremony — Hyderabad</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Exhibition floor overview">
+          <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=700&h=900&auto=format&fit=crop&sat=5" alt="Exhibition floor overview" data-full="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c10/700/900';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c10/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Exhibition Floor — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Stage lighting design detail">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=700&h=580&auto=format&fit=crop&sat=-20" alt="Stage lighting design detail" data-full="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c11/700/580';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c11/1600/1200';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Stage Lighting — Bengaluru</p></div>
+        </div>
+        <div class="gallery-item" data-category="corporate" data-caption="Company anniversary celebration">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=700&h=520&auto=format&fit=crop&sat=25" alt="Company anniversary celebration" data-full="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-c12/700/520';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-c12/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Anniversary Celebration — Chennai</p></div>
+        </div>
+
+        <!-- Festivals (12) -->
+        <div class="gallery-item" data-category="festivals" data-caption="Temple festival marigold arch">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=700&h=880&auto=format&fit=crop" alt="Temple festival marigold arch" data-full="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f1/700/880';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f1/1600/1250';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Marigold Arch — Madurai Temple</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Brahmotsavam procession decor">
+          <img src="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=700&h=520&auto=format&fit=crop&sat=20" alt="Brahmotsavam procession decor" data-full="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f2/700/520';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f2/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Brahmotsavam — Tirupati</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Home griha pravesham puja setup">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700&h=900&auto=format&fit=crop&sat=-10" alt="Home griha pravesham puja setup" data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f3/700/900';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f3/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Griha Pravesham — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Kumbhabhishekam ceremony lights">
+          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=700&h=560&auto=format&fit=crop&sat=15" alt="Kumbhabhishekam ceremony lights" data-full="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f4/700/560';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f4/1600/1150';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Kumbhabhishekam — Madurai</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Flower garland offerings">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=700&h=560&auto=format&fit=crop&sat=-10" alt="Flower garland offerings" data-full="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f5/700/560';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f5/1600/1150';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Garland Offerings — Kanchipuram</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Temple courtyard oil lamps">
+          <img src="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=700&h=900&auto=format&fit=crop&sat=-15" alt="Temple courtyard oil lamps" data-full="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f6/700/900';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f6/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Oil Lamp Courtyard — Thanjavur</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Priest performing puja rituals">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700&h=520&auto=format&fit=crop&sat=25" alt="Priest performing puja rituals" data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f7/700/520';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f7/1600/1100';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Puja Rituals — Hyderabad</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Festival procession chariot decor">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=700&h=880&auto=format&fit=crop&sat=10" alt="Festival procession chariot decor" data-full="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f8/700/880';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f8/1600/1250';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Chariot Procession — Madurai</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Kolam art at temple entrance">
+          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=700&h=880&auto=format&fit=crop&sat=-25" alt="Kolam art at temple entrance" data-full="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f9/700/880';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f9/1600/1250';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Kolam Entrance Art — Chennai</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Evening aarti with diyas">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700&h=560&auto=format&fit=crop&sat=-5" alt="Evening aarti with diyas" data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f10/700/560';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f10/1600/1150';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Evening Aarti — Tirupati</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Community prasadam distribution">
+          <img src="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=700&h=560&auto=format&fit=crop&sat=15" alt="Community prasadam distribution" data-full="https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f11/700/560';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f11/1600/1150';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Prasadam Distribution — Kanchipuram</p></div>
+        </div>
+        <div class="gallery-item" data-category="festivals" data-caption="Temple tower illuminated at dusk">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=700&h=920&auto=format&fit=crop&sat=-15" alt="Temple tower illuminated at dusk" data-full="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://picsum.photos/seed/bnr-g-f12/700/920';this.closest('.gallery-item').dataset.full='https://picsum.photos/seed/bnr-g-f12/1600/1300';">
+          <div class="gallery-item-overlay"><p class="text-white text-sm font-medium">Temple Tower at Dusk — Thanjavur</p></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer py-16 px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div>
+        <p class="font-heading text-2xl font-bold text-white">BNR <span class="text-gradient-gold">Event Planners</span></p>
+        <p class="mt-4 text-sm">Crafting South Indian celebrations across Tamil Nadu and Telangana since 2012.</p>
+        <div class="flex gap-3 mt-6">
+          <a href="https://www.instagram.com/bnreventplanners" class="footer-social" aria-label="Instagram" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="https://www.facebook.com/bnreventplanners" class="footer-social" aria-label="Facebook" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h-2a5 5 0 00-5 5v2H6v4h2v7h4v-7h3l1-4h-4V8a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Pinterest"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 17c1-3 1.5-5.5 1.5-7a2 2 0 114 0c0 1.5-1 4-1 5.5a1.5 1.5 0 003 0c0-3-2-6-5.5-6-3.8 0-6 2.7-6 5.5 0 1.3.5 2 1 2.5"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="font-heading text-lg font-semibold text-white">Explore</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="index.html" class="hover:text-[var(--color-gold)]">Home</a></li>
+          <li><a href="about.html" class="hover:text-[var(--color-gold)]">About</a></li>
+          <li><a href="services.html" class="hover:text-[var(--color-gold)]">Services</a></li>
+          <li><a href="gallery.html" class="hover:text-[var(--color-gold)]">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-[var(--color-gold)]">Contact</a></li>
+          <li><a href="admin.html" class="hover:text-[var(--color-gold)]">Admin</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-heading text-lg font-semibold text-white">Services</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>Weddings</li>
+          <li>Corporate Events</li>
+          <li>Temple Festivals</li>
+          <li>Birthdays &amp; Naming Ceremonies</li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-heading text-lg font-semibold text-white">Contact</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>14 Kutchery Road, Mylapore, Chennai, Tamil Nadu 600004</li>
+          <li><a href="tel:+918939627959" class="hover:text-[var(--color-gold)]">+91 89396 27959</a></li>
+          <li><a href="mailto:hello@bnreventplanners.com" class="hover:text-[var(--color-gold)]">hello@bnreventplanners.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/10 text-xs text-center">
+      &copy; <span data-year></span> BNR Event Planners. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- ============================== LIGHTBOX ============================== -->
+  <div class="lightbox">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous image">&#8592;</button>
+    <img src="" alt="">
+    <button class="lightbox-nav lightbox-next" aria-label="Next image">&#8594;</button>
+    <p class="lightbox-caption text-white text-center mt-3 absolute bottom-6 left-0 right-0"></p>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite">
+    <p class="toast-message font-medium"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | BNR Event Planners — Chennai &amp; Hyderabad</title>
+  <meta name="description" content="Get in touch with BNR Event Planners to start planning your wedding, corporate event or temple festival. Chennai studio, serving Tamil Nadu and Telangana.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bnreventplanners.com/contact.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BNR Event Planners">
+  <meta property="og:title" content="Contact BNR Event Planners">
+  <meta property="og:description" content="Tell us about your event and our team will be in touch within 24 hours.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&amp;w=1200&amp;auto=format&amp;fit=crop">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (typeof tailwind !== "undefined") {
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: { DEFAULT: '#8B0000', dark: '#5c0000', light: '#a83232' },
+            gold: { DEFAULT: '#D4AF37', light: '#e8cc6c', dark: '#a9832a' },
+            cream: '#FFF8DC', ivory: '#FFFDF6',
+          },
+          fontFamily: {
+            heading: ['"Playfair Display"', 'serif'],
+            body: ['"Poppins"', 'sans-serif'],
+          },
+        },
+      },
+    };
+    }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body class="font-body bg-ivory text-[var(--color-text)]">
+
+  <div class="page-transition" aria-hidden="true"></div>
+
+  <!-- ============================== NAVIGATION ============================== -->
+  <nav class="site-nav">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <a href="index.html" class="flex items-baseline gap-1 font-heading text-2xl font-bold nav-logo-text">
+        BNR <span class="text-gradient-gold text-lg font-medium">Event Planners</span>
+      </a>
+      <div class="desktop-nav-links items-center gap-8">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="desktop-nav-links items-center">
+        <a href="contact.html" class="btn btn-primary text-sm py-2.5 px-6">Plan Your Event</a>
+      </div>
+      <button class="hamburger-btn nav-logo-text" aria-label="Open menu" aria-expanded="false">
+        <span class="hamburger"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu-overlay"></div>
+  <aside class="mobile-menu" aria-label="Mobile navigation">
+    <nav class="flex flex-col gap-7">
+      <a href="index.html" class="text-white text-2xl font-heading">Home</a>
+      <a href="about.html" class="text-white text-2xl font-heading">About</a>
+      <a href="services.html" class="text-white text-2xl font-heading">Services</a>
+      <a href="gallery.html" class="text-white text-2xl font-heading">Gallery</a>
+      <a href="contact.html" class="text-white text-2xl font-heading">Contact</a>
+      <a href="contact.html" class="btn btn-outline mt-4">Plan Your Event</a>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- ============================== PAGE HERO ============================== -->
+    <section class="page-hero" style="background-image: url('https://images.unsplash.com/photo-1470753323753-3f8091bb0233?q=80&w=1600&auto=format&fit=crop'); min-height: 40vh;">
+      <div class="hero-overlay"></div>
+      <div class="relative z-10 max-w-4xl mx-auto text-center px-6 py-20">
+        <span class="section-eyebrow hero-anim-sub" data-hero-sub>Let's Talk</span>
+        <h1 class="fluid-h1 font-heading font-bold mt-6 hero-anim-title" data-hero-title>Start Planning Your Event</h1>
+      </div>
+    </section>
+
+    <!-- ============================== CONTACT FORM + INFO ============================== -->
+    <section class="py-24 px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12">
+
+        <!-- Contact form -->
+        <div class="lg:col-span-3 card p-8 md:p-10" data-reveal="fade-up">
+          <span class="section-eyebrow">Enquiry Form</span>
+          <h2 class="fluid-h2 font-heading font-bold mt-4">Tell Us About Your Event</h2>
+          <p class="mt-3 text-sm text-[var(--color-text-light)]">Fields marked with * are required. We typically respond within 24 hours.</p>
+
+          <form id="contactForm" class="mt-8 space-y-5" novalidate>
+            <div>
+              <label for="name" class="block text-sm font-medium mb-1.5">Full Name *</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Your full name" required>
+              <p class="form-error" data-error-for="name"></p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="email" class="block text-sm font-medium mb-1.5">Email *</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required>
+                <p class="form-error" data-error-for="email"></p>
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium mb-1.5">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 98765 43210" required>
+                <p class="form-error" data-error-for="phone"></p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="eventType" class="block text-sm font-medium mb-1.5">Event Type *</label>
+                <select id="eventType" name="eventType" class="form-input" required>
+                  <option value="" disabled selected>Select an event type</option>
+                  <option value="Wedding">Wedding</option>
+                  <option value="Corporate">Corporate</option>
+                  <option value="Festival">Festival</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p class="form-error" data-error-for="eventType"></p>
+              </div>
+              <div>
+                <label for="eventDate" class="block text-sm font-medium mb-1.5">Preferred Event Date *</label>
+                <input type="date" id="eventDate" name="eventDate" class="form-input" required>
+                <p class="form-error" data-error-for="eventDate"></p>
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium mb-1.5">Tell Us About Your Event *</label>
+              <textarea id="message" name="message" rows="5" class="form-input" placeholder="Guest count, venue, style, budget range, or anything else that helps us plan..." required></textarea>
+              <p class="form-error" data-error-for="message"></p>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full sm:w-auto">Send Enquiry</button>
+          </form>
+        </div>
+
+        <!-- Contact info -->
+        <div class="lg:col-span-2 space-y-8" data-reveal="fade-up">
+          <div class="card p-8">
+            <h3 class="font-heading text-xl font-semibold">Visit Our Studio</h3>
+            <ul class="mt-5 space-y-4 text-sm text-[var(--color-text-light)]">
+              <li class="flex gap-3">
+                <svg class="flex-shrink-0 mt-0.5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B0000" stroke-width="1.8"><path d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                14 Kutchery Road, Mylapore, Chennai, Tamil Nadu 600004
+              </li>
+              <li class="flex gap-3">
+                <svg class="flex-shrink-0 mt-0.5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B0000" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+                <a href="tel:+918939627959" class="hover:text-[var(--color-maroon)]">+91 89396 27959</a>
+              </li>
+              <li class="flex gap-3">
+                <svg class="flex-shrink-0 mt-0.5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B0000" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+                <a href="mailto:hello@bnreventplanners.com" class="hover:text-[var(--color-maroon)]">hello@bnreventplanners.com</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card p-8">
+            <h3 class="font-heading text-xl font-semibold">Business Hours</h3>
+            <ul class="mt-5 space-y-2 text-sm text-[var(--color-text-light)]">
+              <li class="flex justify-between"><span>Monday – Saturday</span><span>10:00 AM – 7:00 PM</span></li>
+              <li class="flex justify-between"><span>Sunday</span><span>By appointment</span></li>
+            </ul>
+          </div>
+
+          <div class="card !p-0 overflow-hidden no-print" id="contactMap">
+            <iframe
+              title="BNR Event Planners studio location in Chennai"
+              src="https://www.google.com/maps?q=Mylapore,Chennai,Tamil+Nadu&output=embed"
+              width="100%" height="260" style="border:0;" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer py-16 px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div>
+        <p class="font-heading text-2xl font-bold text-white">BNR <span class="text-gradient-gold">Event Planners</span></p>
+        <p class="mt-4 text-sm">Crafting South Indian celebrations across Tamil Nadu and Telangana since 2012.</p>
+        <div class="flex gap-3 mt-6">
+          <a href="https://www.instagram.com/bnreventplanners" class="footer-social" aria-label="Instagram" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="https://www.facebook.com/bnreventplanners" class="footer-social" aria-label="Facebook" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h-2a5 5 0 00-5 5v2H6v4h2v7h4v-7h3l1-4h-4V8a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Pinterest"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 17c1-3 1.5-5.5 1.5-7a2 2 0 114 0c0 1.5-1 4-1 5.5a1.5 1.5 0 003 0c0-3-2-6-5.5-6-3.8 0-6 2.7-6 5.5 0 1.3.5 2 1 2.5"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <p class="font-heading text-lg font-semibold text-white">Explore</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="index.html" class="hover:text-[var(--color-gold)]">Home</a></li>
+          <li><a href="about.html" class="hover:text-[var(--color-gold)]">About</a></li>
+          <li><a href="services.html" class="hover:text-[var(--color-gold)]">Services</a></li>
+          <li><a href="gallery.html" class="hover:text-[var(--color-gold)]">Gallery</a></li>
+          <li><a href="contact.html" class="hover:text-[var(--color-gold)]">Contact</a></li>
+          <li><a href="admin.html" class="hover:text-[var(--color-gold)]">Admin</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-heading text-lg font-semibold text-white">Services</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>Weddings</li>
+          <li>Corporate Events</li>
+          <li>Temple Festivals</li>
+          <li>Birthdays &amp; Naming Ceremonies</li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-heading text-lg font-semibold text-white">Contact</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>14 Kutchery Road, Mylapore, Chennai, Tamil Nadu 600004</li>
+          <li><a href="tel:+918939627959" class="hover:text-[var(--color-gold)]">+91 89396 27959</a></li>
+          <li><a href="mailto:hello@bnreventplanners.com" class="hover:text-[var(--color-gold)]">hello@bnreventplanners.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/10 text-xs text-center">
+      &copy; <span data-year></span> BNR Event Planners. All rights reserved.
+    </div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite">
+    <p class="toast-message font-medium"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/contact.js"></script>
+</body>
+</html>

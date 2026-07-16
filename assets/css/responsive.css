@@ -1,0 +1,80 @@
+/* ==========================================================================
+   BNR EVENT PLANNERS — RESPONSIVE RULES
+   Breakpoints: 375 (mobile) / 768 (tablet) / 1024 (desktop) / 1440 (wide)
+   ========================================================================== */
+
+/* Mobile-first base already lives in main.css / Tailwind utility classes on
+   each page. This file layers breakpoint-specific overrides that are easier
+   to express in plain CSS than inline utility stacks. */
+
+/* Base / mobile (< 768px) ------------------------------------------------ */
+.desktop-nav-links { display: none; }
+.hamburger-btn { display: flex; }
+
+.hero-content { padding-left: 1.25rem; padding-right: 1.25rem; }
+
+.gallery-grid { columns: 1; }
+
+.admin-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.admin-table { min-width: 900px; }
+
+/* Tablet (>= 768px) ------------------------------------------------------ */
+@media (min-width: 768px) {
+  .desktop-nav-links { display: flex; }
+  .hamburger-btn { display: none; }
+
+  .gallery-grid { columns: 2; }
+
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Desktop (>= 1024px) ----------------------------------------------------- */
+@media (min-width: 1024px) {
+  .gallery-grid { columns: 3; }
+
+  .services-grid { grid-template-columns: repeat(4, 1fr); }
+  .team-grid { grid-template-columns: repeat(4, 1fr); }
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Wide (>= 1440px) --------------------------------------------------------- */
+@media (min-width: 1440px) {
+  .container-wide {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Small phones (<= 375px) tightening --------------------------------------- */
+@media (max-width: 375px) {
+  .fluid-h1 { font-size: 2rem; }
+  .btn { padding: 0.8rem 1.5rem; font-size: 0.88rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Print styles — Contact page (and general print sanity)
+   -------------------------------------------------------------------------- */
+@media print {
+  .site-nav, .mobile-menu, .mobile-menu-overlay, .hamburger-btn,
+  .site-footer, .toast, .lightbox, .page-transition,
+  #contactMap, .no-print, .hero-slide, .hero-overlay {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .page-hero { min-height: auto !important; padding: 1rem 0 !important; color: #000 !important; }
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: #555;
+  }
+  .card { box-shadow: none !important; border: 1px solid #ccc !important; }
+}
