@@ -1,47 +1,73 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
-import { Check } from "lucide-react";
+import { useState } from "react";
+import { useForm, type FieldError, type UseFormRegisterReturn } from "react-hook-form";
+import emailjs from "@emailjs/browser";
+import { AlertCircle, Check } from "lucide-react";
 import FloralAccent from "../ui/FloralAccent";
+import { CONTACT } from "@/lib/constants";
 
-type Errors = Partial<Record<"name" | "eventDate" | "eventType" | "message", string>>;
+type FormValues = {
+  name: string;
+  email: string;
+  phone: string;
+  eventDate: string;
+  eventType: string;
+  message: string;
+};
 
-const EVENT_TYPES = ["Wedding", "Corporate Event", "Birthday", "Destination Event", "Other"];
+const EVENT_TYPES = [
+  "Wedding",
+  "Reception",
+  "Traditional Ceremony",
+  "Corporate Event",
+  "Other",
+];
+
+// Set these in .env.local (see README.md) to enable live email delivery via
+// EmailJS. Until then, submissions surface a friendly error asking the
+// visitor to reach out directly — nothing silently fails.
+const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
 export default function InvitationContactForm() {
-  const formId = useId();
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Errors>({});
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>();
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const name = String(data.get("name") ?? "").trim();
-    const eventDate = String(data.get("eventDate") ?? "").trim();
-    const eventType = String(data.get("eventType") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
-
-    const nextErrors: Errors = {};
-    if (!name) nextErrors.name = "Please share your name.";
-    if (!eventDate) nextErrors.eventDate = "Please select your event date.";
-    if (!eventType) nextErrors.eventType = "Please choose an event type.";
-    if (!message) nextErrors.message = "Tell us a little about your vision.";
-
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
-
-    // Static enquiry form for now — swap this block for a Formspree/EmailJS
-    // submit handler whenever email delivery is wired up. No data leaves
-    // the browser today.
-    setSubmitting(true);
-    window.setTimeout(() => {
-      setSubmitting(false);
-      setSubmitted(true);
-    }, 600);
+  async function onSubmit(data: FormValues) {
+    setStatus("idle");
+    try {
+      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+        throw new Error("EmailJS environment variables are not configured.");
+      }
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          event_date: data.eventDate,
+          event_type: data.eventType,
+          message: data.message,
+        },
+        { publicKey: PUBLIC_KEY },
+      );
+      setStatus("success");
+      reset();
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
+      setStatus("error");
+    }
   }
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <div className="relative overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory px-8 py-16 text-center shadow-sm sm:px-14">
         <FloralAccent className="pointer-events-none absolute -left-4 -top-4 h-28 w-28 text-rose-gold-deep/40" />
@@ -73,37 +99,82 @@ export default function InvitationContactForm() {
           Share a few details and we&apos;ll begin crafting your celebration.
         </p>
 
-        <form onSubmit={handleSubmit} noValidate className="mt-10 flex flex-col gap-6">
+        {status === "error" && (
+          <div
+            role="alert"
+            className="mt-6 flex items-start gap-3 rounded-xl border border-red-700/30 bg-red-50 px-4 py-3 text-sm text-red-800"
+          >
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+            <span>
+              We couldn&apos;t send your enquiry right now. Please try again, or
+              reach us directly at{" "}
+              <a href={CONTACT.phoneHref} className="underline">
+                {CONTACT.phone}
+              </a>{" "}
+              or{" "}
+              <a href={`mailto:${CONTACT.email}`} className="underline">
+                {CONTACT.email}
+              </a>
+              .
+            </span>
+          </div>
+        )}
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          className="mt-10 flex flex-col gap-6"
+        >
           <Field
-            id={`${formId}-name`}
-            name="name"
             label="Name"
             type="text"
             autoComplete="name"
+            registration={register("name", { required: "Please share your name." })}
             error={errors.name}
           />
           <Field
-            id={`${formId}-eventDate`}
-            name="eventDate"
+            label="Email"
+            type="email"
+            autoComplete="email"
+            registration={register("email", {
+              required: "Please share your email.",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Please enter a valid email address.",
+              },
+            })}
+            error={errors.email}
+          />
+          <Field
+            label="Phone (optional)"
+            type="tel"
+            autoComplete="tel"
+            registration={register("phone")}
+          />
+          <Field
             label="Event Date"
             type="date"
             autoComplete="off"
+            registration={register("eventDate", {
+              required: "Please select your event date.",
+            })}
             error={errors.eventDate}
           />
+
           <div className="flex flex-col gap-2">
             <label
-              htmlFor={`${formId}-eventType`}
+              htmlFor="eventType"
               className="font-sans text-xs tracking-[0.2em] text-rose-text uppercase"
             >
               Event Type
             </label>
             <select
-              id={`${formId}-eventType`}
-              name="eventType"
+              id="eventType"
               defaultValue=""
               aria-invalid={!!errors.eventType}
-              aria-describedby={errors.eventType ? `${formId}-eventType-error` : undefined}
+              aria-describedby={errors.eventType ? "eventType-error" : undefined}
               className="min-h-11 border-b border-gold-soft bg-transparent font-sans text-base text-charcoal focus:border-rose-gold-deep focus:outline-none"
+              {...register("eventType", { required: "Please choose an event type." })}
             >
               <option value="" disabled>
                 Select an event type
@@ -115,40 +186,41 @@ export default function InvitationContactForm() {
               ))}
             </select>
             {errors.eventType && (
-              <p id={`${formId}-eventType-error`} className="font-sans text-xs text-red-700">
-                {errors.eventType}
+              <p id="eventType-error" className="font-sans text-xs text-red-700">
+                {errors.eventType.message}
               </p>
             )}
           </div>
+
           <div className="flex flex-col gap-2">
             <label
-              htmlFor={`${formId}-message`}
+              htmlFor="message"
               className="font-sans text-xs tracking-[0.2em] text-rose-text uppercase"
             >
               Message
             </label>
             <textarea
-              id={`${formId}-message`}
-              name="message"
+              id="message"
               rows={4}
               aria-invalid={!!errors.message}
-              aria-describedby={errors.message ? `${formId}-message-error` : undefined}
+              aria-describedby={errors.message ? "message-error" : undefined}
               className="resize-none border-b border-gold-soft bg-transparent font-sans text-base text-charcoal focus:border-rose-gold-deep focus:outline-none"
               placeholder="Tell us about your dream celebration..."
+              {...register("message", { required: "Tell us a little about your vision." })}
             />
             {errors.message && (
-              <p id={`${formId}-message-error`} className="font-sans text-xs text-red-700">
-                {errors.message}
+              <p id="message-error" className="font-sans text-xs text-red-700">
+                {errors.message.message}
               </p>
             )}
           </div>
 
           <button
             type="submit"
-            disabled={submitting}
+            disabled={isSubmitting}
             className="mt-2 inline-flex min-h-11 items-center justify-center rounded-full bg-rose-gold-button px-8 py-3 font-sans text-sm tracking-wide text-ivory uppercase transition-colors hover:bg-charcoal disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
           >
-            {submitting ? "Sending..." : "Send Enquiry"}
+            {isSubmitting ? "Sending..." : "Send Enquiry"}
           </button>
         </form>
       </div>
@@ -157,20 +229,19 @@ export default function InvitationContactForm() {
 }
 
 function Field({
-  id,
-  name,
   label,
   type,
   autoComplete,
+  registration,
   error,
 }: {
-  id: string;
-  name: string;
   label: string;
   type: string;
   autoComplete: string;
-  error?: string;
+  registration: UseFormRegisterReturn;
+  error?: FieldError;
 }) {
+  const id = registration.name;
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={id} className="font-sans text-xs tracking-[0.2em] text-rose-text uppercase">
@@ -178,16 +249,16 @@ function Field({
       </label>
       <input
         id={id}
-        name={name}
         type={type}
         autoComplete={autoComplete}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
         className="min-h-11 border-b border-gold-soft bg-transparent font-sans text-base text-charcoal focus:border-rose-gold-deep focus:outline-none"
+        {...registration}
       />
       {error && (
         <p id={`${id}-error`} className="font-sans text-xs text-red-700">
-          {error}
+          {error.message}
         </p>
       )}
     </div>

@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
-import { NAV_LINKS, SITE_NAME_PRIMARY, SITE_NAME_SECONDARY } from "@/lib/constants";
+import { HEADER_NAV_LINKS, SITE_NAME_FULL } from "@/lib/constants";
 import MobileMenu from "./MobileMenu";
 import Button from "../ui/Button";
+import bnrLogo from "@/assets/bnr-logo.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -48,62 +50,60 @@ export default function Navbar() {
           solid ? "bg-ivory/95 shadow-sm backdrop-blur-sm" : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-8">
-          <Link
-            href="/"
-            className={`font-display text-xl leading-none sm:text-2xl ${
-              overDarkHero ? "text-ivory" : "text-charcoal"
-            }`}
-          >
-            {SITE_NAME_PRIMARY}
-            <span
-              className={`mt-0.5 block font-sans text-[0.55rem] tracking-[0.35em] uppercase ${
-                overDarkHero ? "text-blush" : "text-rose-text"
-              }`}
-            >
-              {SITE_NAME_SECONDARY}
-            </span>
+        {/* Row 1: centered logo, with the mobile menu trigger pinned to the right */}
+        <div className="relative flex items-center justify-center px-6 py-3 sm:px-8">
+          <Link href="/" className="relative block h-20 w-auto sm:h-24">
+            <Image
+              src={bnrLogo}
+              alt={SITE_NAME_FULL}
+              priority
+              className="h-20 w-auto object-contain sm:h-24"
+            />
           </Link>
-
-          <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
-            {NAV_LINKS.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`font-sans text-sm tracking-wide uppercase transition-colors ${
-                    overDarkHero
-                      ? active
-                        ? "text-blush"
-                        : "text-ivory hover:text-blush"
-                      : active
-                        ? "text-rose-text"
-                        : "text-charcoal hover:text-rose-text"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-            <Button href="/contact" className="!px-5 !py-2.5 text-xs">
-              Enquire
-            </Button>
-          </nav>
 
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
             aria-haspopup="dialog"
-            className={`flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-rose-gold-deep md:hidden ${
+            className={`absolute right-6 flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-rose-gold-deep sm:right-8 md:hidden ${
               overDarkHero ? "text-ivory hover:bg-ivory/10" : "text-charcoal hover:bg-blush-soft"
             }`}
           >
             <Menu className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />
           </button>
         </div>
+
+        {/* Row 2: nav menu, centered below the logo (desktop only) */}
+        <nav
+          aria-label="Primary"
+          className="hidden items-center justify-center gap-8 pb-3 md:flex"
+        >
+          {HEADER_NAV_LINKS.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className={`font-sans text-sm tracking-wide uppercase transition-colors ${
+                  overDarkHero
+                    ? active
+                      ? "text-blush"
+                      : "text-ivory hover:text-blush"
+                    : active
+                      ? "text-rose-text"
+                      : "text-charcoal hover:text-rose-text"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+          <Button href="/contact" className="!px-5 !py-2.5 text-xs">
+            Enquire
+          </Button>
+        </nav>
       </header>
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-// Shared interior-page banner used by About, Services, Portfolio,
-// Testimonials, and Contact so every page opens with the same rhythm.
+// Shared interior-page banner used by About, Services, and Gallery so
+// every page opens with the same rhythm.
 export default function PageHeader({
   eyebrow,
   title,
@@ -16,7 +16,7 @@ export default function PageHeader({
   imageAlt: string;
 }) {
   return (
-    <section className="relative flex h-[46vh] min-h-[320px] w-full items-center justify-center overflow-hidden">
+    <section className="relative flex h-[50vh] min-h-[380px] w-full items-center justify-center overflow-hidden pt-32 sm:pt-36">
       <Image
         src={image}
         alt={imageAlt}

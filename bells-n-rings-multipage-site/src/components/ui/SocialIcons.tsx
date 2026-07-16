@@ -40,3 +40,21 @@ export function FacebookIcon({ className = "h-5 w-5" }: IconProps) {
     </svg>
   );
 }
+
+export function YoutubeIcon({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="2.5" y="6" width="19" height="12" rx="4" />
+      <path d="M10.5 9.5v5l4.5-2.5-4.5-2.5Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
