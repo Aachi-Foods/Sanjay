@@ -33,15 +33,15 @@ export default function Hero() {
       />
 
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
-        <div className="relative flex min-h-[290px] items-center justify-center sm:min-h-[400px]">
+        <div className="relative flex min-h-[340px] items-center justify-center sm:min-h-[480px]">
           <SpinningRing
             text={HERO_RING_TEXT}
-            size={400}
+            size={480}
             className="absolute inset-0 m-auto hidden sm:block"
           />
           <SpinningRing
             text={HERO_RING_TEXT}
-            size={290}
+            size={340}
             className="absolute inset-0 m-auto sm:hidden"
           />
 
@@ -50,27 +50,18 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-              className="font-display text-8xl leading-none text-ivory sm:text-9xl md:text-[9.5rem]"
+              className="font-display text-9xl leading-none text-gold uppercase sm:text-[10.5rem] md:text-[11.5rem]"
             >
               {SITE_NAME_PRIMARY}
             </motion.h1>
           </div>
         </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-          className="prose-measure mt-6 font-sans text-base text-blush-soft sm:mt-8 sm:text-lg"
-        >
-          Hindu, Muslim, Sikh, Christian, or interfaith — we plan every
-          celebration with the same devotion to tradition and detail.
-        </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-4"
+          transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:mt-12"
         >
           <Button href="/services">Explore Our Services</Button>
           <Button
