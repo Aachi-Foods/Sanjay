@@ -138,15 +138,19 @@ with graceful fallbacks (reveals render fully visible if
 
 ## Magic MCP (21st.dev)
 
-`.mcp.json` at the repo root configures the [Magic MCP
-server](https://github.com/21st-dev/magic-mcp) for use with Claude Code
-and other MCP-compatible clients in this project. It generates and
-refines UI components from natural-language prompts.
+`.mcp.json` at the repo root configures two servers for
+[21st.dev Magic](https://github.com/21st-dev/magic-mcp) — UI component
+generation and refinement from natural-language prompts — for use with
+Claude Code and other MCP-compatible clients:
+
+- `@21st-dev/magic` — the stdio server, run via `npx`.
+- `21st` — the hosted HTTP server at `https://21st.dev/api/mcp`.
 
 Setup:
 1. Get an API key from the 21st.dev Magic Console.
-2. Export it as `TWENTYFIRST_API_KEY` in your shell environment (the
-   config reads it via `${TWENTYFIRST_API_KEY}` — no key is committed
-   to the repo).
-3. Reopen the project in an MCP-aware client; the `@21st-dev/magic`
-   server will be available automatically.
+2. Export it in your shell as both `TWENTYFIRST_API_KEY` (used by the
+   stdio server) and `API_KEY_21ST` (sent as the `x-api-key` header to
+   the HTTP server) — the config reads these via `${...}` expansion, so
+   no key is committed to the repo.
+3. Reopen the project in an MCP-aware client; both servers will be
+   available automatically.
