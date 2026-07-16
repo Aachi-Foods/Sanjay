@@ -135,3 +135,18 @@ Modern evergreen browsers (Chrome, Edge, Safari, Firefox — last 2
 versions). Uses CSS Grid, `backdrop-filter`, and `IntersectionObserver`
 with graceful fallbacks (reveals render fully visible if
 `IntersectionObserver` is unavailable).
+
+## Magic MCP (21st.dev)
+
+`.mcp.json` at the repo root configures the [Magic MCP
+server](https://github.com/21st-dev/magic-mcp) for use with Claude Code
+and other MCP-compatible clients in this project. It generates and
+refines UI components from natural-language prompts.
+
+Setup:
+1. Get an API key from the 21st.dev Magic Console.
+2. Export it as `TWENTYFIRST_API_KEY` in your shell environment (the
+   config reads it via `${TWENTYFIRST_API_KEY}` — no key is committed
+   to the repo).
+3. Reopen the project in an MCP-aware client; the `@21st-dev/magic`
+   server will be available automatically.
