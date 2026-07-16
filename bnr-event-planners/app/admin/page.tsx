@@ -1,43 +1,64 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { Session } from "@supabase/supabase-js";
+import { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import AdminTable from "@/components/AdminTable";
+import { supabase } from "@/lib/supabase";
 
-// MVP-only auth: credentials are checked against the /api/contact route's
-// Basic Auth check (which reads ADMIN_USERNAME / ADMIN_PASSWORD server-side).
-// This form just verifies the same credentials work before revealing the table.
+// Admin access is a real Supabase Auth account (create one under
+// Authentication > Users in the Supabase dashboard — see README). RLS
+// policies on `inquiries` only grant SELECT/UPDATE to the `authenticated`
+// role, so this session is what actually protects the data, not this page.
 export default function AdminPage() {
-  const [authHeader, setAuthHeader] = useState<string | null>(null);
-  const [username, setUsername] = useState("");
+  const [session, setSession] = useState<Session | null>(null);
+  const [checkingSession, setCheckingSession] = useState(true);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [checking, setChecking] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setCheckingSession(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
 
   async function handleLogin(e: FormEvent) {
     e.preventDefault();
-    setChecking(true);
+    setLoggingIn(true);
     setError("");
 
-    const encoded = typeof window !== "undefined" ? window.btoa(`${username}:${password}`) : "";
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
 
-    try {
-      const res = await fetch("/api/contact", {
-        headers: { Authorization: `Basic ${encoded}` },
-      });
-      if (!res.ok) {
-        throw new Error("Invalid username or password");
-      }
-      setAuthHeader(encoded);
+    if (signInError) {
+      setError(signInError.message);
+    } else {
       toast.success("Welcome back!");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
-    } finally {
-      setChecking(false);
     }
+    setLoggingIn(false);
   }
 
-  if (!authHeader) {
+  async function handleLogout() {
+    await supabase.auth.signOut();
+  }
+
+  if (checkingSession) {
+    return (
+      <section className="flex min-h-screen items-center justify-center bg-charcoal pt-24">
+        <p className="font-body text-cream/60">Loading...</p>
+      </section>
+    );
+  }
+
+  if (!session) {
     return (
       <section className="flex min-h-screen items-center justify-center bg-charcoal px-6 pt-24">
         <form
@@ -51,14 +72,15 @@ export default function AdminPage() {
 
           <div className="mt-6 space-y-4">
             <div>
-              <label htmlFor="username" className="mb-1.5 block font-body text-sm font-medium text-charcoal/80">
-                Username
+              <label htmlFor="email" className="mb-1.5 block font-body text-sm font-medium text-charcoal/80">
+                Email
               </label>
               <input
-                id="username"
+                id="email"
+                type="email"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-charcoal/15 bg-white px-4 py-3 font-body focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
                 autoComplete="username"
               />
@@ -83,10 +105,10 @@ export default function AdminPage() {
 
           <button
             type="submit"
-            disabled={checking}
+            disabled={loggingIn}
             className="mt-6 w-full rounded-full bg-maroon px-6 py-3 font-body text-sm font-semibold uppercase tracking-wide text-cream transition-transform hover:scale-[1.02] disabled:opacity-60"
           >
-            {checking ? "Checking..." : "Log In"}
+            {loggingIn ? "Checking..." : "Log In"}
           </button>
         </form>
       </section>
@@ -104,14 +126,14 @@ export default function AdminPage() {
             </p>
           </div>
           <button
-            onClick={() => setAuthHeader(null)}
+            onClick={handleLogout}
             className="rounded-full border border-charcoal/20 px-5 py-2 font-body text-sm font-medium text-charcoal/70 hover:bg-charcoal/5"
           >
             Log Out
           </button>
         </div>
 
-        <AdminTable authHeader={authHeader} />
+        <AdminTable />
       </div>
     </section>
   );

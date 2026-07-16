@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { eventTypes } from "@/lib/content";
+import { supabase } from "@/lib/supabase";
 
 const initialState = {
   name: "",
@@ -25,25 +26,37 @@ export default function ContactForm() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
+    const guestCount = Number(form.guestCount);
+    if (!Number.isFinite(guestCount) || guestCount <= 0) {
+      toast.error("Guest count must be a positive number");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+      // Static export has no server, so this writes straight to Supabase
+      // using the public anon key. RLS on `inquiries` allows anon INSERT
+      // only — it can't read or modify existing rows (see README).
+      const { error } = await supabase.from("inquiries").insert({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        event_type: form.eventType,
+        event_date: form.eventDate,
+        city: form.city,
+        guest_count: guestCount,
+        message: form.message,
+        status: "new",
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error ?? "Something went wrong. Please try again.");
-      }
+      if (error) throw error;
 
       toast.success("Thank you! Your enquiry has been received — we'll be in touch soon.");
       setForm(initialState);
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Unable to submit. Please try again.");
+    } catch {
+      toast.error("Unable to submit. Please try again shortly.");
     } finally {
       setSubmitting(false);
     }

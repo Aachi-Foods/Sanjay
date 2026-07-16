@@ -2,14 +2,9 @@
 
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Inquiry } from "@/lib/supabase";
+import { Inquiry, supabase } from "@/lib/supabase";
 
-interface AdminTableProps {
-  /** Base64-encoded "user:pass", sent as an HTTP Basic Authorization header. */
-  authHeader: string;
-}
-
-export default function AdminTable({ authHeader }: AdminTableProps) {
+export default function AdminTable() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -17,12 +12,15 @@ export default function AdminTable({ authHeader }: AdminTableProps) {
   async function loadInquiries() {
     setLoading(true);
     try {
-      const res = await fetch("/api/contact", {
-        headers: { Authorization: `Basic ${authHeader}` },
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Failed to load inquiries");
-      setInquiries(data.inquiries ?? []);
+      // RLS restricts SELECT on `inquiries` to the `authenticated` role, so
+      // this only returns rows once the admin has signed in via Supabase Auth.
+      const { data, error } = await supabase
+        .from("inquiries")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setInquiries(data ?? []);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Failed to load inquiries");
     } finally {
@@ -32,21 +30,17 @@ export default function AdminTable({ authHeader }: AdminTableProps) {
 
   useEffect(() => {
     loadInquiries();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function markReviewed(id: string) {
     setUpdatingId(id);
     try {
-      const res = await fetch("/api/contact", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${authHeader}`,
-        },
-        body: JSON.stringify({ id, status: "reviewed" }),
-      });
-      if (!res.ok) throw new Error("Failed to update status");
+      const { error } = await supabase
+        .from("inquiries")
+        .update({ status: "reviewed" })
+        .eq("id", id);
+
+      if (error) throw error;
       setInquiries((prev) =>
         prev.map((inq) => (inq.id === id ? { ...inq, status: "reviewed" } : inq))
       );

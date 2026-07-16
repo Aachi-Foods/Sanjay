@@ -11,11 +11,13 @@ Maroon / Gold / Cream / Charcoal palette.
 
 ## Tech stack
 
-- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS — built as
+  a static export (`output: "export"`), since there's no server at runtime
 - **Animation:** Framer Motion (`whileInView`, stagger children, parallax)
-- **Backend:** Next.js API routes (`/api/contact`)
-- **Database:** Supabase (PostgreSQL)
-- **Deployment target:** Vercel (frontend) + Supabase (database)
+- **Backend:** none — the browser talks to Supabase directly via the anon
+  key; Row Level Security policies (below) enforce what it's allowed to do
+- **Database:** Supabase (PostgreSQL + Auth)
+- **Deployment target:** GitHub Pages (frontend) + Supabase (database/auth)
 
 ## Pages
 
@@ -26,7 +28,7 @@ Maroon / Gold / Cream / Charcoal palette.
 | `/services`  | Detailed service cards for all six event types                     |
 | `/gallery`   | Filterable masonry gallery with lightbox                           |
 | `/contact`   | Contact form (writes to Supabase), address, map embed              |
-| `/admin`     | Password-gated dashboard listing all inquiries                     |
+| `/admin`     | Supabase Auth-gated dashboard listing all inquiries                |
 
 ## Getting started
 
@@ -59,13 +61,34 @@ create table if not exists inquiries (
   created_at timestamp with time zone not null default now()
 );
 
--- Row Level Security: the app writes/reads through the service-role key on
--- the server (API routes), so RLS can stay enabled with no public policies.
 alter table inquiries enable row level security;
+
+-- Public contact form: anyone (anon key) can create an inquiry, but cannot
+-- read or modify existing ones.
+create policy "Anyone can submit an inquiry"
+  on inquiries for insert
+  to anon
+  with check (true);
+
+-- Admin dashboard: only signed-in Supabase Auth users can list/update
+-- inquiries. Create that user in the next step.
+create policy "Authenticated users can view inquiries"
+  on inquiries for select
+  to authenticated
+  using (true);
+
+create policy "Authenticated users can update inquiries"
+  on inquiries for update
+  to authenticated
+  using (true)
+  with check (true);
 ```
 
-3. Copy your **Project URL**, **anon public key**, and **service_role key**
-   from Project Settings &rarr; API.
+3. Copy your **Project URL** and **anon public key** from
+   Project Settings &rarr; API.
+4. Create an admin login: Authentication &rarr; Users &rarr; **Add user**,
+   and set an email + password. This is what you'll use to sign in at
+   `/admin` — there's no separate hardcoded password.
 
 ### 3. Configure environment variables
 
@@ -78,13 +101,10 @@ Fill in the values from step 2:
 ```
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-SUPABASE_SERVICE_ROLE_KEY=...
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=bnr2024
 ```
 
-The service role key is only ever read inside `/api/contact/route.ts`
-(server-side) — it is never sent to the browser.
+The anon key is public by design (it ships in the browser bundle) — the RLS
+policies above are what actually restrict access, not this key being secret.
 
 ### 4. Run locally
 
@@ -92,16 +112,18 @@ The service role key is only ever read inside `/api/contact/route.ts`
 npm run dev
 ```
 
-Visit `http://localhost:3000`. The admin dashboard is at
-`http://localhost:3000/admin` (default credentials `admin` / `bnr2024`,
-overridable via `ADMIN_USERNAME` / `ADMIN_PASSWORD`).
+Visit `http://localhost:3000`. Sign in at `http://localhost:3000/admin`
+with the email/password you created in Supabase Authentication.
 
 ### 5. Build for production
 
 ```bash
 npm run build
-npm run start
 ```
+
+This produces a static export in `bnr-event-planners/out/` — there is no
+`npm run start`, since there's no server to run. Preview it locally with
+any static file server, e.g. `npx serve out`.
 
 ## Project structure
 
@@ -113,9 +135,8 @@ npm run start
     services/page.tsx        Services
     gallery/page.tsx          Gallery
     contact/page.tsx          Contact
-    admin/page.tsx             Admin dashboard (client-gated)
+    admin/page.tsx             Admin dashboard (Supabase Auth-gated)
     admin/layout.tsx           noindex metadata for admin route
-    api/contact/route.ts       POST (create), GET (list), PATCH (update status)
     layout.tsx                Root layout: fonts, navbar, footer, toaster
     globals.css                Tailwind entry + reduced-motion handling
   /components
@@ -123,8 +144,8 @@ npm run start
     Footer.tsx
     HeroSection.tsx             Video background hero with staggered headline
     ServiceCard.tsx
-    ContactForm.tsx
-    AdminTable.tsx
+    ContactForm.tsx             Writes directly to Supabase (anon insert)
+    AdminTable.tsx               Reads/updates directly (authenticated only)
     AnimatedSection.tsx         Reusable whileInView/stagger wrapper
     AboutTeaser.tsx             Parallax image + copy
     CTABanner.tsx
@@ -134,20 +155,35 @@ npm run start
     TeamCard.tsx
     Timeline.tsx
   /lib
-    supabase.ts                 Public + service-role Supabase clients, types
+    supabase.ts                 Anon-key Supabase client + types
     content.ts                  Static copy: services, testimonials, gallery, team, timeline
   tailwind.config.ts
   package.json
   .env.local.example
 ```
 
-## Deployment
+## Deployment (GitHub Pages)
 
-- **Frontend:** push to GitHub, import into [Vercel](https://vercel.com/new),
-  and set the same environment variables from `.env.local` in the Vercel
-  project settings.
-- **Database:** the Supabase project created above requires no further setup
-  — the same URL/keys work in production.
+A workflow at `.github/workflows/deploy-bnr-event-planners.yml` builds and
+publishes this project automatically. One-time setup:
+
+1. Repo **Settings &rarr; Pages &rarr; Build and deployment &rarr; Source**:
+   set to **GitHub Actions**.
+2. Repo **Settings &rarr; Secrets and variables &rarr; Actions**, add:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+3. Push to the branch the workflow watches (or run it manually from the
+   Actions tab) — it builds the static export and deploys it to Pages.
+
+Because GitHub Pages serves a project site at `https://<org>.github.io/<repo>/`,
+`next.config.js` automatically sets `basePath`/`assetPrefix` to the repo
+name when running inside GitHub Actions (`GITHUB_ACTIONS=true`). Local dev
+and any other host serve from `/` as normal.
+
+**Note:** GitHub Pages hosts one live deployment per repository. If another
+workflow in this repo also publishes to the `github-pages` environment,
+whichever ran most recently is what's actually live — they can't both be
+live simultaneously from a single repo.
 
 ## Notes on imagery
 
@@ -158,9 +194,10 @@ events and store them in `/public/images`.
 
 ## Admin authentication
 
-The `/admin` route uses HTTP Basic Auth checked against `ADMIN_USERNAME` /
-`ADMIN_PASSWORD` inside `/api/contact/route.ts`. This is intentionally
-simple for an MVP — before scaling beyond a single internal user, replace
-it with a real auth provider (Supabase Auth, NextAuth, etc.) and move
-`inquiries` access behind a proper session check instead of a shared
-password.
+`/admin` is gated by a real Supabase Auth session
+(`supabase.auth.signInWithPassword`), not a hardcoded password. The RLS
+policies from step 2 are what actually enforce access — the anon key used
+everywhere else on the site can `INSERT` into `inquiries` but never `SELECT`
+or `UPDATE` it, so the admin data stays private even though the anon key
+itself is public in the shipped JS. To add more admins, create additional
+users under Authentication &rarr; Users in the Supabase dashboard.
