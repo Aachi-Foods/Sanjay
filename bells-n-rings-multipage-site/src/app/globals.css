@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand palette — BnR Event Planners, South Indian wedding aesthetic.
+     Token names kept from the previous rose-gold theme so every existing
+     Tailwind utility class (bg-blush, text-rose-text, etc.) repaints
+     automatically instead of needing a repo-wide class rename. */
+  --color-blush: #f2e7bf;
+  --color-blush-soft: #f8f2dd;
+  --color-rose-gold: #4c6b4c;
+  --color-rose-gold-deep: #1a2e1a;
+  /* Deeper green used only where text needs 4.5:1 contrast on ivory */
+  --color-rose-text: #21391f;
+  --color-rose-gold-button: #1a2e1a;
+  --color-ivory: #faf6ef;
+  --color-ivory-deep: #f1ead6;
+  --color-charcoal: #2c2c2c;
+  --color-charcoal-soft: #5c5952;
+  --color-gold: #c9a84c;
+  --color-gold-soft: #ddc98a;
+}
+
+@theme inline {
+  --color-blush: var(--color-blush);
+  --color-blush-soft: var(--color-blush-soft);
+  --color-rose-gold: var(--color-rose-gold);
+  --color-rose-gold-deep: var(--color-rose-gold-deep);
+  --color-rose-text: var(--color-rose-text);
+  --color-rose-gold-button: var(--color-rose-gold-button);
+  --color-ivory: var(--color-ivory);
+  --color-ivory-deep: var(--color-ivory-deep);
+  --color-charcoal: var(--color-charcoal);
+  --color-charcoal-soft: var(--color-charcoal-soft);
+  --color-gold: var(--color-gold);
+  --color-gold-soft: var(--color-gold-soft);
+
+  --font-display: var(--font-playfair);
+  --font-script: var(--font-parisienne);
+  --font-sans: var(--font-dm-sans);
+}
+
+html {
+  background: #000;
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-charcoal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Thin gold hairline used by GoldDivider */
+.hairline-gold {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold) 50%,
+    transparent
+  );
+  height: 1px;
+}
+
+/* Utility for balanced editorial line length */
+.prose-measure {
+  max-width: 65ch;
+}
+
+/* Hero ring rotation — 18s, elegant and slow (spec range: 12-20s) */
+@keyframes spin-ring {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-ring {
+  animation: spin-ring 18s linear infinite;
+}
