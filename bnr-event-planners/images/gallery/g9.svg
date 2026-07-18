@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700" viewBox="0 0 800 700">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#335C30"/>
+      <stop offset="100%" stop-color="#16241A"/>
+    </linearGradient>
+    <pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1" fill="#C9A45C" opacity="0.35"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="700" fill="url(#g)"/>
+  <rect width="800" height="700" fill="url(#p)"/>
+  <rect x="48" y="42" width="704" height="616" fill="none" stroke="#C9A45C" stroke-width="1" opacity="0.6"/>
+  <text x="50%" y="344.0" text-anchor="middle" font-family="Georgia, serif" font-size="58" fill="#F7F4EC" font-style="italic">Temple Wedding Rites</text>
+  <text x="50%" y="402.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" fill="#C9A45C" letter-spacing="2">WEDDINGS</text>
+</svg>

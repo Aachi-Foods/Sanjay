@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <circle cx="80" cy="80" r="76" fill="none" stroke="#C9A45C" stroke-width="1.5"/>
+  <circle cx="80" cy="80" r="66" fill="none" stroke="#C9A45C" stroke-width="1"/>
+  <text x="50%" y="56%" text-anchor="middle" font-family="Georgia, serif" font-size="46" fill="#335C30" font-weight="500">BNR</text>
+  <text x="50%" y="72%" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" letter-spacing="3" fill="#C9A45C">EVENT PLANNERS</text>
+</svg>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquire | BNR Event Planners — Chennai</title>
+<meta name="description" content="Begin your celebration with BNR Event Planners. Share your event details and reach us instantly via WhatsApp or email.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Great+Vibes&amp;family=Jost:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="enquire">
+
+<div id="preloader"><div id="preloader-inner"></div></div>
+<div class="curtain" id="curtain"><div id="curtain-inner"></div></div>
+
+<header id="site-header"><div id="header-inner-mount"></div></header>
+<div class="mobile-nav-panel" id="mobileNavPanel"><div id="mobile-nav-inner"></div></div>
+<div id="wa-float-root"></div>
+
+<main>
+  <section class="page-header">
+    <div class="hero-media"><img src="images/hero-enquire.svg" alt="Begin your celebration"></div>
+    <div class="container hero-content">
+      <span class="eyebrow-script on-dark reveal">Begin Your Story</span>
+      <h1 class="reveal">Enquire With Us</h1>
+      <div class="crumb reveal"><a href="index.html">Home</a> &middot; Enquire</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container invitation-wrap">
+      <div class="invitation-card reveal">
+        <div class="invitation-head">
+          <span class="label-caps">BNR Event Planners</span>
+          <div class="script-big">requests the pleasure</div>
+          <p>of your enquiry, so we may begin crafting your celebration together.</p>
+        </div>
+
+        <form id="inquiryForm">
+          <div class="form-grid">
+            <div class="form-field full script-input">
+              <label for="name">Your Name(s)</label>
+              <input type="text" id="name" name="name" placeholder="e.g. Meenakshi &amp; Aravind" required>
+            </div>
+            <div class="form-field">
+              <label for="eventType">Event Type</label>
+              <select id="eventType" name="eventType" required>
+                <option value="" disabled selected>Choose an occasion</option>
+                <option>Wedding</option>
+                <option>Reception</option>
+                <option>Muhurtham / Temple Ritual</option>
+                <option>Corporate Event</option>
+                <option>Cultural Celebration</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="eventDate">Preferred Date</label>
+              <input type="date" id="eventDate" name="eventDate" required>
+            </div>
+            <div class="form-field">
+              <label for="venueCity">Venue City</label>
+              <input type="text" id="venueCity" name="venueCity" placeholder="e.g. Chennai, Madurai, Coimbatore" required>
+            </div>
+            <div class="form-field">
+              <label for="guestCount">Guest Count</label>
+              <select id="guestCount" name="guestCount">
+                <option value="" disabled selected>Approximate guests</option>
+                <option>Under 100</option>
+                <option>100 &ndash; 300</option>
+                <option>300 &ndash; 600</option>
+                <option>600 &ndash; 1000</option>
+                <option>1000+</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="budget">Approximate Budget</label>
+              <select id="budget" name="budget">
+                <option value="" disabled selected>Select a range</option>
+                <option>Under &#8377;10 Lakh</option>
+                <option>&#8377;10 &ndash; 25 Lakh</option>
+                <option>&#8377;25 &ndash; 50 Lakh</option>
+                <option>&#8377;50 Lakh &ndash; 1 Crore</option>
+                <option>&#8377;1 Crore+</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="message">Tell Us About Your Celebration</label>
+              <textarea id="message" name="message" rows="4" placeholder="Share your vision, traditions, or anything close to your heart..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="sendWaBtn" class="btn btn-gold">Send via WhatsApp</button>
+            <button type="button" id="sendEmailBtn" class="btn btn-outline on-light">Send via Email</button>
+          </div>
+          <div id="formStatus" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div class="section-head reveal" style="margin-top:80px;">
+        <span class="eyebrow-script">Or Reach Us Directly</span>
+        <h2>We'd Love to Hear From You</h2>
+      </div>
+      <div class="stats-row reveal" style="text-align:center;">
+        <div class="stat-item">
+          <div class="label" style="text-transform:none;letter-spacing:0;font-family:var(--font-display);font-size:1.3rem;color:var(--forest);">+91 98765 43210</div>
+          <div class="label" style="margin-top:6px;">Phone &amp; WhatsApp</div>
+        </div>
+        <div class="stat-item">
+          <div class="label" style="text-transform:none;letter-spacing:0;font-family:var(--font-display);font-size:1.3rem;color:var(--forest);">enquiries@bnreventplanners.com</div>
+          <div class="label" style="margin-top:6px;">Email</div>
+        </div>
+        <div class="stat-item">
+          <div class="label" style="text-transform:none;letter-spacing:0;font-family:var(--font-display);font-size:1.3rem;color:var(--forest);">Mylapore, Chennai</div>
+          <div class="label" style="margin-top:6px;">Studio</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer"><div id="footer-root"></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/partials.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
