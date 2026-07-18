@@ -1,0 +1,40 @@
+# Deploys the static bnr-event-planners/ site (plain HTML/CSS/JS, no build
+# step) to GitHub Pages. Scoped to these branches only — does not touch the
+# existing Next.js Pages workflow (nextjs.yml) or any other project.
+
+name: Deploy BNR Event Planners (static) to Pages
+
+on:
+  push:
+    branches: ["claude/new-session-syk0wh", "BNR-lumene-Design"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./bnr-event-planners
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
