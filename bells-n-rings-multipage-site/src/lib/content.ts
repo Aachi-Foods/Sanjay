@@ -185,8 +185,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Leadership Summit",
     category: "corporate",
     location: "Hyderabad, Telangana",
-    image: hf("hf_20260722_044551_44c786bc-ba85-4f72-822a-326a29adb1f1.png"),
-    imageAlt: "Corporate leadership summit stage with branded backdrop and seating",
+    image: hf("hf_20260722_072232_c201380e-d490-4d19-b4a8-dbc5e52eeae0.png"),
+    imageAlt: "Empty corporate stage with warm uplighting, seating, and minimalist backdrop panels",
     description:
       "A 300-guest leadership summit with custom stage design, AV production, and delegate hospitality.",
   },
@@ -195,8 +195,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Anand Karaj & Sangeet Night",
     category: "receptions",
     location: "Coimbatore, Tamil Nadu",
-    image: hf("hf_20260722_044553_ec4396f0-f6af-4c5e-9a25-e29324504fa6.png"),
-    imageAlt: "Vibrant Sikh sangeet night stage with dynamic colored lighting",
+    image: hf("hf_20260722_072240_305d4301-c492-4afb-9ac1-4e958040d321.png"),
+    imageAlt: "Vibrant sangeet night dance floor with colorful dynamic stage lighting",
     description:
       "A Sikh Anand Karaj followed by a high-energy sangeet, with a custom stage, dynamic lighting, and a live performance lineup.",
   },
@@ -215,8 +215,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Product Launch Gala",
     category: "corporate",
     location: "Chennai, Tamil Nadu",
-    image: hf("hf_20260722_044558_d774c185-b5c2-4679-9a9a-430154fd2e9f.png"),
-    imageAlt: "Brand product-launch gala stage with immersive lighting and branding",
+    image: hf("hf_20260722_072236_d5f0abe8-c99c-4483-be5b-cceec786587b.png"),
+    imageAlt: "Product launch gala stage with dramatic light beams and minimalist podium",
     description:
       "A brand product launch with immersive stage branding, live demo zones, and press hospitality.",
   },
@@ -265,7 +265,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Nischayathartham Engagement",
     category: "traditional",
     location: "Chennai, Tamil Nadu",
-    image: hf("hf_20260722_051551_c2617012-3850-44eb-a5e6-d8b6f0f2a2e9.png"),
+    image: hf("hf_20260722_072244_fbb24796-f63a-4320-9923-337063a52dee.png"),
     imageAlt: "South Indian nischayathartham engagement stage with silver plates of fruit and flowers",
     description:
       "A nischayathartham engagement styled with ornate silver plates, gold-bordered silk drapery, and a warm, celebratory glow.",
@@ -275,7 +275,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Diwali Corporate Gala",
     category: "corporate",
     location: "Bengaluru, Karnataka",
-    image: hf("hf_20260722_051555_be8518b6-6c72-4b8b-a0fd-114d32019972.png"),
+    image: hf("hf_20260722_072247_188a2267-06ec-4f1b-b37c-6c9e561b62ff.png"),
     imageAlt: "Grand Diwali corporate gala stage with rows of lit brass diyas and marigold garlands",
     description:
       "A 200-guest Diwali gala for a Bengaluru tech firm, with rows of brass diyas, marigold garlands, and a festival-of-lights stage design.",
