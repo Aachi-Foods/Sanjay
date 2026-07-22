@@ -31,7 +31,7 @@ export default function HomePage() {
       <Scene>
         <InstagramStrip />
       </Scene>
-      <Scene tilt={8} rise={40}>
+      <Scene rise={40}>
         <InvitationTeaser />
       </Scene>
     </>
