@@ -8,8 +8,8 @@ export default function AboutTeaser() {
     <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 sm:px-8 md:grid-cols-2 md:items-center md:gap-16">
       <Reveal className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl">
         <Image
-          src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80"
-          alt="Placeholder — BnR planning team styling a celebration"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044512_3b47cc14-5b72-4313-8670-5913e74ed62e.png"
+          alt="Hands arranging fresh marigold and jasmine garlands on a decor table"
           fill
           loading="lazy"
           sizes="(min-width: 768px) 45vw, 100vw"

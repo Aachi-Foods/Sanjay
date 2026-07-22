@@ -42,8 +42,8 @@ export default function StorySection() {
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
       >
         <Image
-          src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1200&q=80"
-          alt="Placeholder — BnR team reviewing an event floor plan"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044528_ca62b7d4-82a5-43f9-9103-ece8902011a0.png"
+          alt="Event planner's desk with a hand-sketched floor plan, fabric swatches, and jasmine flowers"
           fill
           loading="lazy"
           sizes="(min-width: 768px) 45vw, 100vw"

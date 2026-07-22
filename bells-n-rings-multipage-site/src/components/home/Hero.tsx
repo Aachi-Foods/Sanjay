@@ -11,8 +11,8 @@ export default function Hero() {
     <section className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep">
       {/* Dimmed background photo — visible enough to read as a real backdrop, while the ring and heading stay legible */}
       <Image
-        src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80"
-        alt="Placeholder — hero background, ornate mandap decorated with flowers"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044156_e2cb7513-237f-4015-9363-635508cff470.png"
+        alt="Ornate South Indian wedding mandap at dusk, draped in marigold and jasmine garlands with warm gold string lighting"
         fill
         priority
         sizes="100vw"

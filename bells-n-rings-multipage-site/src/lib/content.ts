@@ -16,6 +16,12 @@ function unsplash(id: string, w = 1600) {
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 }
 
+const HF_CDN =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/";
+function hf(filename: string) {
+  return `${HF_CDN}${filename}`;
+}
+
 export type ServiceSlug =
   | "event-planning"
   | "venue-selection"
@@ -134,8 +140,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Silk & Jasmine Hindu Wedding",
     category: "weddings",
     location: "Chennai, Tamil Nadu",
-    image: unsplash("photo-1465495976277-4387d4b0b4c6", 1200),
-    imageAlt: "Placeholder — traditional wedding ceremony styling",
+    image: hf("hf_20260722_044534_88e6c3c3-5c2a-43da-af61-28cb8088a1d2.png"),
+    imageAlt: "Traditional South Indian Hindu wedding mandap with silk and jasmine garlands",
     description:
       "A traditional Hindu ceremony styled with jasmine garlands, banana-leaf motifs, and a gold-accented mandap.",
   },
@@ -144,8 +150,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Temple Town Muhurtham",
     category: "traditional",
     location: "Madurai, Tamil Nadu",
-    image: unsplash("photo-1583939003579-730e3918a45a", 1200),
-    imageAlt: "Placeholder — traditional Hindu muhurtham ceremony under a decorated mandap",
+    image: hf("hf_20260722_044537_6b309dd7-ac38-4864-85f4-eddbeeda524c.png"),
+    imageAlt: "South Indian temple-town muhurtham ceremony with a kolam-lined pathway",
     description:
       "A muhurtham ceremony honoring family tradition, with kolam-lined pathways and live nadaswaram music.",
   },
@@ -154,8 +160,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Nikah Reception",
     category: "receptions",
     location: "Bengaluru, Karnataka",
-    image: unsplash("photo-1509927083803-4bd519298ac4", 1200),
-    imageAlt: "Placeholder — evening wedding reception styling",
+    image: hf("hf_20260722_044539_7d9b9cd9-1c1b-49eb-9857-ce211fa66dea.png"),
+    imageAlt: "Elegant nikah reception with antique-gold drapery and candlelit tables",
     description:
       "A joyful nikah reception styled with antique-gold drapery, candlelight, and a curated regional menu.",
   },
@@ -164,8 +170,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Kochi Christian Wedding",
     category: "weddings",
     location: "Kochi, Kerala",
-    image: unsplash("photo-1522673607200-164d1b6ce486", 1200),
-    imageAlt: "Placeholder — waterfront wedding ceremony",
+    image: hf("hf_20260722_044547_93709261-8150-4409-b476-9267e7a3111c.png"),
+    imageAlt: "Christian wedding reception on a Kerala backwater waterfront at golden hour",
     description:
       "A Syro-Malabar church wedding followed by a waterside reception, with a multi-day itinerary for out-of-town guests.",
   },
@@ -174,8 +180,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Leadership Summit",
     category: "corporate",
     location: "Hyderabad, Telangana",
-    image: unsplash("photo-1511578314322-379afb476865", 1200),
-    imageAlt: "Placeholder — corporate summit stage and seating",
+    image: hf("hf_20260722_044551_44c786bc-ba85-4f72-822a-326a29adb1f1.png"),
+    imageAlt: "Corporate leadership summit stage with branded backdrop and seating",
     description:
       "A 300-guest leadership summit with custom stage design, AV production, and delegate hospitality.",
   },
@@ -184,8 +190,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Anand Karaj & Sangeet Night",
     category: "receptions",
     location: "Coimbatore, Tamil Nadu",
-    image: unsplash("photo-1530103862676-de8c9debad1d", 1200),
-    imageAlt: "Placeholder — sangeet night stage and lighting",
+    image: hf("hf_20260722_044553_ec4396f0-f6af-4c5e-9a25-e29324504fa6.png"),
+    imageAlt: "Vibrant Sikh sangeet night stage with dynamic colored lighting",
     description:
       "A Sikh Anand Karaj followed by a high-energy sangeet, with a custom stage, dynamic lighting, and a live performance lineup.",
   },
@@ -194,8 +200,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Palace Grounds Wedding",
     category: "weddings",
     location: "Mysuru, Karnataka",
-    image: unsplash("photo-1519225421980-715cb0215aed", 1200),
-    imageAlt: "Placeholder — heritage venue wedding styling",
+    image: hf("hf_20260722_044555_cea4adaf-95d3-425d-8418-44c892313c89.png"),
+    imageAlt: "Heritage palace-grounds wedding styled with marigold and jasmine",
     description:
       "A heritage-venue Hindu wedding styled with marigold and jasmine, honoring the grandeur of the setting.",
   },
@@ -204,8 +210,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Product Launch Gala",
     category: "corporate",
     location: "Chennai, Tamil Nadu",
-    image: unsplash("photo-1606800052052-a08af7148866", 1200),
-    imageAlt: "Placeholder — product launch stage and branding",
+    image: hf("hf_20260722_044558_d774c185-b5c2-4679-9a9a-430154fd2e9f.png"),
+    imageAlt: "Brand product-launch gala stage with immersive lighting and branding",
     description:
       "A brand product launch with immersive stage branding, live demo zones, and press hospitality.",
   },
@@ -214,8 +220,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Seaside Reception",
     category: "receptions",
     location: "Puducherry",
-    image: unsplash("photo-1519167758481-83f550bb49b3", 1200),
-    imageAlt: "Placeholder — seaside reception dinner setting",
+    image: hf("hf_20260722_044601_1feba7bd-db23-4d38-991d-10ac616a6d52.png"),
+    imageAlt: "Breezy seaside wedding reception dinner at dusk with string lighting",
     description:
       "A breezy seaside reception styled for an interfaith couple, with string lighting, a curated coastal menu, and live acoustic music.",
   },
@@ -332,7 +338,7 @@ export const INSTAGRAM_STRIP_IMAGES = [
 
 // Interior page banner imagery (About, Services, Gallery, Contact).
 export const PAGE_HEADER_IMAGES = {
-  services: unsplash("photo-1478146059778-26028b07395a", 1920),
-  gallery: unsplash("photo-1530103862676-de8c9debad1d", 1920),
-  about: unsplash("photo-1511285560929-80b456fea0bc", 1920),
+  services: hf("hf_20260722_044603_ddfcd4e9-43b4-45c3-9866-d98f614dbead.png"),
+  gallery: hf("hf_20260722_044606_9b167a46-dea5-43b2-8f1c-90e1b2352eef.png"),
+  about: hf("hf_20260722_044715_f277e41f-2d15-4a75-a378-db1d39d12eb1.png"),
 };
