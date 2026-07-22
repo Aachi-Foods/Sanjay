@@ -1,9 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { GALLERY_ITEMS } from "@/lib/content";
 import Reveal from "../shared/Reveal";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
+import SessionsBrowser from "../gallery/SessionsBrowser";
 
 // Asymmetric editorial layout — the first tile spans two columns and two
 // rows, the rest fill in around it.
@@ -17,6 +21,7 @@ const SPAN_CLASSES = [
 
 export default function GalleryTeaser() {
   const featured = GALLERY_ITEMS.slice(0, 5);
+  const router = useRouter();
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
@@ -29,7 +34,17 @@ export default function GalleryTeaser() {
         />
       </Reveal>
 
-      <div className="grid auto-rows-[180px] grid-cols-1 gap-4 sm:grid-cols-4 sm:auto-rows-[160px]">
+      {/* Desktop: same Google Flow Sessions-style spotlight browser as the
+          full gallery page. "View Photo" sends visitors on to /gallery
+          rather than opening a lightbox here. */}
+      <Reveal className="hidden lg:block">
+        <SessionsBrowser
+          items={featured}
+          onView={(slug) => router.push(`/gallery#${slug}`)}
+        />
+      </Reveal>
+
+      <div className="grid auto-rows-[180px] grid-cols-1 gap-4 sm:grid-cols-4 sm:auto-rows-[160px] lg:hidden">
         {featured.map((item, i) => (
           <Reveal
             key={item.slug}
