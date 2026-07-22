@@ -12,6 +12,10 @@
 // spread with real photos of each tradition once they're available. Nothing
 // else needs to change since every image goes through next/image.
 
+import type { StaticImageData } from "next/image";
+import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
+import entertainmentPhoto from "@/assets/services/entertainment.jpg";
+
 function unsplash(id: string, w = 1600) {
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 }
@@ -37,7 +41,7 @@ export type Service = {
   title: string;
   shortDescription: string;
   longDescription: string;
-  image: string;
+  image: string | StaticImageData;
   imageAlt: string;
 };
 
@@ -50,8 +54,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Concept to execution",
     longDescription:
       "Complete event planning from the first concept through schedules, vendors, production, coordination, and final execution.",
-    image: hf("hf_20260722_045731_63c41ce1-7c9b-4a39-a290-c95509a9a828.png"),
-    imageAlt: "South Indian wedding planner's table with a floor plan and marigold garlands beside an ornate mandap",
+    image: eventPlanningPhoto,
+    imageAlt: "Floral wedding arch draped in pink and ivory blooms on a seaside terrace",
   },
   {
     slug: "venue-selection",
@@ -95,8 +99,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Music, hosts & performances",
     longDescription:
       "Coordination of music, DJs, live performers, hosts, traditional entertainment, stage programs, and guest experiences.",
-    image: hf("hf_20260722_045746_28fa271c-f9ed-42a6-b01c-83e2254968e4.png"),
-    imageAlt: "Traditional South Indian nadaswaram and thavil instruments on a decorated wedding stage",
+    image: entertainmentPhoto,
+    imageAlt: "DJ mixing on a professional deck at an outdoor evening event",
   },
   {
     slug: "guest-management",
