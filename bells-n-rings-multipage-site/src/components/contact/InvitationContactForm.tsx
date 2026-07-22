@@ -32,6 +32,8 @@ const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
+const REST_TILT = { x: 3, y: -6 };
+
 export default function InvitationContactForm() {
   const {
     register,
@@ -42,7 +44,9 @@ export default function InvitationContactForm() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const reduceMotion = useReducedMotion();
   const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  // A resting lean, not a flat 0/0 — so the card reads as a tilted 3D object
+  // at a glance (screenshot, mobile, no-hover), not just on desktop hover.
+  const [tilt, setTilt] = useState(REST_TILT);
 
   function handleCardPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
     if (reduceMotion) return;
@@ -51,11 +55,11 @@ export default function InvitationContactForm() {
     const rect = card.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width - 0.5;
     const py = (event.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: py * -8, y: px * 10 });
+    setTilt({ x: REST_TILT.x + py * -10, y: REST_TILT.y + px * 12 });
   }
 
   function handleCardPointerLeave() {
-    setTilt({ x: 0, y: 0 });
+    setTilt(REST_TILT);
   }
 
   async function onSubmit(data: FormValues) {
@@ -105,7 +109,14 @@ export default function InvitationContactForm() {
   }
 
   return (
-    <div style={{ perspective: 1800 }}>
+    <div className="relative" style={{ perspective: 1800 }}>
+      {/* A second card peeking out from behind — a static depth cue that reads
+          as 3D immediately, without needing hover to discover it. */}
+      <div
+        aria-hidden="true"
+        style={{ transform: "rotateZ(-3deg) translate(-8px, 10px)" }}
+        className="pointer-events-none absolute inset-3 rounded-3xl border border-gold-soft/30 bg-blush-soft/80"
+      />
       <motion.div
         ref={cardRef}
         onPointerMove={handleCardPointerMove}
