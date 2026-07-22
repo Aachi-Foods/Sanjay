@@ -96,7 +96,7 @@ export default function Hero() {
         >
           <Button href="/services">Explore Our Services</Button>
           <Button
-            href="/contact"
+            href="/enquire"
             variant="outline"
             className="!border-ivory !text-ivory hover:!bg-ivory/10"
           >

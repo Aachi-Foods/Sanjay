@@ -33,11 +33,13 @@ export default function Navbar() {
 
   const solid = scrolled || menuOpen;
 
-  // Every page except Contact opens with a dark-scrimmed photo banner
-  // behind the transparent navbar, so charcoal text would fail contrast
-  // there until the bar turns solid. Contact opens on a light blush intro,
-  // so it keeps dark text throughout.
-  const overDarkHero = pathname !== "/contact" && !solid;
+  // Every page except Contact and Enquire opens with a dark-scrimmed photo
+  // banner behind the transparent navbar, so charcoal text would fail
+  // contrast there until the bar turns solid. Contact opens on a light
+  // blush intro, and Enquire opens on the light ivory invitation cover, so
+  // both keep dark text throughout.
+  const LIGHT_INTRO_PATHS = ["/contact", "/enquire"];
+  const overDarkHero = !LIGHT_INTRO_PATHS.includes(pathname) && !solid;
 
   return (
     // MobileMenu renders as a sibling, not a child, of <header>: backdrop-blur
@@ -100,7 +102,7 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <Button href="/contact" className="!px-5 !py-2.5 text-xs">
+          <Button href="/enquire" className="!px-5 !py-2.5 text-xs">
             Enquire
           </Button>
         </nav>

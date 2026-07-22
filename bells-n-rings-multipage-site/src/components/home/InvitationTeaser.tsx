@@ -24,7 +24,7 @@ export default function InvitationTeaser() {
           touch to begin crafting a celebration that feels entirely yours.
         </p>
         <GoldDivider />
-        <Button href="/contact">Send an Enquiry</Button>
+        <Button href="/enquire">Send an Enquiry</Button>
       </Reveal>
     </section>
   );
