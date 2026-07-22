@@ -10,6 +10,7 @@ import {
   type GalleryCategorySlug,
 } from "@/lib/content";
 import Reveal from "../shared/Reveal";
+import SessionsBrowser from "./SessionsBrowser";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -129,8 +130,22 @@ export default function GalleryGrid() {
         })}
       </Reveal>
 
-      <Reveal delay={0.1}>
-        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Desktop: Google Flow Sessions-style spotlight browser — a scrolling
+          title list with floating tilted thumbnails and a trailing glow.
+          Mobile falls back to the card grid below; the layout doesn't
+          translate to narrow viewports. */}
+      <Reveal delay={0.1} className="hidden lg:block">
+        <SessionsBrowser
+          items={filtered}
+          onView={(slug) => {
+            const globalIndex = GALLERY_ITEMS.findIndex((g) => g.slug === slug);
+            goTo(globalIndex, 0);
+          }}
+        />
+      </Reveal>
+
+      <Reveal delay={0.1} className="lg:hidden">
+        <motion.div layout className="grid gap-6 sm:grid-cols-2">
           <AnimatePresence mode="popLayout">
             {filtered.map((item, i) => {
               const globalIndex = GALLERY_ITEMS.findIndex((g) => g.slug === item.slug);
