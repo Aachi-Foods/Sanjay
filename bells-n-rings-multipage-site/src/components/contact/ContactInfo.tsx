@@ -27,13 +27,13 @@ export default function ContactInfo() {
             {CONTACT.email}
           </a>
           {CONTACT.emailIsPlaceholder && (
-            <span className="ml-2 text-xs text-charcoal-soft/70">(placeholder)</span>
+            <span className="ml-2 text-xs text-charcoal-soft/70">{" "}(placeholder)</span>
           )}
         </InfoRow>
         <InfoRow icon={MapPin}>
           {CONTACT.address}
           {CONTACT.addressIsPlaceholder && (
-            <span className="ml-2 text-xs text-charcoal-soft/70">(placeholder)</span>
+            <span className="ml-2 text-xs text-charcoal-soft/70">{" "}(placeholder)</span>
           )}
         </InfoRow>
       </div>
@@ -85,7 +85,7 @@ function InfoRow({
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-soft/60 text-rose-text">
         <Icon className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
       </span>
-      {children}
+      <span className="min-w-0">{children}</span>
     </div>
   );
 }

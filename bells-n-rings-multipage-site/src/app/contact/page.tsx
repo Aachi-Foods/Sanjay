@@ -36,10 +36,10 @@ export default function ContactPage() {
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:px-8 lg:grid-cols-[3fr_2fr] lg:gap-16">
-        <Reveal>
+        <Reveal className="min-w-0">
           <InvitationContactForm />
         </Reveal>
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} className="min-w-0">
           <ContactInfo />
         </Reveal>
       </section>

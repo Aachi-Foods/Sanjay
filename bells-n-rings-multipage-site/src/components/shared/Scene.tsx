@@ -26,8 +26,8 @@ export default function Scene({
   children,
   className = "",
   delay = 0,
-  tilt = 18,
-  rise = 90,
+  tilt = 12,
+  rise = 64,
   as = "div",
   ...rest
 }: SceneProps) {
