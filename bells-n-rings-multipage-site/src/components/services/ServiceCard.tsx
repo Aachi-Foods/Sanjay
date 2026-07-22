@@ -5,7 +5,6 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import type { Service } from "@/lib/content";
-import { SERVICE_ICONS } from "./serviceIcons";
 import Reveal from "../shared/Reveal";
 
 export default function ServiceCard({
@@ -16,7 +15,6 @@ export default function ServiceCard({
   delay?: number;
 }) {
   const [open, setOpen] = useState(false);
-  const Icon = SERVICE_ICONS[service.slug];
 
   return (
     <Reveal delay={delay} className="h-full">
@@ -35,11 +33,8 @@ export default function ServiceCard({
           />
         </div>
 
-        <div className="flex flex-1 flex-col items-center px-8 pb-8">
-          <span className="-mt-8 flex h-16 w-16 items-center justify-center rounded-full border border-gold-soft/60 bg-blush-soft ring-4 ring-ivory text-rose-text">
-            <Icon className="h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
-          </span>
-          <h3 className="mt-5 font-display text-xl text-charcoal">{service.title}</h3>
+        <div className="flex flex-1 flex-col items-center px-8 pb-8 pt-6">
+          <h3 className="font-display text-xl text-charcoal">{service.title}</h3>
           <p className="mt-2 font-sans text-sm text-charcoal-soft">
             {service.shortDescription}
           </p>
