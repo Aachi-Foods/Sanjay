@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { useForm, type FieldError, type UseFormRegisterReturn } from "react-hook-form";
 import emailjs from "@emailjs/browser";
+import { motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, Check } from "lucide-react";
 import FloralAccent from "../ui/FloralAccent";
 import { CONTACT } from "@/lib/constants";
@@ -39,6 +40,23 @@ export default function InvitationContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const reduceMotion = useReducedMotion();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  function handleCardPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    if (reduceMotion) return;
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: py * -8, y: px * 10 });
+  }
+
+  function handleCardPointerLeave() {
+    setTilt({ x: 0, y: 0 });
+  }
 
   async function onSubmit(data: FormValues) {
     setStatus("idle");
@@ -87,11 +105,33 @@ export default function InvitationContactForm() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory px-6 py-12 shadow-sm sm:px-12 sm:py-14">
-      <FloralAccent className="pointer-events-none absolute -left-4 -top-4 h-28 w-28 text-rose-gold-deep/40 sm:h-36 sm:w-36" />
-      <FloralAccent flip className="pointer-events-none absolute -bottom-4 -right-4 h-28 w-28 text-rose-gold-deep/40 sm:h-36 sm:w-36" />
+    <div style={{ perspective: 1800 }}>
+      <motion.div
+        ref={cardRef}
+        onPointerMove={handleCardPointerMove}
+        onPointerLeave={handleCardPointerLeave}
+        animate={{ rotateX: tilt.x, rotateY: tilt.y }}
+        transition={{ type: "spring", stiffness: 150, damping: 18, mass: 0.6 }}
+        style={{ transformStyle: "preserve-3d" }}
+        className="relative overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory px-6 py-12 shadow-[0_30px_70px_-25px_rgba(26,46,26,0.4)] sm:px-12 sm:py-14"
+      >
+        {/* Decorative only (pointer-events-none) — safe to keep drifting continuously without disturbing the interactive form */}
+        <motion.div
+          animate={reduceMotion ? undefined : { x: [0, 6, 0], y: [0, -6, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-none absolute -left-4 -top-4"
+        >
+          <FloralAccent className="h-28 w-28 text-rose-gold-deep/40 sm:h-36 sm:w-36" />
+        </motion.div>
+        <motion.div
+          animate={reduceMotion ? undefined : { x: [0, -6, 0], y: [0, 6, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-none absolute -bottom-4 -right-4"
+        >
+          <FloralAccent flip className="h-28 w-28 text-rose-gold-deep/40 sm:h-36 sm:w-36" />
+        </motion.div>
 
-      <div className="relative mx-auto max-w-md">
+        <div className="relative mx-auto max-w-md">
         <span className="block text-center font-script text-4xl text-rose-text sm:text-5xl">
           Get in Touch
         </span>
@@ -227,6 +267,7 @@ export default function InvitationContactForm() {
           </button>
         </form>
       </div>
+      </motion.div>
     </div>
   );
 }
