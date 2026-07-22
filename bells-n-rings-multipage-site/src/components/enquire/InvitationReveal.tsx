@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { SITE_NAME_PRIMARY } from "@/lib/constants";
 import InvitationContactForm from "../contact/InvitationContactForm";
 import FloralAccent from "../ui/FloralAccent";
+import GoldDivider from "../ui/GoldDivider";
 
 function mapRange(value: number, inMin: number, inMax: number, outMin: number, outMax: number) {
   const t = Math.min(1, Math.max(0, (value - inMin) / (inMax - inMin)));
@@ -69,8 +71,8 @@ export default function InvitationReveal() {
   const leftRotate = mapRange(progress, 0.12, 0.55, 0, -112);
   const rightRotate = mapRange(progress, 0.12, 0.55, 0, 112);
   const doorsOpacity = mapRange(progress, 0.5, 0.64, 1, 0);
-  const sealOpacity = mapRange(progress, 0, 0.16, 1, 0);
-  const sealScale = mapRange(progress, 0, 0.16, 1, 0.55);
+  const coverOpacity = mapRange(progress, 0, 0.16, 1, 0);
+  const coverScale = mapRange(progress, 0, 0.16, 1, 0.55);
   const formOpacity = mapRange(progress, 0.4, 0.68, 0, 1);
   const formY = mapRange(progress, 0.4, 0.68, 36, 0);
   const hintOpacity = mapRange(progress, 0, 0.1, 1, 0);
@@ -79,6 +81,20 @@ export default function InvitationReveal() {
   return (
     <section ref={sectionRef} className="relative" style={{ height: "230vh" }}>
       <div className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden bg-blush">
+        {/* Ambient depth behind everything — two soft, slowly drifting glows */}
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(74,107,76,0.22),_transparent_70%)] blur-3xl"
+          animate={{ x: [0, 24, 0], y: [0, -16, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-20 bottom-1/4 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(201,168,76,0.28),_transparent_70%)] blur-3xl"
+          animate={{ x: [0, -20, 0], y: [0, 18, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        />
+
         <div
           style={{ opacity: formOpacity, transform: `translateY(${formY}px)` }}
           className="relative z-0 w-full max-w-xl px-6 pt-16"
@@ -115,27 +131,66 @@ export default function InvitationReveal() {
             </div>
 
             <div
-              style={{ opacity: sealOpacity, transform: `scale(${sealScale})` }}
-              className="absolute left-1/2 top-1/2 z-20 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 border-gold bg-rose-gold-deep text-center shadow-xl sm:h-32 sm:w-32"
+              style={{ opacity: coverOpacity, transform: `scale(${coverScale})`, perspective: 1400 }}
+              className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
             >
-              <span className="font-display text-2xl text-gold">{SITE_NAME_PRIMARY}</span>
-              <span className="font-script text-sm text-blush-soft">Invited</span>
+              <motion.div
+                animate={{
+                  y: [0, -10, 0],
+                  rotateZ: [-2.5, 2.5, -2.5],
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformStyle: "preserve-3d" }}
+                className="flex w-72 flex-col items-center gap-4 rounded-3xl border border-gold bg-ivory px-8 py-10 text-center shadow-[0_30px_60px_-15px_rgba(26,46,26,0.45)] sm:w-80 sm:px-10 sm:py-12"
+              >
+                <span className="font-display text-lg text-gold" aria-hidden="true">
+                  ❦
+                </span>
+                <div>
+                  <p className="font-display text-4xl leading-none text-rose-gold-deep sm:text-5xl">
+                    {SITE_NAME_PRIMARY}
+                  </p>
+                  <p className="mt-1 font-sans text-[0.65rem] tracking-[0.35em] text-charcoal-soft uppercase">
+                    Event Planners
+                  </p>
+                </div>
+                <GoldDivider className="!gap-2" />
+                <p className="font-script text-3xl text-rose-text sm:text-4xl">
+                  You&rsquo;re Invited
+                </p>
+                <p className="font-sans text-xs text-charcoal-soft">
+                  Scroll down to begin your enquiry
+                </p>
+              </motion.div>
             </div>
           </div>
         )}
 
         <div
           style={{ opacity: hintOpacity }}
-          className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-center"
+          className="pointer-events-none absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-center"
         >
-          <p className="font-sans text-xs tracking-[0.3em] text-rose-text uppercase">
-            Scroll to Open
-          </p>
           <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="mx-auto mt-2 h-6 w-px bg-rose-gold-deep/50"
-          />
+            animate={{ opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <p className="font-sans text-sm font-medium tracking-[0.35em] text-rose-text uppercase">
+              Scroll to Open
+            </p>
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              className="mx-auto mt-3 flex h-10 w-6 items-start justify-center rounded-full border-2 border-rose-gold-deep p-1"
+              aria-hidden="true"
+            >
+              <span className="h-2 w-2 rounded-full bg-rose-gold-deep" />
+            </motion.div>
+            <ChevronDown
+              className="mx-auto mt-1 h-4 w-4 text-rose-gold-deep"
+              strokeWidth={2}
+              aria-hidden="true"
+            />
+          </motion.div>
         </div>
       </div>
     </section>

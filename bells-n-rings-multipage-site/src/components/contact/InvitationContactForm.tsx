@@ -146,10 +146,13 @@ export default function InvitationContactForm() {
             error={errors.email}
           />
           <Field
-            label="Phone (optional)"
+            label="Phone"
             type="tel"
             autoComplete="tel"
-            registration={register("phone")}
+            registration={register("phone", {
+              required: "Please share your phone number.",
+            })}
+            error={errors.phone}
           />
           <Field
             label="Event Date"
