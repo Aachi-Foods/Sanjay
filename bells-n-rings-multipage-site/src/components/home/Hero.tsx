@@ -1,23 +1,47 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Button from "../ui/Button";
 import SpinningRing from "../ui/SpinningRing";
 import { SITE_NAME_PRIMARY, HERO_RING_TEXT } from "@/lib/constants";
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // As the story is scrolled past, the backdrop pushes in and the ring/
+  // heading recede and dissolve — the "camera" diving deeper into the page.
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 140]);
+  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.82]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+
   return (
-    <section className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep">
+    <section
+      ref={sectionRef}
+      className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep"
+    >
       {/* Dimmed background photo — visible enough to read as a real backdrop, while the ring and heading stay legible */}
-      <Image
-        src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044156_e2cb7513-237f-4015-9363-635508cff470.png"
-        alt="Ornate South Indian wedding mandap at dusk, draped in marigold and jasmine garlands with warm gold string lighting"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-45"
-      />
+      <motion.div
+        className="absolute inset-0"
+        style={reduceMotion ? undefined : { scale: bgScale }}
+      >
+        <Image
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044156_e2cb7513-237f-4015-9363-635508cff470.png"
+          alt="Ornate South Indian wedding mandap at dusk, draped in marigold and jasmine garlands with warm gold string lighting"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-45"
+        />
+      </motion.div>
       {/* Deep forest-green gradient backdrop with a soft radial glow behind the ring */}
       <div
         className="absolute inset-0 bg-rose-gold-deep/60"
@@ -32,7 +56,14 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
+      <motion.div
+        className="relative z-10 flex flex-col items-center justify-center px-6 text-center"
+        style={
+          reduceMotion
+            ? undefined
+            : { y: contentY, scale: contentScale, opacity: contentOpacity }
+        }
+      >
         <div className="relative flex min-h-[340px] items-center justify-center sm:min-h-[480px]">
           <SpinningRing
             text={HERO_RING_TEXT}
@@ -72,7 +103,7 @@ export default function Hero() {
             Get In Touch
           </Button>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -5,25 +5,35 @@ import GalleryTeaser from "@/components/home/GalleryTeaser";
 import TestimonialCarousel from "@/components/home/TestimonialCarousel";
 import InstagramStrip from "@/components/home/InstagramStrip";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
-import Reveal from "@/components/shared/Reveal";
+import Scene from "@/components/shared/Scene";
 import KolamDivider from "@/components/ui/KolamDivider";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <AboutTeaser />
+      <Scene>
+        <AboutTeaser />
+      </Scene>
       <KolamDivider />
-      <ServicesGrid />
-      <GalleryTeaser />
+      <Scene>
+        <ServicesGrid />
+      </Scene>
+      <Scene delay={0.05}>
+        <GalleryTeaser />
+      </Scene>
       <KolamDivider />
-      <section className="bg-ivory-deep py-24">
-        <Reveal className="mx-auto max-w-7xl px-6 sm:px-8">
+      <Scene as="section" className="bg-ivory-deep py-24">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8">
           <TestimonialCarousel />
-        </Reveal>
-      </section>
-      <InstagramStrip />
-      <InvitationTeaser />
+        </div>
+      </Scene>
+      <Scene>
+        <InstagramStrip />
+      </Scene>
+      <Scene tilt={8} rise={40}>
+        <InvitationTeaser />
+      </Scene>
     </>
   );
 }
