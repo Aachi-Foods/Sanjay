@@ -13,10 +13,23 @@ import Reveal from "../shared/Reveal";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Focus-pull slide, inspired by Google Flow's Sessions carousel: the
+// incoming/outgoing image travels blurred and slightly scaled down, then
+// sharpens into focus as it settles — rather than a plain cross-fade.
 const slideVariants = {
-  enter: (direction: number) => ({ opacity: 0, x: direction >= 0 ? 32 : -32 }),
-  center: { opacity: 1, x: 0 },
-  exit: (direction: number) => ({ opacity: 0, x: direction >= 0 ? -32 : 32 }),
+  enter: (direction: number) => ({
+    opacity: 0,
+    x: direction >= 0 ? 48 : -48,
+    scale: 0.94,
+    filter: "blur(10px)",
+  }),
+  center: { opacity: 1, x: 0, scale: 1, filter: "blur(0px)" },
+  exit: (direction: number) => ({
+    opacity: 0,
+    x: direction >= 0 ? -48 : 48,
+    scale: 0.94,
+    filter: "blur(10px)",
+  }),
 };
 
 export default function GalleryGrid() {
@@ -211,42 +224,53 @@ export default function GalleryGrid() {
               <ChevronRight className="h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
             </button>
 
-            <div
-              className="relative flex max-h-full w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-ivory"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <AnimatePresence mode="wait" custom={direction}>
-                <motion.div
-                  key={activeItem.slug}
-                  custom={direction}
-                  variants={slideVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                >
-                  <div className="relative aspect-[4/3] w-full">
-                    <Image
-                      src={activeItem.image}
-                      alt={activeItem.imageAlt}
-                      fill
-                      sizes="(min-width: 640px) 700px, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6 sm:p-8">
-                    <h2 className="font-display text-2xl text-charcoal sm:text-3xl">
-                      {activeItem.title}
-                    </h2>
-                    <p className="mt-1 font-sans text-xs tracking-wide text-rose-text uppercase">
-                      {activeItem.location}
-                    </p>
-                    <p className="mt-4 font-sans text-sm text-charcoal-soft sm:text-base">
-                      {activeItem.description}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+            <div className="relative w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
+              {/* Warm glow pulse behind the card, echoing the soft radial
+                  light that trails the active item in Google Flow's Sessions
+                  carousel — brightens on arrival, then settles. */}
+              <motion.div
+                key={`glow-${activeItem.slug}`}
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-10 -z-10 rounded-[2.5rem] bg-[radial-gradient(circle,_rgba(201,168,76,0.45),_transparent_70%)] blur-2xl"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: [0, 0.85, 0.45], scale: [0.9, 1.05, 1] }}
+                transition={{ duration: 0.7, ease: EASE }}
+              />
+
+              <div className="relative flex max-h-full w-full flex-col overflow-hidden rounded-2xl bg-ivory">
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key={activeItem.slug}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.5, ease: EASE }}
+                  >
+                    <div className="relative aspect-[4/3] w-full">
+                      <Image
+                        src={activeItem.image}
+                        alt={activeItem.imageAlt}
+                        fill
+                        sizes="(min-width: 640px) 700px, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-6 sm:p-8">
+                      <h2 className="font-display text-2xl text-charcoal sm:text-3xl">
+                        {activeItem.title}
+                      </h2>
+                      <p className="mt-1 font-sans text-xs tracking-wide text-rose-text uppercase">
+                        {activeItem.location}
+                      </p>
+                      <p className="mt-4 font-sans text-sm text-charcoal-soft sm:text-base">
+                        {activeItem.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
           </motion.div>
         )}
