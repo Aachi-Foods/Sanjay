@@ -122,7 +122,8 @@ export type GalleryCategorySlug =
   | "weddings"
   | "receptions"
   | "traditional"
-  | "corporate";
+  | "corporate"
+  | "festivals";
 
 export type GalleryItem = {
   slug: string;
@@ -225,6 +226,56 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     description:
       "A breezy seaside reception styled for an interfaith couple, with string lighting, a curated coastal menu, and live acoustic music.",
   },
+  {
+    slug: "onam-sadhya-celebration",
+    title: "Onam Sadhya Celebration",
+    category: "festivals",
+    location: "Kochi, Kerala",
+    image: hf("hf_20260722_051541_dd2ff8b3-2c69-412f-a029-45eef09b262c.png"),
+    imageAlt: "Traditional Kerala Onam sadhya feast on a banana leaf with a pookalam flower rangoli",
+    description:
+      "A family Onam sadhya laid across a banana leaf with a full pookalam rangoli, styled to honor Kerala's harvest tradition.",
+  },
+  {
+    slug: "pongal-harvest-festival",
+    title: "Pongal Harvest Festival",
+    category: "festivals",
+    location: "Thanjavur, Tamil Nadu",
+    image: hf("hf_20260722_051544_bea38ed9-925d-4b34-948b-8a9bcd7b91a3.png"),
+    imageAlt: "Tamil Nadu Pongal harvest festival with a boiling clay pot, sugarcane, and fresh kolam",
+    description:
+      "A community Pongal celebration styled around the traditional boiling-over clay pot, sugarcane stalks, and fresh kolam artwork.",
+  },
+  {
+    slug: "namakaran-naming-ceremony",
+    title: "Namakaran Naming Ceremony",
+    category: "traditional",
+    location: "Coimbatore, Tamil Nadu",
+    image: hf("hf_20260722_051548_b8d42e4f-531d-4836-960f-ed03d4cfdf15.png"),
+    imageAlt: "South Indian namakaran naming ceremony with a decorated cradle and jasmine garlands",
+    description:
+      "An intimate namakaran ceremony centered on a jasmine-garlanded cradle, styled for close family and a lifetime of memories.",
+  },
+  {
+    slug: "nischayathartham-engagement",
+    title: "Nischayathartham Engagement",
+    category: "traditional",
+    location: "Chennai, Tamil Nadu",
+    image: hf("hf_20260722_051551_c2617012-3850-44eb-a5e6-d8b6f0f2a2e9.png"),
+    imageAlt: "South Indian nischayathartham engagement stage with silver plates of fruit and flowers",
+    description:
+      "A nischayathartham engagement styled with ornate silver plates, gold-bordered silk drapery, and a warm, celebratory glow.",
+  },
+  {
+    slug: "diwali-corporate-gala",
+    title: "Diwali Corporate Gala",
+    category: "corporate",
+    location: "Bengaluru, Karnataka",
+    image: hf("hf_20260722_051555_be8518b6-6c72-4b8b-a0fd-114d32019972.png"),
+    imageAlt: "Grand Diwali corporate gala stage with rows of lit brass diyas and marigold garlands",
+    description:
+      "A 200-guest Diwali gala for a Bengaluru tech firm, with rows of brass diyas, marigold garlands, and a festival-of-lights stage design.",
+  },
 ];
 
 export const GALLERY_FILTERS: {
@@ -235,6 +286,7 @@ export const GALLERY_FILTERS: {
   { label: "Weddings", value: "weddings" },
   { label: "Receptions", value: "receptions" },
   { label: "Traditional Ceremonies", value: "traditional" },
+  { label: "Festivals", value: "festivals" },
   { label: "Corporate & Private", value: "corporate" },
 ];
 

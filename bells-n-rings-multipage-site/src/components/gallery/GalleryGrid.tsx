@@ -11,9 +11,18 @@ import {
 } from "@/lib/content";
 import Reveal from "../shared/Reveal";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const slideVariants = {
+  enter: (direction: number) => ({ opacity: 0, x: direction >= 0 ? 32 : -32 }),
+  center: { opacity: 1, x: 0 },
+  exit: (direction: number) => ({ opacity: 0, x: direction >= 0 ? -32 : 32 }),
+};
+
 export default function GalleryGrid() {
   const [filter, setFilter] = useState<GalleryCategorySlug | "all">("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [direction, setDirection] = useState(0);
 
   const filtered = useMemo(
     () =>
@@ -22,6 +31,11 @@ export default function GalleryGrid() {
         : GALLERY_ITEMS.filter((item) => item.category === filter),
     [filter],
   );
+
+  const goTo = (next: number | ((i: number | null) => number | null), dir: number) => {
+    setDirection(dir);
+    setLightboxIndex(next);
+  };
 
   // Deep-link support: /gallery#slug (used by Home page preview tiles)
   // opens straight to that item's lightbox. This has to be an effect —
@@ -51,9 +65,11 @@ export default function GalleryGrid() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxIndex(null);
       if (e.key === "ArrowRight") {
+        setDirection(1);
         setLightboxIndex((i) => (i === null ? i : (i + 1) % GALLERY_ITEMS.length));
       }
       if (e.key === "ArrowLeft") {
+        setDirection(-1);
         setLightboxIndex((i) =>
           i === null ? i : (i - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length,
         );
@@ -67,7 +83,12 @@ export default function GalleryGrid() {
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
-      <div className="mb-12 flex flex-wrap items-center justify-center gap-3" role="group" aria-label="Filter gallery by category">
+      <Reveal
+        className="mb-12 flex flex-wrap items-center justify-center gap-3"
+        y={12}
+        role="group"
+        aria-label="Filter gallery by category"
+      >
         {GALLERY_FILTERS.map((f) => {
           const active = filter === f.value;
           return (
@@ -76,49 +97,71 @@ export default function GalleryGrid() {
               type="button"
               onClick={() => setFilter(f.value)}
               aria-pressed={active}
-              className={`rounded-full border px-5 py-2.5 min-h-11 font-sans text-sm tracking-wide uppercase transition-colors cursor-pointer ${
+              className={`relative min-h-11 rounded-full border px-5 py-2.5 font-sans text-sm tracking-wide uppercase cursor-pointer ${
                 active
-                  ? "border-rose-gold-button bg-rose-gold-button text-ivory"
-                  : "border-gold-soft/60 text-charcoal-soft hover:border-rose-gold-deep hover:text-rose-text"
+                  ? "border-rose-gold-button text-ivory"
+                  : "border-gold-soft/60 text-charcoal-soft transition-colors duration-300 hover:border-rose-gold-deep hover:text-rose-text"
               }`}
             >
-              {f.label}
+              {active && (
+                <motion.span
+                  layoutId="gallery-filter-pill"
+                  className="absolute inset-0 rounded-full bg-rose-gold-button"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">{f.label}</span>
             </button>
           );
         })}
-      </div>
+      </Reveal>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((item) => {
-          const globalIndex = GALLERY_ITEMS.findIndex((i) => i.slug === item.slug);
-          return (
-            <Reveal key={item.slug} className="group">
-              <button
-                type="button"
-                id={item.slug}
-                onClick={() => setLightboxIndex(globalIndex)}
-                className="relative block aspect-[4/5] w-full scroll-mt-24 overflow-hidden rounded-2xl text-left cursor-pointer"
-              >
-                <Image
-                  src={item.image}
-                  alt={item.imageAlt}
-                  fill
-                  loading="lazy"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <p className="font-display text-xl text-ivory">{item.title}</p>
-                  <p className="font-sans text-xs tracking-wide text-blush-soft uppercase">
-                    {item.location}
-                  </p>
-                </div>
-              </button>
-            </Reveal>
-          );
-        })}
-      </div>
+      <Reveal delay={0.1}>
+        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((item, i) => {
+              const globalIndex = GALLERY_ITEMS.findIndex((g) => g.slug === item.slug);
+              return (
+                <motion.div
+                  key={item.slug}
+                  layout
+                  initial={{ opacity: 0, scale: 0.94 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: { duration: 0.45, delay: i * 0.04, ease: EASE },
+                  }}
+                  exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.25, ease: EASE } }}
+                  className="group"
+                >
+                  <button
+                    type="button"
+                    id={item.slug}
+                    onClick={() => goTo(globalIndex, 0)}
+                    className="relative block aspect-[4/5] w-full scroll-mt-24 overflow-hidden rounded-2xl text-left cursor-pointer transition-transform duration-500 ease-out hover:-translate-y-1"
+                  >
+                    <Image
+                      src={item.image}
+                      alt={item.imageAlt}
+                      fill
+                      loading="lazy"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <p className="font-display text-xl text-ivory">{item.title}</p>
+                      <p className="font-sans text-xs tracking-wide text-blush-soft uppercase">
+                        {item.location}
+                      </p>
+                    </div>
+                  </button>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
+      </Reveal>
 
       <AnimatePresence>
         {activeItem && (
@@ -137,7 +180,7 @@ export default function GalleryGrid() {
               type="button"
               onClick={() => setLightboxIndex(null)}
               aria-label="Close detail view"
-              className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full text-ivory hover:bg-ivory/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ivory sm:right-8 sm:top-8"
+              className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full text-ivory transition-colors hover:bg-ivory/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ivory sm:right-8 sm:top-8"
             >
               <X className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />
             </button>
@@ -146,12 +189,13 @@ export default function GalleryGrid() {
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((i) =>
-                  i === null ? i : (i - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length,
+                goTo(
+                  (i) => (i === null ? i : (i - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length),
+                  -1,
                 );
               }}
               aria-label="Previous image"
-              className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-ivory hover:bg-ivory/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ivory sm:left-6"
+              className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-ivory transition-colors hover:bg-ivory/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ivory sm:left-6"
             >
               <ChevronLeft className="h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
             </button>
@@ -159,44 +203,51 @@ export default function GalleryGrid() {
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((i) => (i === null ? i : (i + 1) % GALLERY_ITEMS.length));
+                goTo((i) => (i === null ? i : (i + 1) % GALLERY_ITEMS.length), 1);
               }}
               aria-label="Next image"
-              className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-ivory hover:bg-ivory/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ivory sm:right-6"
+              className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-ivory transition-colors hover:bg-ivory/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ivory sm:right-6"
             >
               <ChevronRight className="h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
             </button>
 
-            <motion.div
-              key={activeItem.slug}
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+            <div
               className="relative flex max-h-full w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-ivory"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-[4/3] w-full">
-                <Image
-                  src={activeItem.image}
-                  alt={activeItem.imageAlt}
-                  fill
-                  sizes="(min-width: 640px) 700px, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6 sm:p-8">
-                <h2 className="font-display text-2xl text-charcoal sm:text-3xl">
-                  {activeItem.title}
-                </h2>
-                <p className="mt-1 font-sans text-xs tracking-wide text-rose-text uppercase">
-                  {activeItem.location}
-                </p>
-                <p className="mt-4 font-sans text-sm text-charcoal-soft sm:text-base">
-                  {activeItem.description}
-                </p>
-              </div>
-            </motion.div>
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                  key={activeItem.slug}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ type: "spring", stiffness: 320, damping: 32 }}
+                >
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src={activeItem.image}
+                      alt={activeItem.imageAlt}
+                      fill
+                      sizes="(min-width: 640px) 700px, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-6 sm:p-8">
+                    <h2 className="font-display text-2xl text-charcoal sm:text-3xl">
+                      {activeItem.title}
+                    </h2>
+                    <p className="mt-1 font-sans text-xs tracking-wide text-rose-text uppercase">
+                      {activeItem.location}
+                    </p>
+                    <p className="mt-4 font-sans text-sm text-charcoal-soft sm:text-base">
+                      {activeItem.description}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
