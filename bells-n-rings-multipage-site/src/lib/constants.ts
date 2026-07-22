@@ -8,8 +8,6 @@ export const SITE_NAME_FULL = `${SITE_NAME_PRIMARY} ${SITE_NAME_SECONDARY}`;
 export const SITE_MONOGRAM = "BnR";
 
 export const SITE_TAGLINE = "Your Celebration. Our Passion.";
-// Spaced with " . " to match the hero ring's dotted-separator styling.
-export const HERO_RING_TEXT = "YOUR CELEBRATION . OUR PASSION . ";
 
 export const SITE_URL = "https://bellsnringsevents.example.com";
 

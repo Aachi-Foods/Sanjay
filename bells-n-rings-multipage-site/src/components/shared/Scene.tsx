@@ -26,8 +26,8 @@ export default function Scene({
   children,
   className = "",
   delay = 0,
-  tilt = 10,
-  rise = 56,
+  tilt = 18,
+  rise = 90,
   as = "div",
   ...rest
 }: SceneProps) {
@@ -51,11 +51,11 @@ export default function Scene({
 
   return (
     <Component
-      initial={{ opacity: 0, y: rise, rotateX: tilt, scale: 0.94 }}
+      initial={{ opacity: 0, y: rise, rotateX: tilt, scale: 0.9 }}
       whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-120px" }}
-      transition={{ duration: 1, delay, ease: EASE }}
-      style={{ transformPerspective: 1200, transformOrigin: "50% 100%" }}
+      viewport={{ once: true, margin: "-140px" }}
+      transition={{ duration: 1.3, delay, ease: EASE }}
+      style={{ transformPerspective: 1000, transformOrigin: "50% 100%" }}
       className={className}
       {...rest}
     >

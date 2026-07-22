@@ -4,8 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Button from "../ui/Button";
-import SpinningRing from "../ui/SpinningRing";
-import { SITE_NAME_PRIMARY, HERO_RING_TEXT } from "@/lib/constants";
+import { SITE_NAME_PRIMARY } from "@/lib/constants";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -16,8 +15,8 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // As the story is scrolled past, the backdrop pushes in and the ring/
-  // heading recede and dissolve — the "camera" diving deeper into the page.
+  // As the story is scrolled past, the backdrop pushes in and the
+  // heading recedes and dissolves — the "camera" diving deeper into the page.
   const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.82]);
@@ -42,7 +41,7 @@ export default function Hero() {
           className="object-cover opacity-45"
         />
       </motion.div>
-      {/* Deep forest-green gradient backdrop with a soft radial glow behind the ring */}
+      {/* Deep forest-green gradient backdrop with a soft radial glow behind the heading */}
       <div
         className="absolute inset-0 bg-rose-gold-deep/60"
         aria-hidden="true"
@@ -64,34 +63,30 @@ export default function Hero() {
             : { y: contentY, scale: contentScale, opacity: contentOpacity }
         }
       >
-        <div className="relative flex min-h-[340px] items-center justify-center sm:min-h-[480px]">
-          <SpinningRing
-            text={HERO_RING_TEXT}
-            size={480}
-            className="absolute inset-0 m-auto hidden sm:block"
-          />
-          <SpinningRing
-            text={HERO_RING_TEXT}
-            size={340}
-            className="absolute inset-0 m-auto sm:hidden"
-          />
-
-          <div className="relative flex flex-col items-center gap-4 px-10 py-10 sm:px-16 sm:py-16">
-            <motion.h1
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-              className="font-display text-9xl leading-none text-gold uppercase sm:text-[10.5rem] md:text-[11.5rem]"
-            >
-              {SITE_NAME_PRIMARY}
-            </motion.h1>
-          </div>
+        <div className="relative flex flex-col items-center gap-4 px-10 py-10 sm:px-16 sm:py-16">
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
+            className="font-display text-9xl leading-none text-gold uppercase sm:text-[10.5rem] md:text-[11.5rem]"
+          >
+            {SITE_NAME_PRIMARY}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            className="whitespace-nowrap font-sans text-xs tracking-[0.3em] text-gold/85 uppercase sm:text-base sm:tracking-[0.5em]"
+          >
+            Plan <span aria-hidden="true" className="mx-1 text-gold/40 sm:mx-2">|</span> Design{" "}
+            <span aria-hidden="true" className="mx-1 text-gold/40 sm:mx-2">|</span> Deliver
+          </motion.p>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
           className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:mt-12"
         >
           <Button href="/services">Explore Our Services</Button>
