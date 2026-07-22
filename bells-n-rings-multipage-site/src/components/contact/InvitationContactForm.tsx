@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useState } from "react";
 import { useForm, type FieldError, type UseFormRegisterReturn } from "react-hook-form";
 import emailjs from "@emailjs/browser";
 import { motion, useReducedMotion } from "framer-motion";
@@ -32,8 +32,6 @@ const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-const REST_TILT = { x: 3, y: -6 };
-
 export default function InvitationContactForm() {
   const {
     register,
@@ -43,24 +41,6 @@ export default function InvitationContactForm() {
   } = useForm<FormValues>();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const reduceMotion = useReducedMotion();
-  const cardRef = useRef<HTMLDivElement>(null);
-  // A resting lean, not a flat 0/0 — so the card reads as a tilted 3D object
-  // at a glance (screenshot, mobile, no-hover), not just on desktop hover.
-  const [tilt, setTilt] = useState(REST_TILT);
-
-  function handleCardPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    if (reduceMotion) return;
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const px = (event.clientX - rect.left) / rect.width - 0.5;
-    const py = (event.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: REST_TILT.x + py * -10, y: REST_TILT.y + px * 12 });
-  }
-
-  function handleCardPointerLeave() {
-    setTilt(REST_TILT);
-  }
 
   async function onSubmit(data: FormValues) {
     setStatus("idle");
@@ -109,23 +89,18 @@ export default function InvitationContactForm() {
   }
 
   return (
-    <div className="relative" style={{ perspective: 1800 }}>
-      {/* A second card peeking out from behind — a static depth cue that reads
-          as 3D immediately, without needing hover to discover it. */}
+    // The card itself stays flat/unrotated — rotating a tall, near-full-width
+    // form (any axis, even a small rotateZ) either bleeds past the viewport
+    // on mobile or, via rotateX/rotateY+perspective, makes some mobile GPUs
+    // rasterize body text at an angle and blur it. The depth cue instead
+    // comes from the static peek-behind card, shadow, and drifting corners.
+    <div className="relative">
       <div
         aria-hidden="true"
         style={{ transform: "rotateZ(-3deg) translate(-8px, 10px)" }}
         className="pointer-events-none absolute inset-3 rounded-3xl border border-gold-soft/30 bg-blush-soft/80"
       />
-      <motion.div
-        ref={cardRef}
-        onPointerMove={handleCardPointerMove}
-        onPointerLeave={handleCardPointerLeave}
-        animate={{ rotateX: tilt.x, rotateY: tilt.y }}
-        transition={{ type: "spring", stiffness: 150, damping: 18, mass: 0.6 }}
-        style={{ transformStyle: "preserve-3d" }}
-        className="relative overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory px-6 py-12 shadow-[0_30px_70px_-25px_rgba(26,46,26,0.4)] sm:px-12 sm:py-14"
-      >
+      <div className="relative overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory px-6 py-12 shadow-[0_30px_70px_-25px_rgba(26,46,26,0.4)] sm:px-12 sm:py-14">
         {/* Decorative only (pointer-events-none) — safe to keep drifting continuously without disturbing the interactive form */}
         <motion.div
           animate={reduceMotion ? undefined : { x: [0, 6, 0], y: [0, -6, 0] }}
@@ -278,7 +253,7 @@ export default function InvitationContactForm() {
           </button>
         </form>
       </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
