@@ -19,7 +19,7 @@ export default function ServicesPage() {
         title="Celebrations, Planned With Devotion"
         description="Eight services, one standard of care. Tap any card below to read the full details."
         image={PAGE_HEADER_IMAGES.services}
-        imageAlt="Placeholder — services page banner"
+        imageAlt="Grand South Indian temple gopuram-inspired wedding venue entrance"
       />
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">

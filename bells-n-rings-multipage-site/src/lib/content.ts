@@ -50,8 +50,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Concept to execution",
     longDescription:
       "Complete event planning from the first concept through schedules, vendors, production, coordination, and final execution.",
-    image: unsplash("photo-1519671482749-fd09be7ccebf"),
-    imageAlt: "Placeholder — event planning stage design and coordination",
+    image: hf("hf_20260722_045731_63c41ce1-7c9b-4a39-a290-c95509a9a828.png"),
+    imageAlt: "South Indian wedding planner's table with a floor plan and marigold garlands beside an ornate mandap",
   },
   {
     slug: "venue-selection",
@@ -59,8 +59,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Perfect place for your occasion",
     longDescription:
       "Assistance with researching, shortlisting, visiting, comparing, and finalizing the right venue for the celebration.",
-    image: unsplash("photo-1465495976277-4387d4b0b4c6"),
-    imageAlt: "Placeholder — outdoor garden venue under a floral arch",
+    image: hf("hf_20260722_045736_20d41710-aeba-4708-89cb-98c3749d91f5.png"),
+    imageAlt: "Grand South Indian heritage wedding venue courtyard with pillared architecture and brass oil lamps",
   },
   {
     slug: "decoration-design",
@@ -68,8 +68,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Custom themes & styling",
     longDescription:
       "Personalized event concepts, décor themes, floral styling, stage design, table styling, lighting, and visual presentation.",
-    image: unsplash("photo-1583939003579-730e3918a45a"),
-    imageAlt: "Placeholder — ornate mandap decorated with flowers",
+    image: hf("hf_20260722_045738_f3e7c774-f787-4c8f-9d54-45b71ba4785f.png"),
+    imageAlt: "Ornate South Indian wedding mandap stage with marigold and jasmine garlands",
   },
   {
     slug: "photography-videography",
@@ -77,8 +77,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Capture every moment",
     longDescription:
       "Coordination of professional photography, traditional videography, candid coverage, cinematic films, and event memories.",
-    image: unsplash("photo-1519741497674-611481863552"),
-    imageAlt: "Placeholder — close-up wedding detail photography",
+    image: hf("hf_20260722_045741_cc05897d-211e-433e-91d8-5280d4084082.png"),
+    imageAlt: "Professional camera and video gear beside marigold garlands at a South Indian wedding",
   },
   {
     slug: "catering-beverages",
@@ -86,8 +86,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Delicious food, happy guests",
     longDescription:
       "Menu planning, caterer coordination, traditional and contemporary cuisine, live counters, refreshments, beverages, and guest dining management.",
-    image: unsplash("photo-1509927083803-4bd519298ac4"),
-    imageAlt: "Placeholder — reception dining setting",
+    image: hf("hf_20260722_045743_c7852e01-ef15-4e27-98a2-7a22ecd87901.png"),
+    imageAlt: "Elegant South Indian wedding banana-leaf feast spread with brass vessels",
   },
   {
     slug: "entertainment",
@@ -95,8 +95,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Music, hosts & performances",
     longDescription:
       "Coordination of music, DJs, live performers, hosts, traditional entertainment, stage programs, and guest experiences.",
-    image: unsplash("photo-1530103862676-de8c9debad1d"),
-    imageAlt: "Placeholder — outdoor celebration at golden hour",
+    image: hf("hf_20260722_045746_28fa271c-f9ed-42a6-b01c-83e2254968e4.png"),
+    imageAlt: "Traditional South Indian nadaswaram and thavil instruments on a decorated wedding stage",
   },
   {
     slug: "guest-management",
@@ -104,8 +104,8 @@ export const SERVICES: Service[] = [
     shortDescription: "Invites, RSVP & coordination",
     longDescription:
       "Invitation coordination, RSVP tracking, guest communication, hospitality, seating support, travel guidance, and event-day assistance.",
-    image: unsplash("photo-1527529482837-4698179dc6ce"),
-    imageAlt: "Placeholder — guest table styling",
+    image: hf("hf_20260722_045748_e03a2010-ba2f-40af-be74-cc3f3ae3a5b0.png"),
+    imageAlt: "Elegant South Indian wedding welcome table with guest name cards and marigold garlands",
   },
   {
     slug: "logistics-support",
@@ -113,8 +113,8 @@ export const SERVICES: Service[] = [
     shortDescription: "On-ground management",
     longDescription:
       "Vendor movement, timelines, transport, setup supervision, technical coordination, event-day operations, and on-ground problem solving.",
-    image: unsplash("photo-1606800052052-a08af7148866"),
-    imageAlt: "Placeholder — event stage setup and production crew",
+    image: hf("hf_20260722_045807_cbf1a7a0-c716-48f6-82d6-3c3889c36008.png"),
+    imageAlt: "Event production crew setting up string lights and stage rig at dusk",
   },
 ];
 
@@ -338,7 +338,7 @@ export const INSTAGRAM_STRIP_IMAGES = [
 
 // Interior page banner imagery (About, Services, Gallery, Contact).
 export const PAGE_HEADER_IMAGES = {
-  services: hf("hf_20260722_044603_ddfcd4e9-43b4-45c3-9866-d98f614dbead.png"),
+  services: hf("hf_20260722_045729_a3748580-4bb8-45d8-b55b-75683739d218.png"),
   gallery: hf("hf_20260722_044606_9b167a46-dea5-43b2-8f1c-90e1b2352eef.png"),
   about: hf("hf_20260722_044715_f277e41f-2d15-4a75-a378-db1d39d12eb1.png"),
 };
