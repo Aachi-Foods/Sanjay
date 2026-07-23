@@ -9,6 +9,7 @@ import { HEADER_NAV_LINKS, SITE_NAME_FULL } from "@/lib/constants";
 import MobileMenu from "./MobileMenu";
 import Button from "../ui/Button";
 import bnrLogo from "@/assets/bnr-logo.png";
+import bnrLogoDark from "@/assets/bnr-logo-dark-bg.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -56,7 +57,7 @@ export default function Navbar() {
         <div className="relative flex items-center justify-center px-6 py-3 sm:px-8">
           <Link href="/" className="relative block h-20 w-auto sm:h-24">
             <Image
-              src={bnrLogo}
+              src={overDarkHero ? bnrLogoDark : bnrLogo}
               alt={SITE_NAME_FULL}
               priority
               className="h-20 w-auto object-contain sm:h-24"

@@ -1,14 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
 import {
   CONTACT,
   NAV_LINKS,
+  SITE_NAME_FULL,
   SITE_NAME_PRIMARY,
   SITE_NAME_SECONDARY,
   SITE_TAGLINE,
 } from "@/lib/constants";
 import GoldDivider from "../ui/GoldDivider";
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "../ui/SocialIcons";
+import bnrLogo from "@/assets/bnr-logo.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -18,11 +21,12 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="flex flex-col gap-3 md:col-span-2">
-            <Link href="/" className="font-display text-2xl text-charcoal">
-              {SITE_NAME_PRIMARY}
-              <span className="mt-1 block font-sans text-xs tracking-[0.35em] text-rose-text uppercase">
-                {SITE_NAME_SECONDARY}
-              </span>
+            <Link href="/" className="relative block h-24 w-auto">
+              <Image
+                src={bnrLogo}
+                alt={SITE_NAME_FULL}
+                className="h-24 w-auto object-contain object-left"
+              />
             </Link>
             <p className="prose-measure font-sans text-sm italic text-charcoal-soft">
               {SITE_TAGLINE}

@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import { ChevronDown } from "lucide-react";
-import { SITE_NAME_PRIMARY } from "@/lib/constants";
+import { SITE_NAME_FULL } from "@/lib/constants";
 import InvitationContactForm from "../contact/InvitationContactForm";
 import FloralAccent from "../ui/FloralAccent";
 import GoldDivider from "../ui/GoldDivider";
 import Reveal from "../shared/Reveal";
+import bnrLogo from "@/assets/bnr-logo.png";
 
 function mapRange(value: number, inMin: number, inMax: number, outMin: number, outMax: number) {
   const t = Math.min(1, Math.max(0, (value - inMin) / (inMax - inMin)));
@@ -147,16 +149,8 @@ export default function InvitationReveal() {
                 style={{ transformStyle: "preserve-3d" }}
                 className="flex w-72 flex-col items-center gap-4 rounded-3xl border border-gold bg-ivory px-8 py-10 text-center shadow-[0_30px_60px_-15px_rgba(26,46,26,0.45)] sm:w-80 sm:px-10 sm:py-12"
               >
-                <span className="font-display text-lg text-gold" aria-hidden="true">
-                  ❦
-                </span>
-                <div>
-                  <p className="font-display text-4xl leading-none text-rose-gold-deep sm:text-5xl">
-                    {SITE_NAME_PRIMARY}
-                  </p>
-                  <p className="mt-1 font-sans text-[0.65rem] tracking-[0.35em] text-charcoal-soft uppercase">
-                    Event Planners
-                  </p>
+                <div className="relative w-32 sm:w-36">
+                  <Image src={bnrLogo} alt={SITE_NAME_FULL} className="h-auto w-full object-contain" />
                 </div>
                 <GoldDivider className="!gap-2" />
                 <p className="font-script text-3xl text-rose-text sm:text-4xl">
