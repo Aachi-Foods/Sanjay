@@ -7,6 +7,7 @@ import { SITE_NAME_PRIMARY } from "@/lib/constants";
 import InvitationContactForm from "../contact/InvitationContactForm";
 import FloralAccent from "../ui/FloralAccent";
 import GoldDivider from "../ui/GoldDivider";
+import Reveal from "../shared/Reveal";
 
 function mapRange(value: number, inMin: number, inMax: number, outMin: number, outMax: number) {
   const t = Math.min(1, Math.max(0, (value - inMin) / (inMax - inMin)));
@@ -14,9 +15,11 @@ function mapRange(value: number, inMin: number, inMax: number, outMin: number, o
 }
 
 // A closed invitation "cover" — two ivory doors meeting at a gold-sealed
-// center seam — pinned for the length of this section and opened purely by
-// scroll position (not a click): the doors swing away in 3D, the wax-seal
-// monogram dissolves, and the enquiry form scales up into focus behind them.
+// center seam — pinned for the length of the first section and opened purely
+// by scroll position (not a click): the doors swing away in 3D and the
+// wax-seal monogram dissolves. The enquiry form itself is a separate,
+// normal-flow section further down the page — see the comment above the
+// return statement for why it isn't inside the pinned section.
 //
 // Progress is tracked with a plain scroll listener + getBoundingClientRect
 // rather than Framer Motion's useScroll/useTransform: bound directly to a
@@ -68,18 +71,26 @@ export default function InvitationReveal() {
     );
   }
 
-  const leftRotate = mapRange(progress, 0.12, 0.55, 0, -112);
-  const rightRotate = mapRange(progress, 0.12, 0.55, 0, 112);
-  const doorsOpacity = mapRange(progress, 0.5, 0.64, 1, 0);
-  const coverOpacity = mapRange(progress, 0, 0.16, 1, 0);
-  const coverScale = mapRange(progress, 0, 0.16, 1, 0.55);
-  const formOpacity = mapRange(progress, 0.4, 0.68, 0, 1);
-  const formY = mapRange(progress, 0.4, 0.68, 36, 0);
-  const hintOpacity = mapRange(progress, 0, 0.1, 1, 0);
+  // The pinned section below only stages the door-opening spectacle now —
+  // the form itself lives in normal document flow further down the page
+  // (see the section after it). It used to be rendered inside this pinned,
+  // overflow-hidden, single-viewport-tall box, which meant that on any
+  // phone where the form was taller than one screen (nearly always — six
+  // fields, a heading, and a button routinely run past 900px), its top
+  // and/or bottom got clipped with no way to scroll to the rest: the Send
+  // button could end up permanently cut off, unreachable. Letting the form
+  // render normally below lets it be exactly as tall as it needs to be.
+  const leftRotate = mapRange(progress, 0.15, 0.75, 0, -112);
+  const rightRotate = mapRange(progress, 0.15, 0.75, 0, 112);
+  const doorsOpacity = mapRange(progress, 0.68, 0.85, 1, 0);
+  const coverOpacity = mapRange(progress, 0, 0.2, 1, 0);
+  const coverScale = mapRange(progress, 0, 0.2, 1, 0.55);
+  const hintOpacity = mapRange(progress, 0, 0.12, 1, 0);
   const doorsVisible = doorsOpacity > 0.01;
 
   return (
-    <section ref={sectionRef} className="relative" style={{ height: "230vh" }}>
+    <>
+      <section ref={sectionRef} className="relative" style={{ height: "180vh" }}>
       <div className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden bg-blush">
         {/* Ambient depth behind everything — two soft, slowly drifting glows */}
         <motion.div
@@ -94,13 +105,6 @@ export default function InvitationReveal() {
           animate={{ x: [0, -20, 0], y: [0, 18, 0] }}
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
         />
-
-        <div
-          style={{ opacity: formOpacity, transform: `translateY(${formY}px)` }}
-          className="relative z-0 w-full max-w-xl px-6 pt-16"
-        >
-          <InvitationContactForm />
-        </div>
 
         {doorsVisible && (
           <div
@@ -193,6 +197,13 @@ export default function InvitationReveal() {
           </motion.div>
         </div>
       </div>
-    </section>
+      </section>
+
+      <section className="bg-blush pt-12 pb-24 sm:pt-16">
+        <Reveal className="mx-auto max-w-xl px-6">
+          <InvitationContactForm />
+        </Reveal>
+      </section>
+    </>
   );
 }
