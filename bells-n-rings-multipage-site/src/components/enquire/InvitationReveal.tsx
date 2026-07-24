@@ -82,17 +82,17 @@ export default function InvitationReveal() {
   // and/or bottom got clipped with no way to scroll to the rest: the Send
   // button could end up permanently cut off, unreachable. Letting the form
   // render normally below lets it be exactly as tall as it needs to be.
-  const leftRotate = mapRange(progress, 0.15, 0.75, 0, -112);
-  const rightRotate = mapRange(progress, 0.15, 0.75, 0, 112);
-  const doorsOpacity = mapRange(progress, 0.68, 0.85, 1, 0);
-  const coverOpacity = mapRange(progress, 0, 0.2, 1, 0);
-  const coverScale = mapRange(progress, 0, 0.2, 1, 0.55);
-  const hintOpacity = mapRange(progress, 0, 0.12, 1, 0);
+  const leftRotate = mapRange(progress, 0.08, 0.5, 0, -112);
+  const rightRotate = mapRange(progress, 0.08, 0.5, 0, 112);
+  const doorsOpacity = mapRange(progress, 0.45, 0.6, 1, 0);
+  const coverOpacity = mapRange(progress, 0, 0.12, 1, 0);
+  const coverScale = mapRange(progress, 0, 0.12, 1, 0.55);
+  const hintOpacity = mapRange(progress, 0, 0.08, 1, 0);
   const doorsVisible = doorsOpacity > 0.01;
 
   return (
     <>
-      <section ref={sectionRef} className="relative" style={{ height: "180vh" }}>
+      <section ref={sectionRef} className="relative" style={{ height: "130vh" }}>
       <div className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden bg-blush">
         {/* Ambient depth behind everything — two soft, slowly drifting glows */}
         <motion.div
