@@ -2,6 +2,7 @@ import Image from "next/image";
 import { TEAM_MEMBERS } from "@/lib/content";
 import Reveal from "../shared/Reveal";
 import SectionHeading from "../ui/SectionHeading";
+import TeamStack from "./TeamStack";
 
 export default function TeamGrid() {
   return (
@@ -14,7 +15,12 @@ export default function TeamGrid() {
         />
       </Reveal>
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Desktop: fanned, hover-driven card stack (see TeamStack.tsx). Not
+          wrapped in <Reveal> — its transform-based fade-in as an ancestor is
+          exactly what breaks hover transforms elsewhere on this site. */}
+      <TeamStack members={TEAM_MEMBERS} />
+
+      <div className="grid gap-8 sm:grid-cols-2 lg:hidden">
         {TEAM_MEMBERS.map((member, i) => (
           <Reveal key={member.name} delay={i * 0.08} className="flex flex-col gap-4">
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-blush">
