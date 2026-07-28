@@ -26,7 +26,7 @@ export default function TeamGrid() {
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-blush">
               <Image
                 src={member.image}
-                alt={`Placeholder headshot — ${member.name}, ${member.role}`}
+                alt={`${member.name}, ${member.role}`}
                 fill
                 loading="lazy"
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
