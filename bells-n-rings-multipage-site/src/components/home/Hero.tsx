@@ -26,7 +26,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep"
+      className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep pt-20 md:pt-32"
     >
       {/* Dimmed background photo — visible enough to read as a real backdrop, while the ring and heading stay legible */}
       <motion.div
@@ -68,9 +68,18 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-          className="relative w-64 sm:w-80 md:w-[26rem]"
+          className="relative flex justify-center"
         >
-          <Image src={bnrLogoDark} alt={SITE_NAME_FULL} priority className="h-auto w-full object-contain" />
+          {/* Both max-w and max-h (with h-auto/w-auto) so the logo shrinks to
+              fit whichever dimension is tighter — on a short laptop browser
+              window, a width-only cap left the logo tall enough to collide
+              with the fixed navbar above it. */}
+          <Image
+            src={bnrLogoDark}
+            alt={SITE_NAME_FULL}
+            priority
+            className="h-auto max-h-[22vh] w-auto max-w-[16rem] object-contain sm:max-h-[28vh] sm:max-w-[20rem] md:max-h-[30vh] md:max-w-[24rem]"
+          />
         </motion.div>
 
         <motion.div
