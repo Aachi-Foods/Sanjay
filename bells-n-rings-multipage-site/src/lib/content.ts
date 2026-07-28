@@ -15,6 +15,10 @@
 import type { StaticImageData } from "next/image";
 import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
 import entertainmentPhoto from "@/assets/services/entertainment.jpg";
+import balaajiPhoto from "@/assets/team/balaaji.jpg";
+import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
+import sairamPhoto from "@/assets/team/sairam.jpg";
+import revathiPhoto from "@/assets/team/revathi.jpg";
 
 function unsplash(id: string, w = 1600) {
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
@@ -353,33 +357,36 @@ export type TeamMember = {
   name: string;
   role: string;
   bio: string;
-  image: string;
+  image: string | StaticImageData;
 };
 
+// The real team roster, replacing the earlier placeholder names/stock
+// photos. TeamStack.tsx (the desktop fan) always spotlights whichever
+// member is first in this list — Balaaji stays first.
 export const TEAM_MEMBERS: TeamMember[] = [
   {
-    name: "Bhavani Raman",
-    role: "Founder & Creative Director",
-    bio: "Bhavani founded BnR Event Planners after a decade in South Indian wedding hospitality, bringing an editorial eye to every celebration she designs.",
-    image: unsplash("photo-1544005313-94ddf0286df2", 800),
+    name: "Balaaji",
+    role: "Creative Lead",
+    bio: "Balaaji is a Creative Lead at BNR Events, known for transforming ideas into immersive, memorable experiences.",
+    image: balaajiPhoto,
   },
   {
-    name: "Anitha Suresh",
-    role: "Lead Event Planner",
-    bio: "Anitha turns timelines and vendor logistics into invisible infrastructure, so every event runs without a single visible seam.",
-    image: unsplash("photo-1580489944761-15a19d654956", 800),
+    name: "Dhanasekar",
+    role: "Event Curator",
+    bio: "Dhanasekar turns timelines and vendor logistics into invisible infrastructure, so every event runs without a single visible seam.",
+    image: dhanasekarPhoto,
   },
   {
-    name: "Ramesh Krishnan",
-    role: "Operations Director",
-    bio: "Ramesh leads on-ground execution — from venue setup to day-of coordination — keeping every moving part on schedule.",
-    image: unsplash("photo-1568602471122-7832951cc4c5", 800),
+    name: "Sairam",
+    role: "Venue Scout",
+    bio: "Sairam handles venue sourcing, negotiations, and relationship management to secure the best spaces for every event.",
+    image: sairamPhoto,
   },
   {
-    name: "Kavitha Pillai",
-    role: "Design & Styling Lead",
-    bio: "Kavitha shapes the visual language of every celebration, from floral direction to stage design and lighting.",
-    image: unsplash("photo-1607346256330-dee7af15f7c5", 800),
+    name: "Revathi",
+    role: "Celebration Coordinator",
+    bio: "Revathi manages on-ground hospitality, guest experience, and client service to deliver smooth, memorable interactions.",
+    image: revathiPhoto,
   },
 ];
 
