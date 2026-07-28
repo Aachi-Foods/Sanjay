@@ -88,12 +88,12 @@ export default function SessionsBrowser({
                 >
                   <motion.span
                     animate={{
-                      opacity: isActive ? 1 : Math.max(0.25, 1 - dist * 0.22),
+                      opacity: isActive ? 1 : Math.max(0.55, 1 - dist * 0.15),
                       color: isActive ? "#c9a84c" : "#f1ead6",
                     }}
                     transition={{ duration: 0.4, ease: EASE }}
                     className="truncate font-display"
-                    style={{ fontSize: isActive ? "2.25rem" : "1.15rem" }}
+                    style={{ fontSize: isActive ? "2.25rem" : "1.3rem" }}
                   >
                     {item.title}
                   </motion.span>
@@ -178,7 +178,7 @@ export default function SessionsBrowser({
               <p className="mt-1 font-sans text-xs tracking-wide text-blush-soft uppercase">
                 {current.location}
               </p>
-              <p className="prose-measure mt-4 font-sans text-sm text-ivory/70">
+              <p className="prose-measure mt-4 font-sans text-sm text-ivory/85">
                 {current.description}
               </p>
               <button
