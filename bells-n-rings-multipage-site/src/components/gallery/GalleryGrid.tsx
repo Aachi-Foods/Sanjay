@@ -130,19 +130,23 @@ export default function GalleryGrid() {
         })}
       </Reveal>
 
-      {/* Desktop: Google Flow Sessions-style spotlight browser — a scrolling
-          title list with floating tilted thumbnails and a trailing glow.
+      {/* Desktop: full-screen, scroll-pinned Google Flow Sessions-style
+          browser — scrolling down advances through sessions one at a time.
+          Not wrapped in <Reveal>: its fade-in animation applies a CSS
+          transform, and an ancestor transform is exactly what broke
+          scroll-linked positioning elsewhere on this site (see
+          InvitationReveal.tsx) — not worth risking on the one thing this
+          component depends on to work at all.
           Mobile falls back to the card grid below; the layout doesn't
           translate to narrow viewports. */}
-      <Reveal delay={0.1} className="hidden lg:block">
-        <SessionsBrowser
-          items={filtered}
-          onView={(slug) => {
-            const globalIndex = GALLERY_ITEMS.findIndex((g) => g.slug === slug);
-            goTo(globalIndex, 0);
-          }}
-        />
-      </Reveal>
+      <SessionsBrowser
+        items={filtered}
+        fullScreen
+        onView={(slug) => {
+          const globalIndex = GALLERY_ITEMS.findIndex((g) => g.slug === slug);
+          goTo(globalIndex, 0);
+        }}
+      />
 
       <Reveal delay={0.1} className="lg:hidden">
         <motion.div layout className="grid gap-6 sm:grid-cols-2">

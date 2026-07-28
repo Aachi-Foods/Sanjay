@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type { GalleryItem } from "@/lib/content";
 
@@ -10,6 +10,9 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const ROW_HEIGHT = 56;
 const VISIBLE_ROWS = 7;
 const LIST_HEIGHT = ROW_HEIGHT * VISIBLE_ROWS;
+// How much extra scroll (as a fraction of the viewport height) each session
+// past the first one adds to the pinned section, in full-screen mode.
+const SCROLL_PER_ITEM_VH = 65;
 
 // Deterministic tilt angles (no Math.random — must match between server and
 // client render) cycled per stacking depth, echoing the scattered, slightly
@@ -19,11 +22,15 @@ const TILT = { back: -7, front: 5 };
 export default function SessionsBrowser({
   items,
   onView,
+  fullScreen = false,
 }: {
   items: GalleryItem[];
   onView: (slug: string) => void;
+  fullScreen?: boolean;
 }) {
   const [active, setActive] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   // Filter change swaps the whole item list out from under us — snap back
   // to the first item rather than pointing at a now out-of-range index.
@@ -36,19 +43,63 @@ export default function SessionsBrowser({
     setActive(0);
   }
 
+  // Reduced-motion users get the plain compact card (see the non-pinned
+  // branch below) rather than a scroll-pinned section that never advances.
+  const pinned = fullScreen && !reduceMotion;
+
+  // In pinned mode, scrolling through a tall section drives which session is
+  // active — a plain scroll listener rather than Framer's useScroll/
+  // useTransform: bound via style on an element nested inside a 3D
+  // perspective transform (the floating thumbnail stack below), those
+  // MotionValues stop reaching the DOM after first paint. See
+  // InvitationReveal.tsx for the fuller writeup of the same bug.
+  useEffect(() => {
+    if (!pinned) return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let rafId = 0;
+    const update = () => {
+      const rect = section.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const p = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
+      setActive(Math.round(p * (items.length - 1)));
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [pinned, items.length]);
+
   if (items.length === 0) return null;
 
-  const go = (dir: number) => setActive((i) => (i + dir + items.length) % items.length);
+  const go = (dir: number) => {
+    if (pinned && sectionRef.current && items.length > 1) {
+      const rect = sectionRef.current.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const perItem = total / (items.length - 1);
+      window.scrollBy({ top: dir * perItem, behavior: "smooth" });
+      return;
+    }
+    setActive((i) => (i + dir + items.length) % items.length);
+  };
+
   const current = items[active];
   const hasNeighbors = items.length > 1;
   const prevItem = hasNeighbors ? items[(active - 1 + items.length) % items.length] : null;
   const nextItem = hasNeighbors && items.length > 2 ? items[(active + 1) % items.length] : null;
 
-  return (
-    <div
-      className="relative hidden overflow-hidden rounded-[2.5rem] border border-gold-soft/20 bg-rose-gold-deep lg:block"
-      style={{ minHeight: 560 }}
-    >
+  const content = (
+    <>
       {/* Warm glow trailing the active session, as in Flow Sessions */}
       <motion.div
         key={`glow-${current.slug}`}
@@ -82,7 +133,7 @@ export default function SessionsBrowser({
                 <button
                   key={item.slug}
                   type="button"
-                  onClick={() => setActive(i)}
+                  onClick={() => go(i - active)}
                   className="flex w-full cursor-pointer items-center text-left"
                   style={{ height: ROW_HEIGHT }}
                 >
@@ -213,6 +264,42 @@ export default function SessionsBrowser({
           </button>
         </div>
       )}
+    </>
+  );
+
+  if (!pinned) {
+    return (
+      <div
+        className="relative hidden overflow-hidden rounded-[2.5rem] border border-gold-soft/20 bg-rose-gold-deep lg:block"
+        style={{ minHeight: 560 }}
+      >
+        {content}
+      </div>
+    );
+  }
+
+  // Full-bleed + pinned: the outer element breaks out of its parent's max
+  // width (the standard "full-bleed" trick) and reserves extra scroll room
+  // — one screen-height per session, roughly — for the sticky inner view to
+  // stay pinned while the scroll listener above advances through them.
+  return (
+    <div
+      ref={sectionRef}
+      // ml-[calc(50%-50vw)] rather than the more common left-1/2 + -mx-[50vw]
+      // pairing: this component sits inside a max-w-7xl container, and
+      // `left` percentages resolve against that (narrower) containing block,
+      // not the viewport, so the two offsets wouldn't actually cancel out.
+      // A single margin computed from both units breaks out correctly
+      // regardless of how wide the parent is.
+      className="hidden w-screen lg:block"
+      style={{
+        marginLeft: "calc(50% - 50vw)",
+        height: `${100 + (items.length - 1) * SCROLL_PER_ITEM_VH}vh`,
+      }}
+    >
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-rose-gold-deep">
+        {content}
+      </div>
     </div>
   );
 }
