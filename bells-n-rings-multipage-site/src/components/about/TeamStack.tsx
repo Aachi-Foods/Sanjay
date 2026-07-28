@@ -17,8 +17,12 @@ import type { TeamMember } from "@/lib/content";
 // perspective) — this only ever rotates flat on the Z axis and never on
 // anything tall/full-width, so it doesn't hit the text-blur or overflow bugs
 // that ruled those out elsewhere on this site (see InvitationReveal.tsx).
-const SPACING = 96; // px between adjacent card centers
-const ROTATE_STEP = 7; // degrees per slot away from the spotlight
+const SPACING = 112; // px between adjacent card centers
+// Small — a rotated card's bounding box is wider than the card itself
+// (extra width = h·sin(θ)), and at only 1024px (the lg breakpoint this fan
+// first appears at) that extra add-on was enough to push the page into
+// real horizontal overflow.
+const ROTATE_STEP = 6; // degrees per slot away from the spotlight
 
 export default function TeamStack({ members }: { members: TeamMember[] }) {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -46,19 +50,25 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
             key={member.name}
             onMouseEnter={() => setHovered(cardId)}
             onMouseLeave={() => setHovered(null)}
-            className="absolute left-1/2 top-1/2 h-60 w-64 overflow-hidden rounded-3xl border border-gold-soft/30 bg-rose-gold-deep p-6 text-center shadow-2xl transition-transform duration-500 ease-out"
+            className="absolute left-1/2 top-1/2 h-52 w-56 overflow-hidden rounded-3xl border border-gold-soft/30 bg-rose-gold-deep p-5 text-center shadow-2xl transition-transform duration-500 ease-out"
             style={{
               transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`,
               zIndex: z,
             }}
           >
-            <div className="relative mx-auto h-20 w-20 overflow-hidden rounded-full border-2 border-gold-soft/40">
+            {/* Anchored to the outer edge (away from the spotlight) rather
+                than centered — centered would sit directly behind the
+                always-on-top spotlight card, permanently hiding the face. */}
+            <div
+              className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-gold-soft/40"
+              style={side < 0 ? { marginRight: "auto" } : { marginLeft: "auto" }}
+            >
               <Image
                 src={member.image}
                 alt={`Placeholder headshot — ${member.name}, ${member.role}`}
                 fill
-                sizes="80px"
-                className="object-cover"
+                sizes="64px"
+                className="object-cover object-top"
               />
             </div>
             <p className="mt-3 font-sans text-[0.65rem] tracking-[0.2em] text-gold-soft uppercase">
@@ -73,14 +83,14 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
       })}
 
       {/* Spotlight: always centered, unrotated, and on top */}
-      <div className="absolute left-1/2 top-1/2 z-40 h-72 w-72 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-gold bg-ivory p-7 text-center shadow-[0_30px_60px_-15px_rgba(26,46,26,0.35)]">
-        <div className="relative mx-auto h-24 w-24 overflow-hidden rounded-full border-2 border-gold">
+      <div className="absolute left-1/2 top-1/2 z-40 h-60 w-60 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-gold bg-ivory p-5 text-center shadow-[0_30px_60px_-15px_rgba(26,46,26,0.35)]">
+        <div className="relative mx-auto h-20 w-20 overflow-hidden rounded-full border-2 border-gold">
           <Image
             src={spotlight.image}
             alt={`Placeholder headshot — ${spotlight.name}, ${spotlight.role}`}
             fill
-            sizes="96px"
-            className="object-cover"
+            sizes="80px"
+            className="object-cover object-top"
           />
         </div>
         <p className="mt-4 font-sans text-[0.65rem] tracking-[0.2em] text-rose-text uppercase">
