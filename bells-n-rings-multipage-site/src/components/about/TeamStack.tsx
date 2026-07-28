@@ -24,11 +24,12 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 // boxes (see InvitationReveal.tsx). The fan-out entrance is a plain
 // `whileInView` variant, not a scroll-linked MotionValue, so it isn't
 // affected by the transform-ancestor bug that broke those.
-const CARD_W = 240; // px — keep in sync with the w-60 class below
-const CARD_H = 352; // px — keep in sync with the h-[22rem] class below
-// Wide enough that each card's name and role stay readable at rest —
-// neighbours overlap by roughly a fifth of a card, as in the reference.
-const X_STEP = 196; // px between adjacent card centres
+const CARD_W = 272; // px — keep in sync with the w-68 class below
+const CARD_H = 400; // px — keep in sync with the h-[25rem] class below
+// Sized so the widest point of the fan (the outer cards' rotated corners)
+// still clears a 1024px laptop viewport, the narrowest width this fan is
+// shown at.
+const X_STEP = 206; // px between adjacent card centres
 const ROTATE_STEP = 8; // degrees per slot away from centre
 const ARC_DROP = 26; // px — multiplied by offset² for the arc's sag
 
@@ -47,7 +48,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
   const mid = (ordered.length - 1) / 2;
 
   return (
-    <div className="relative mx-auto hidden h-[30rem] max-w-5xl lg:block">
+    <div className="relative mx-auto hidden h-[34rem] max-w-5xl lg:block">
       {ordered.map((member, i) => {
         const offset = i - mid;
         const isFeatured = member.name === featured.name;
@@ -56,11 +57,12 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
         const x = offset * X_STEP;
         const y = offset * offset * ARC_DROP;
         const rotate = offset * ROTATE_STEP;
-        const z = isHovered
-          ? 40
-          : isFeatured
-            ? 25
-            : 20 - Math.round(Math.abs(offset) * 4);
+        // Stacking runs strictly left-to-right: every card sits above the
+        // one to its left, so a neighbour can only ever cover a card's
+        // right-hand edge — never the left-aligned role and name. Ordering
+        // by distance from centre instead (with the featured card on top)
+        // buries the name of whichever card sits to its right.
+        const z = isHovered ? 40 : i + 1;
 
         // Cards are centred with negative margins rather than a
         // translate(-50%,-50%), which would fight Framer's x/y transform.
@@ -85,7 +87,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
             <div
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className={`flex h-[22rem] w-60 flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
+              className={`flex h-[25rem] w-68 flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
                 isFeatured
                   ? "border-gold bg-rose-gold-deep shadow-[0_30px_60px_-15px_rgba(26,46,26,0.5)]"
                   : "border-gold-soft/50 bg-ivory shadow-[0_20px_45px_-18px_rgba(26,46,26,0.45)]"
@@ -99,7 +101,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
               }}
             >
               <div
-                className={`relative h-48 w-full shrink-0 overflow-hidden rounded-2xl ${
+                className={`relative h-56 w-full shrink-0 overflow-hidden rounded-2xl ${
                   isFeatured ? "bg-rose-gold" : "bg-blush"
                 }`}
               >
@@ -107,27 +109,27 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
                   src={member.image}
                   alt={`${member.name}, ${member.role}`}
                   fill
-                  sizes="208px"
+                  sizes="240px"
                   className="object-cover object-top"
                 />
               </div>
 
               <p
-                className={`mt-4 font-sans text-[0.6rem] tracking-[0.2em] uppercase ${
+                className={`mt-4 font-sans text-[0.65rem] tracking-[0.2em] uppercase ${
                   isFeatured ? "text-gold-soft" : "text-rose-text"
                 }`}
               >
                 {member.role}
               </p>
               <h3
-                className={`mt-1 font-display text-xl leading-tight ${
+                className={`mt-1 font-display text-2xl leading-tight ${
                   isFeatured ? "text-ivory" : "text-charcoal"
                 }`}
               >
                 {member.name}
               </h3>
               <p
-                className={`mt-2 line-clamp-3 font-sans text-xs leading-relaxed ${
+                className={`mt-2 line-clamp-3 font-sans text-[0.8rem] leading-relaxed ${
                   isFeatured ? "text-ivory/75" : "text-charcoal-soft"
                 }`}
               >
