@@ -34,15 +34,16 @@ export default function GalleryTeaser() {
         />
       </Reveal>
 
-      {/* Desktop: same Google Flow Sessions-style spotlight browser as the
-          full gallery page. "View Photo" sends visitors on to /gallery
-          rather than opening a lightbox here. */}
-      <Reveal className="hidden lg:block">
-        <SessionsBrowser
-          items={featured}
-          onView={(slug) => router.push(`/gallery#${slug}`)}
-        />
-      </Reveal>
+      {/* Desktop: same full-screen, scroll-pinned Sessions browser as the
+          full gallery page — scrolling down advances through sessions.
+          "View Photo" sends visitors on to /gallery rather than opening a
+          lightbox here. Not wrapped in <Reveal>: see GalleryGrid.tsx for
+          why its transform-based fade-in isn't worth risking here. */}
+      <SessionsBrowser
+        items={featured}
+        fullScreen
+        onView={(slug) => router.push(`/gallery#${slug}`)}
+      />
 
       <div className="grid auto-rows-[180px] grid-cols-1 gap-4 sm:grid-cols-4 sm:auto-rows-[160px] lg:hidden">
         {featured.map((item, i) => (

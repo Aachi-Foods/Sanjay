@@ -12,7 +12,7 @@ const VISIBLE_ROWS = 7;
 const LIST_HEIGHT = ROW_HEIGHT * VISIBLE_ROWS;
 // How much extra scroll (as a fraction of the viewport height) each session
 // past the first one adds to the pinned section, in full-screen mode.
-const SCROLL_PER_ITEM_VH = 65;
+const SCROLL_PER_ITEM_VH = 38;
 
 // Deterministic tilt angles (no Math.random — must match between server and
 // client render) cycled per stacking depth, echoing the scattered, slightly
