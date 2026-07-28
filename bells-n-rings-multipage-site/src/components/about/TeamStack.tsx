@@ -25,13 +25,24 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 // `whileInView` variant, not a scroll-linked MotionValue, so it isn't
 // affected by the transform-ancestor bug that broke those.
 const CARD_W = 272; // px — keep in sync with the w-68 class below
-const CARD_H = 400; // px — keep in sync with the h-[25rem] class below
+// Tall enough for the longest bio to render in full — the bios are not
+// truncated, so this has to clear the worst case rather than the average.
+const CARD_H = 496; // px — keep in sync with the h-[31rem] class below
 // Sized so the widest point of the fan (the outer cards' rotated corners)
 // still clears a 1024px laptop viewport, the narrowest width this fan is
 // shown at.
-const X_STEP = 206; // px between adjacent card centres
-const ROTATE_STEP = 8; // degrees per slot away from centre
+const X_STEP = 208; // px between adjacent card centres
+const ROTATE_STEP = 6; // degrees per slot away from centre
 const ARC_DROP = 26; // px — multiplied by offset² for the arc's sag
+// Each card covers CARD_W - X_STEP of the one beneath it, so text has to
+// live inside the strip no neighbour can reach — otherwise the end of every
+// bio line sits under the next card. The photo still spans the full card
+// width: a partly overlapped photo reads as depth, clipped words just read
+// as broken. Card width minus the overlapped strip reduces to X_STEP; the
+// extra 40px is because neighbours are rotated relative to each other, so
+// the covering edge slants and reaches further in at the card's top and
+// bottom than a flat overlap would.
+const TEXT_W = X_STEP - 40;
 
 export default function TeamStack({ members }: { members: TeamMember[] }) {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -48,7 +59,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
   const mid = (ordered.length - 1) / 2;
 
   return (
-    <div className="relative mx-auto hidden h-[34rem] max-w-5xl lg:block">
+    <div className="relative mx-auto hidden h-[40rem] max-w-5xl lg:block">
       {ordered.map((member, i) => {
         const offset = i - mid;
         const isFeatured = member.name === featured.name;
@@ -87,7 +98,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
             <div
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className={`flex h-[25rem] w-68 flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
+              className={`flex h-[31rem] w-68 flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
                 isFeatured
                   ? "border-gold bg-rose-gold-deep shadow-[0_30px_60px_-15px_rgba(26,46,26,0.5)]"
                   : "border-gold-soft/50 bg-ivory shadow-[0_20px_45px_-18px_rgba(26,46,26,0.45)]"
@@ -101,7 +112,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
               }}
             >
               <div
-                className={`relative h-56 w-full shrink-0 overflow-hidden rounded-2xl ${
+                className={`relative h-52 w-full shrink-0 overflow-hidden rounded-2xl ${
                   isFeatured ? "bg-rose-gold" : "bg-blush"
                 }`}
               >
@@ -115,13 +126,15 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
               </div>
 
               <p
-                className={`mt-4 font-sans text-[0.65rem] tracking-[0.2em] uppercase ${
+                style={{ width: TEXT_W }}
+                className={`mt-4 font-sans text-[0.6rem] tracking-[0.15em] uppercase ${
                   isFeatured ? "text-gold-soft" : "text-rose-text"
                 }`}
               >
                 {member.role}
               </p>
               <h3
+                style={{ width: TEXT_W }}
                 className={`mt-1 font-display text-2xl leading-tight ${
                   isFeatured ? "text-ivory" : "text-charcoal"
                 }`}
@@ -129,7 +142,8 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
                 {member.name}
               </h3>
               <p
-                className={`mt-2 line-clamp-3 font-sans text-[0.8rem] leading-relaxed ${
+                style={{ width: TEXT_W }}
+                className={`mt-2 font-sans text-[0.8rem] leading-relaxed ${
                   isFeatured ? "text-ivory/75" : "text-charcoal-soft"
                 }`}
               >
