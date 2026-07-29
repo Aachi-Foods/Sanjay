@@ -1,13 +1,11 @@
 // All copy, service/gallery/testimonial data, and placeholder imagery lives
 // here so it's a single place to edit when real content arrives.
 //
-// IMAGE NOTE: every image below is a free-to-use Unsplash photo (Unsplash
-// License — free for commercial use, no attribution required), hotlinked by
-// ID so nothing needs downloading to preview. These are generic event/
-// wedding stock photography — not literal photos of the ceremony type named
-// in each title/description, and not real BnR events — so treat them as
-// placeholders: swap every `src` value for real event photography whenever
-// it's ready. The titles/descriptions are intentionally spread across
+// IMAGE NOTE: real photography is being swapped in a piece at a time, and
+// anything imported from @/assets is real. The rest are still placeholders —
+// hotlinked stock or generated stand-ins, generic event/wedding imagery
+// rather than literal photos of the ceremony each entry names, and not real
+// BnR events. Keep replacing them with real event photography as it lands. The titles/descriptions are intentionally spread across
 // Hindu, Muslim, Sikh, and Christian ceremonies (see CONTENT.md); match that
 // spread with real photos of each tradition once they're available. Nothing
 // else needs to change since every image goes through next/image.
@@ -15,6 +13,7 @@
 import type { StaticImageData } from "next/image";
 import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
 import entertainmentPhoto from "@/assets/services/entertainment.jpg";
+import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -138,7 +137,7 @@ export type GalleryItem = {
   title: string;
   category: GalleryCategorySlug;
   location: string;
-  image: string;
+  image: string | StaticImageData;
   imageAlt: string;
   description: string;
 };
@@ -149,8 +148,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Silk & Jasmine Hindu Wedding",
     category: "weddings",
     location: "Chennai, Tamil Nadu",
-    image: hf("hf_20260722_044534_88e6c3c3-5c2a-43da-af61-28cb8088a1d2.png"),
-    imageAlt: "Traditional South Indian Hindu wedding mandap with silk and jasmine garlands",
+    image: silkJasminePhoto,
+    imageAlt:
+      "Bride and groom in silk and jasmine seated before the sacred fire, beneath a mandap of jasmine strands, banana leaves and brass lamps",
     description:
       "A traditional Hindu ceremony styled with jasmine garlands, banana-leaf motifs, and a gold-accented mandap.",
   },
