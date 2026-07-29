@@ -19,6 +19,7 @@ import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
 import leadershipSummitPhoto from "@/assets/gallery/leadership-summit.jpg";
+import anandKarajPhoto from "@/assets/gallery/anand-karaj-sangeet-night.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -207,8 +208,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Anand Karaj & Sangeet Night",
     category: "receptions",
     location: "Coimbatore, Tamil Nadu",
-    image: hf("hf_20260722_072240_305d4301-c492-4afb-9ac1-4e958040d321.png"),
-    imageAlt: "Vibrant sangeet night dance floor with colorful dynamic stage lighting",
+    image: anandKarajPhoto,
+    imageAlt:
+      "Seated bride and groom at the Anand Karaj in the foreground, floral drapes overhead, with the live sangeet band and a dancing crowd lit in pink and gold on the stage behind",
     description:
       "A Sikh Anand Karaj followed by a high-energy sangeet, with a custom stage, dynamic lighting, and a live performance lineup.",
   },
