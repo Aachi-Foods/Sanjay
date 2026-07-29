@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
     // optimization API — placeholders come from remote stock URLs anyway.
     unoptimized: true,
   },
+  // Exposed so client components can prefix paths to files in public/ —
+  // basePath rewrites next/link and next/image for us, but not a raw src on
+  // an element like <video>.
+  env: { NEXT_PUBLIC_BASE_PATH: isGithubPages ? `/${repoName}` : "" },
   ...(isGithubPages
     ? { basePath: `/${repoName}`, assetPrefix: `/${repoName}/` }
     : {}),

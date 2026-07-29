@@ -46,3 +46,20 @@ export const NAV_LINKS: NavLink[] = [
 export const HEADER_NAV_LINKS: NavLink[] = NAV_LINKS.filter(
   (link) => link.href !== "/contact",
 );
+
+// --- Hero backdrop -------------------------------------------------------
+// The hero can play a video instead of the still photo. To use one, drop the
+// file into public/ and set HERO_VIDEO to "/your-file.mp4", or paste a full
+// https:// URL if it is hosted elsewhere. Leave it empty and the hero falls
+// back to HERO_POSTER on its own.
+//
+// The same image is used as the video's poster, so it shows while the video
+// buffers and stands in for visitors who prefer reduced motion — a hero that
+// loops on its own is exactly what that setting is meant to stop.
+export const HERO_VIDEO: string = "";
+
+export const HERO_POSTER =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044156_e2cb7513-237f-4015-9363-635508cff470.png";
+
+export const HERO_POSTER_ALT =
+  "Ornate South Indian wedding mandap at dusk, draped in marigold and jasmine garlands with warm gold string lighting";

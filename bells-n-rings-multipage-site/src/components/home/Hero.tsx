@@ -4,8 +4,18 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Button from "../ui/Button";
-import { SITE_NAME_FULL } from "@/lib/constants";
-import bnrLogoDark from "@/assets/bnr-logo-dark-bg.png";
+import {
+  HERO_POSTER,
+  HERO_POSTER_ALT,
+  HERO_VIDEO,
+} from "@/lib/constants";
+
+// A path into public/ needs the basePath prepending by hand — next/image and
+// next/link get it applied for them, a raw <video src> does not.
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const videoSrc = HERO_VIDEO.startsWith("http")
+  ? HERO_VIDEO
+  : `${BASE_PATH}${HERO_VIDEO}`;
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -28,31 +38,55 @@ export default function Hero() {
       ref={sectionRef}
       className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep pt-20 md:pt-32"
     >
-      {/* Dimmed background photo — visible enough to read as a real backdrop, while the ring and heading stay legible */}
+      {/* Backdrop: the video when one is configured, otherwise the still.
+          Reduced motion always gets the still — a hero that loops by itself
+          is the kind of movement that setting exists to stop. */}
       <motion.div
         className="absolute inset-0"
         style={reduceMotion ? undefined : { scale: bgScale }}
       >
-        <Image
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044156_e2cb7513-237f-4015-9363-635508cff470.png"
-          alt="Ornate South Indian wedding mandap at dusk, draped in marigold and jasmine garlands with warm gold string lighting"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-45"
-        />
+        {HERO_VIDEO && !reduceMotion ? (
+          <video
+            src={videoSrc}
+            poster={HERO_POSTER}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label={HERO_POSTER_ALT}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <Image
+            src={HERO_POSTER}
+            alt={HERO_POSTER_ALT}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        )}
       </motion.div>
-      {/* Deep forest-green gradient backdrop with a soft radial glow behind the heading */}
+
+      {/* Just enough tint to keep the buttons legible over the footage —
+          previously a 60% green wash sat on top of a backdrop already dimmed
+          to 45%, which buried the picture behind it. */}
       <div
-        className="absolute inset-0 bg-rose-gold-deep/60"
+        className="absolute inset-0 bg-rose-gold-deep/25"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(201,168,76,0.16),_transparent_60%)]"
+        className="absolute inset-0 bg-gradient-to-b from-charcoal/25 via-transparent to-charcoal/45"
         aria-hidden="true"
       />
+      {/* A soft pool of shade behind the buttons only. The outline button has
+          no fill, so it needs something to sit against on a bright frame —
+          darkening the whole hero to achieve that is what made the picture
+          disappear before. Neutral rather than green, to leave the footage's
+          own colour alone. */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-charcoal/30 via-transparent to-charcoal/60"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.3),_transparent_62%)]"
         aria-hidden="true"
       />
 
@@ -65,28 +99,10 @@ export default function Hero() {
         }
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-          className="relative flex justify-center"
-        >
-          {/* Both max-w and max-h (with h-auto/w-auto) so the logo shrinks to
-              fit whichever dimension is tighter — on a short laptop browser
-              window, a width-only cap left the logo tall enough to collide
-              with the fixed navbar above it. */}
-          <Image
-            src={bnrLogoDark}
-            alt={SITE_NAME_FULL}
-            priority
-            className="h-auto max-h-[22vh] w-auto max-w-[16rem] object-contain sm:max-h-[28vh] sm:max-w-[20rem] md:max-h-[30vh] md:max-w-[24rem]"
-          />
-        </motion.div>
-
-        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:mt-12"
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          className="flex flex-wrap items-center justify-center gap-4"
         >
           <Button href="/services">Explore Our Services</Button>
           <Button
