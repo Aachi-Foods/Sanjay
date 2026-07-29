@@ -1,4 +1,5 @@
 import GoldDivider from "./GoldDivider";
+import BottomUpLetters from "../shared/BottomUpLetters";
 
 type Align = "center" | "left";
 
@@ -27,9 +28,12 @@ export default function SectionHeading({
           {eyebrow}
         </span>
       )}
-      <h2 className="font-display text-3xl leading-tight text-charcoal sm:text-4xl md:text-5xl">
+      <BottomUpLetters
+        as="h2"
+        className="font-display text-3xl leading-tight text-charcoal sm:text-4xl md:text-5xl"
+      >
         {title}
-      </h2>
+      </BottomUpLetters>
       {description && (
         <p
           className={`prose-measure font-sans text-base text-charcoal-soft sm:text-lg ${

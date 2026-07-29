@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Parallax from "../shared/Parallax";
 import Particles from "../shared/Particles";
+import BottomUpLetters from "../shared/BottomUpLetters";
 
 // Shared interior-page banner used by About, Services, and Gallery so
 // every page opens with the same rhythm.
@@ -52,7 +53,15 @@ export default function PageHeader({
         <span className="font-script text-3xl text-blush sm:text-4xl">
           {eyebrow}
         </span>
-        <h1 className="font-display text-4xl text-ivory sm:text-5xl">{title}</h1>
+        {/* Above the fold on arrival, so it lifts in on load rather than
+            waiting to be scrolled to. */}
+        <BottomUpLetters
+          as="h1"
+          triggerOnView={false}
+          className="font-display text-4xl text-ivory sm:text-5xl"
+        >
+          {title}
+        </BottomUpLetters>
         {description && (
           <p className="prose-measure font-sans text-base text-blush-soft sm:text-lg">
             {description}
