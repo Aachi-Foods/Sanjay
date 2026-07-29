@@ -21,6 +21,7 @@ import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
 import leadershipSummitPhoto from "@/assets/gallery/leadership-summit.jpg";
 import anandKarajPhoto from "@/assets/gallery/anand-karaj-sangeet-night.jpg";
 import productLaunchPhoto from "@/assets/gallery/product-launch-gala.jpg";
+import namingCeremonyPhoto from "@/assets/gallery/naming-ceremony.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -247,13 +248,14 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     slug: "namakaran-naming-ceremony",
-    title: "Namakaran Naming Ceremony",
+    title: "Naming Ceremony",
     category: "traditional",
     location: "Coimbatore, Tamil Nadu",
-    image: hf("hf_20260722_051548_b8d42e4f-531d-4836-960f-ed03d4cfdf15.png"),
-    imageAlt: "South Indian namakaran naming ceremony with a decorated cradle and jasmine garlands",
+    image: namingCeremonyPhoto,
+    imageAlt:
+      "Newborn in a jasmine-garlanded wooden cradle, surrounded by three generations of family kneeling around it with brass lamps and a tray of turmeric and kumkum in the foreground",
     description:
-      "An intimate namakaran ceremony centered on a jasmine-garlanded cradle, styled for close family and a lifetime of memories.",
+      "An intimate naming ceremony centered on a jasmine-garlanded cradle, styled for close family and a lifetime of memories.",
   },
   {
     slug: "nischayathartham-engagement",
