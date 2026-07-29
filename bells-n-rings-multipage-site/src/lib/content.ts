@@ -17,6 +17,7 @@ import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
 import entertainmentPhoto from "@/assets/services/entertainment.jpg";
 import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
+import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -173,8 +174,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Nikah Reception",
     category: "receptions",
     location: "Bengaluru, Karnataka",
-    image: hf("hf_20260722_044539_7d9b9cd9-1c1b-49eb-9857-ce211fa66dea.png"),
-    imageAlt: "Elegant nikah reception with antique-gold drapery and candlelit tables",
+    image: nikahReceptionPhoto,
+    imageAlt:
+      "Bride and groom greeting family at a nikah reception, before swagged gold drapery and lantern light, with a banana-leaf feast laid out in brass across the foreground",
     description:
       "A joyful nikah reception styled with antique-gold drapery, candlelight, and a curated regional menu.",
   },
