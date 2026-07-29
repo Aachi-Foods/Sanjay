@@ -25,9 +25,9 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 // `whileInView` variant, not a scroll-linked MotionValue, so it isn't
 // affected by the transform-ancestor bug that broke those.
 const CARD_W = 272; // px — keep in sync with the w-68 class below
-// Tall enough for the longest bio to render in full — the bios are not
-// truncated, so this has to clear the worst case rather than the average.
-const CARD_H = 496; // px — keep in sync with the h-[31rem] class below
+// Sized to the content: the tallest card's bio ends 401px down, plus the
+// 16px bottom padding. Anything more just adds dead space under the text.
+const CARD_H = 416; // px — keep in sync with the h-[26rem] class below
 // Sized so the widest point of the fan (the outer cards' rotated corners)
 // still clears a 1024px laptop viewport, the narrowest width this fan is
 // shown at.
@@ -59,7 +59,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
   const mid = (ordered.length - 1) / 2;
 
   return (
-    <div className="relative mx-auto hidden h-[40rem] max-w-5xl lg:block">
+    <div className="relative mx-auto hidden h-[34rem] max-w-5xl lg:block">
       {ordered.map((member, i) => {
         const offset = i - mid;
         const isFeatured = member.name === featured.name;
@@ -98,7 +98,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
             <div
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className={`flex h-[31rem] w-68 flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
+              className={`flex h-[26rem] w-68 flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
                 isFeatured
                   ? "border-gold bg-rose-gold-deep shadow-[0_30px_60px_-15px_rgba(26,46,26,0.5)]"
                   : "border-gold-soft/50 bg-ivory shadow-[0_20px_45px_-18px_rgba(26,46,26,0.45)]"
