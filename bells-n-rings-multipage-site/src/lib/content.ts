@@ -22,6 +22,7 @@ import leadershipSummitPhoto from "@/assets/gallery/leadership-summit.jpg";
 import anandKarajPhoto from "@/assets/gallery/anand-karaj-sangeet-night.jpg";
 import productLaunchPhoto from "@/assets/gallery/product-launch-gala.jpg";
 import namingCeremonyPhoto from "@/assets/gallery/naming-ceremony.jpg";
+import nischayatharthamPhoto from "@/assets/gallery/nischayathartham-engagement.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -262,8 +263,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Nischayathartham Engagement",
     category: "traditional",
     location: "Chennai, Tamil Nadu",
-    image: hf("hf_20260722_072244_fbb24796-f63a-4320-9923-337063a52dee.png"),
-    imageAlt: "South Indian nischayathartham engagement stage with silver plates of fruit and flowers",
+    image: nischayatharthamPhoto,
+    imageAlt:
+      "Couple exchanging rings before gathered family, gold-bordered silk drapery behind them and silver ceremonial plates of fruit, kumkum and flowers laid out on the table in front",
     description:
       "A nischayathartham engagement styled with ornate silver plates, gold-bordered silk drapery, and a warm, celebratory glow.",
   },
