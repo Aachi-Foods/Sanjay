@@ -110,7 +110,7 @@ export default function SessionsBrowser({
         transition={{ duration: 0.8, ease: EASE }}
       />
 
-      <div className="relative z-10 grid h-full grid-cols-2 items-center gap-12 px-14 py-16">
+      <div className="relative z-10 grid h-full grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] items-center gap-10 px-14 py-12">
         {/* Left: vertical title list, scrolling to keep the active item centered */}
         <div
           className="relative overflow-hidden"
@@ -156,12 +156,12 @@ export default function SessionsBrowser({
 
         {/* Right: stacked floating thumbnails + active session detail */}
         <div className="flex flex-col gap-8">
-          <div className="relative h-64" style={{ perspective: 1200 }}>
+          <div className="relative h-[min(30rem,46vh)]" style={{ perspective: 1200 }}>
             <AnimatePresence mode="popLayout">
               {prevItem && (
                 <motion.div
                   key={`prev-${prevItem.slug}`}
-                  className="absolute left-0 top-6 h-40 w-56 overflow-hidden rounded-xl shadow-2xl"
+                  className="absolute left-0 top-10 h-[min(19rem,29vh)] w-[19rem] overflow-hidden rounded-2xl shadow-2xl"
                   initial={{ opacity: 0, x: -40, rotate: TILT.back, scale: 0.7 }}
                   animate={{ opacity: 0.55, x: 0, rotate: TILT.back, scale: 0.78, filter: "blur(3px)" }}
                   exit={{ opacity: 0, x: -40, scale: 0.7 }}
@@ -171,7 +171,7 @@ export default function SessionsBrowser({
                     src={prevItem.image}
                     alt=""
                     fill
-                    sizes="224px"
+                    sizes="304px"
                     className="object-cover"
                   />
                 </motion.div>
@@ -179,7 +179,7 @@ export default function SessionsBrowser({
 
               <motion.div
                 key={`active-${current.slug}`}
-                className="absolute left-1/4 top-0 h-56 w-72 overflow-hidden rounded-2xl shadow-2xl"
+                className="absolute left-1/5 top-0 h-[min(27rem,42vh)] w-[31rem] overflow-hidden rounded-3xl shadow-2xl"
                 initial={{ opacity: 0, scale: 0.85, rotate: 0 }}
                 animate={{ opacity: 1, scale: 1, rotate: 3, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 0.85 }}
@@ -190,7 +190,7 @@ export default function SessionsBrowser({
                   src={current.image}
                   alt={current.imageAlt}
                   fill
-                  sizes="288px"
+                  sizes="496px"
                   className="object-cover"
                   priority
                 />
@@ -199,7 +199,7 @@ export default function SessionsBrowser({
               {nextItem && (
                 <motion.div
                   key={`next-${nextItem.slug}`}
-                  className="absolute right-0 top-10 h-40 w-56 overflow-hidden rounded-xl shadow-2xl"
+                  className="absolute right-0 top-16 h-[min(19rem,29vh)] w-[19rem] overflow-hidden rounded-2xl shadow-2xl"
                   initial={{ opacity: 0, x: 40, rotate: TILT.front, scale: 0.7 }}
                   animate={{ opacity: 0.5, x: 0, rotate: TILT.front, scale: 0.74, filter: "blur(4px)" }}
                   exit={{ opacity: 0, x: 40, scale: 0.7 }}
@@ -209,7 +209,7 @@ export default function SessionsBrowser({
                     src={nextItem.image}
                     alt=""
                     fill
-                    sizes="224px"
+                    sizes="304px"
                     className="object-cover"
                   />
                 </motion.div>
