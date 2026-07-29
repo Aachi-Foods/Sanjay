@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/ui/PageHeader";
-import ServiceCard from "@/components/services/ServiceCard";
+import ServiceScrollCards from "@/components/services/ServiceScrollCards";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
 import KolamDivider from "@/components/ui/KolamDivider";
 import { SERVICES, PAGE_HEADER_IMAGES } from "@/lib/content";
@@ -17,17 +17,13 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="What We Do"
         title="Celebrations, Planned With Devotion"
-        description="Eight services, one standard of care. Tap any card below to read the full details."
+        description="Eight services, one standard of care. Scroll through — each card opens its full details as you reach it."
         image={PAGE_HEADER_IMAGES.services}
         imageAlt="Grand South Indian temple gopuram-inspired wedding venue entrance"
       />
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service, i) => (
-            <ServiceCard key={service.slug} service={service} delay={i * 0.06} />
-          ))}
-        </div>
+        <ServiceScrollCards services={SERVICES} />
       </section>
 
       <KolamDivider />
