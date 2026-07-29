@@ -20,6 +20,7 @@ import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
 import leadershipSummitPhoto from "@/assets/gallery/leadership-summit.jpg";
 import anandKarajPhoto from "@/assets/gallery/anand-karaj-sangeet-night.jpg";
+import productLaunchPhoto from "@/assets/gallery/product-launch-gala.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -173,14 +174,14 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     slug: "nikah-reception",
-    title: "Nikah Reception",
+    title: "Nikah",
     category: "receptions",
     location: "Bengaluru, Karnataka",
     image: nikahReceptionPhoto,
     imageAlt:
-      "Bride and groom greeting family at a nikah reception, before swagged gold drapery and lantern light, with a banana-leaf feast laid out in brass across the foreground",
+      "Bride and groom greeting family at a nikah, before swagged gold drapery and lantern light, with a banana-leaf feast laid out in brass across the foreground",
     description:
-      "A joyful nikah reception styled with antique-gold drapery, candlelight, and a curated regional menu.",
+      "A joyful nikah styled with antique-gold drapery, candlelight, and a curated regional menu.",
   },
   {
     slug: "kochi-christian-wedding",
@@ -205,7 +206,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     slug: "anand-karaj-sangeet-night",
-    title: "Anand Karaj & Sangeet Night",
+    title: "Sangeet Night",
     category: "receptions",
     location: "Coimbatore, Tamil Nadu",
     image: anandKarajPhoto,
@@ -229,8 +230,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Product Launch Gala",
     category: "corporate",
     location: "Chennai, Tamil Nadu",
-    image: hf("hf_20260722_072236_d5f0abe8-c99c-4483-be5b-cceec786587b.png"),
-    imageAlt: "Product launch gala stage with dramatic light beams and minimalist podium",
+    image: productLaunchPhoto,
+    imageAlt:
+      "Presenter unveiling a product on a lit podium before an immersive blue LED backdrop, with the seated audience and a live broadcast desk of monitors in the foreground",
     description:
       "A brand product launch with immersive stage branding, live demo zones, and press hospitality.",
   },
