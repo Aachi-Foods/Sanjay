@@ -71,20 +71,22 @@ function ServiceHoverCard({ service }: { service: Service }) {
           </p>
         </div>
 
-        {/* The whole photo has to be visible, so the box carries the 3:2
-            ratio the photography is shot at and the image is contained
-            rather than cropped — a source at a different ratio letterboxes
-            against the card instead of losing its edges. Nothing is laid
-            over it, and it isn't scaled on hover, since either would hide
-            part of the picture. */}
-        <div className="relative aspect-[3/2] w-full bg-blush-soft">
+        {/* Filling the card and showing every pixel of every photo cannot
+            both be true while the sources are different shapes: the two
+            local photos are 3:2 and the rest are 4:3, so a box matching
+            either one letterboxes the others. The box fills instead, which
+            is what makes the grid read as even — the crop is centred, and
+            at 4:3 it is the majority of the photos that need none at all.
+            Nothing is laid over the photo and it isn't scaled on hover,
+            since either would hide part of it. */}
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-blush-soft">
           <Image
             src={service.image}
             alt={service.imageAlt}
             fill
             loading="lazy"
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-contain"
+            className="object-cover object-center"
           />
         </div>
       </div>

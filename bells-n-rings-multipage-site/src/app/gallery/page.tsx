@@ -3,6 +3,7 @@ import PageHeader from "@/components/ui/PageHeader";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
 import KolamDivider from "@/components/ui/KolamDivider";
+import StoryStage from "@/components/shared/StoryStage";
 import { PAGE_HEADER_IMAGES } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -21,9 +22,17 @@ export default function GalleryPage() {
         image={PAGE_HEADER_IMAGES.gallery}
         imageAlt="Placeholder — gallery page banner"
       />
+      {/* GalleryGrid is left unwrapped: it pins its browser with position
+          sticky, and a continuously transformed ancestor becomes the
+          containing block for sticky descendants, which breaks the pinning.
+          It already carries the most dramatic scroll sequence here. */}
       <GalleryGrid />
+
       <KolamDivider />
-      <InvitationTeaser />
+
+      <StoryStage depth={34}>
+        <InvitationTeaser />
+      </StoryStage>
     </>
   );
 }

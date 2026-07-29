@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import Parallax from "../shared/Parallax";
+import AmbientMotes from "../shared/AmbientMotes";
 
 // Shared interior-page banner used by About, Services, and Gallery so
 // every page opens with the same rhythm.
@@ -17,18 +21,33 @@ export default function PageHeader({
 }) {
   return (
     <section className="relative flex h-[50vh] min-h-[380px] w-full items-center justify-center overflow-hidden pt-32 sm:pt-36">
-      <Image
-        src={image}
-        alt={imageAlt}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
+      {/* The backdrop drifts against the scroll so the banner has depth
+          behind the heading. It is deliberately taller than the section on
+          both edges — a photo pinned exactly to the bounds would slide its
+          own edge into view as soon as it moved. */}
+      <Parallax
+        distance={48}
+        className="absolute -top-[14%] -bottom-[14%] left-0 right-0"
+      >
+        <div className="relative h-full w-full">
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+      </Parallax>
+
       <div
         className="absolute inset-0 bg-gradient-to-b from-charcoal/60 via-charcoal/40 to-charcoal/60"
         aria-hidden="true"
       />
+
+      <AmbientMotes count={12} />
+
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 text-center">
         <span className="font-script text-3xl text-blush sm:text-4xl">
           {eyebrow}

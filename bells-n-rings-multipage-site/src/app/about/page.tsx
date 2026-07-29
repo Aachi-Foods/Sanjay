@@ -5,6 +5,7 @@ import Philosophy from "@/components/about/Philosophy";
 import TeamGrid from "@/components/about/TeamGrid";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
 import KolamDivider from "@/components/ui/KolamDivider";
+import StoryStage from "@/components/shared/StoryStage";
 import { PAGE_HEADER_IMAGES } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -22,11 +23,23 @@ export default function AboutPage() {
         image={PAGE_HEADER_IMAGES.about}
         imageAlt="Placeholder — About BnR Event Planners page banner"
       />
-      <StorySection />
+      <StoryStage depth={32}>
+        <StorySection />
+      </StoryStage>
+
       <KolamDivider />
-      <Philosophy />
-      <TeamGrid />
-      <InvitationTeaser />
+
+      <StoryStage depth={18}>
+        <Philosophy />
+      </StoryStage>
+
+      <StoryStage depth={40}>
+        <TeamGrid />
+      </StoryStage>
+
+      <StoryStage depth={24}>
+        <InvitationTeaser />
+      </StoryStage>
     </>
   );
 }

@@ -3,6 +3,7 @@ import PageHeader from "@/components/ui/PageHeader";
 import ServiceHoverCards from "@/components/services/ServiceHoverCards";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
 import KolamDivider from "@/components/ui/KolamDivider";
+import StoryStage from "@/components/shared/StoryStage";
 import { SERVICES, PAGE_HEADER_IMAGES } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -22,12 +23,17 @@ export default function ServicesPage() {
         imageAlt="Grand South Indian temple gopuram-inspired wedding venue entrance"
       />
 
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
-        <ServiceHoverCards services={SERVICES} />
-      </section>
+      <StoryStage depth={26}>
+        <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
+          <ServiceHoverCards services={SERVICES} />
+        </section>
+      </StoryStage>
 
       <KolamDivider />
-      <InvitationTeaser />
+
+      <StoryStage depth={36}>
+        <InvitationTeaser />
+      </StoryStage>
     </>
   );
 }
