@@ -136,8 +136,7 @@ export type GalleryCategorySlug =
   | "weddings"
   | "receptions"
   | "traditional"
-  | "corporate"
-  | "festivals";
+  | "corporate";
 
 export type GalleryItem = {
   slug: string;
@@ -247,26 +246,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
       "A breezy seaside reception styled for an interfaith couple, with string lighting, a curated coastal menu, and live acoustic music.",
   },
   {
-    slug: "onam-sadhya-celebration",
-    title: "Onam Sadhya Celebration",
-    category: "festivals",
-    location: "Kochi, Kerala",
-    image: hf("hf_20260722_051541_dd2ff8b3-2c69-412f-a029-45eef09b262c.png"),
-    imageAlt: "Traditional Kerala Onam sadhya feast on a banana leaf with a pookalam flower rangoli",
-    description:
-      "A family Onam sadhya laid across a banana leaf with a full pookalam rangoli, styled to honor Kerala's harvest tradition.",
-  },
-  {
-    slug: "pongal-harvest-festival",
-    title: "Pongal Harvest Festival",
-    category: "festivals",
-    location: "Thanjavur, Tamil Nadu",
-    image: hf("hf_20260722_051544_bea38ed9-925d-4b34-948b-8a9bcd7b91a3.png"),
-    imageAlt: "Tamil Nadu Pongal harvest festival with a boiling clay pot, sugarcane, and fresh kolam",
-    description:
-      "A community Pongal celebration styled around the traditional boiling-over clay pot, sugarcane stalks, and fresh kolam artwork.",
-  },
-  {
     slug: "namakaran-naming-ceremony",
     title: "Namakaran Naming Ceremony",
     category: "traditional",
@@ -286,16 +265,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     description:
       "A nischayathartham engagement styled with ornate silver plates, gold-bordered silk drapery, and a warm, celebratory glow.",
   },
-  {
-    slug: "diwali-corporate-gala",
-    title: "Diwali Corporate Gala",
-    category: "corporate",
-    location: "Bengaluru, Karnataka",
-    image: hf("hf_20260722_072247_188a2267-06ec-4f1b-b37c-6c9e561b62ff.png"),
-    imageAlt: "Grand Diwali corporate gala stage with rows of lit brass diyas and marigold garlands",
-    description:
-      "A 200-guest Diwali gala for a Bengaluru tech firm, with rows of brass diyas, marigold garlands, and a festival-of-lights stage design.",
-  },
 ];
 
 export const GALLERY_FILTERS: {
@@ -306,7 +275,6 @@ export const GALLERY_FILTERS: {
   { label: "Weddings", value: "weddings" },
   { label: "Receptions", value: "receptions" },
   { label: "Traditional Ceremonies", value: "traditional" },
-  { label: "Festivals", value: "festivals" },
   { label: "Corporate & Private", value: "corporate" },
 ];
 
