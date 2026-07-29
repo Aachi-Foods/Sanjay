@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import PixelImage from "../shared/PixelImage";
 import { useReducedMotion } from "framer-motion";
 import Reveal from "../shared/Reveal";
 import Button from "../ui/Button";
@@ -55,15 +55,25 @@ export default function AboutTeaser() {
         ref={frameRef}
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
       >
-        <Image
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044512_3b47cc14-5b72-4313-8670-5913e74ed62e.png"
-          alt="Hands arranging fresh marigold and jasmine garlands on a decor table"
-          fill
-          loading="lazy"
-          sizes="(min-width: 768px) 45vw, 100vw"
-          style={reduceMotion ? undefined : { transform: `translateY(${drift}px) scale(1.12)` }}
-          className="object-cover"
-        />
+        {/* Oversized and offset by the scroll drift, so the photo still
+            parallaxes inside its frame while the tiles assemble it. */}
+        <div
+          className="absolute inset-0"
+          style={
+            reduceMotion
+              ? undefined
+              : { transform: `translateY(${drift}px) scale(1.12)` }
+          }
+        >
+          <PixelImage
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044512_3b47cc14-5b72-4313-8670-5913e74ed62e.png"
+            alt="Hands arranging fresh marigold and jasmine garlands on a decor table"
+            customGrid={{ rows: 4, cols: 6 }}
+            grayscaleAnimation
+            sizes="(min-width: 768px) 45vw, 100vw"
+            className="h-full w-full"
+          />
+        </div>
       </Reveal>
 
       <Reveal delay={0.1}>

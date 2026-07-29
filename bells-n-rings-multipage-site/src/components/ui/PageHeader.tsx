@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Parallax from "../shared/Parallax";
-import AmbientMotes from "../shared/AmbientMotes";
+import Particles from "../shared/Particles";
 
 // Shared interior-page banner used by About, Services, and Gallery so
 // every page opens with the same rhythm.
@@ -46,7 +46,7 @@ export default function PageHeader({
         aria-hidden="true"
       />
 
-      <AmbientMotes count={12} />
+      <Particles quantity={60} staticity={45} />
 
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 text-center">
         <span className="font-script text-3xl text-blush sm:text-4xl">
