@@ -17,7 +17,7 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="What We Do"
         title="Celebrations, Planned With Devotion"
-        description="Eight services, one standard of care. Scroll through — each card opens its full details as you reach it."
+        description="Eight services, one standard of care. Point at any card to open its full details."
         image={PAGE_HEADER_IMAGES.services}
         imageAlt="Grand South Indian temple gopuram-inspired wedding venue entrance"
       />
