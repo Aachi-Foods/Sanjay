@@ -88,3 +88,40 @@ body {
 .animate-spin-ring {
   animation: spin-ring 18s linear infinite;
 }
+
+/* Drifting ambient lights (AmbientMotes). Runs as a CSS animation rather
+   than per-frame JS: the compositor can keep these going without touching
+   the main thread, which matters when a couple of dozen are on screen at
+   once. Honours the OS reduced-motion setting as a second line of defence —
+   the component also declines to render under it. */
+@keyframes bnr-mote-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--bnr-mote-x, 20px), -120px, 0) scale(1.35);
+    opacity: 0;
+  }
+}
+
+.bnr-mote {
+  animation-name: bnr-mote-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+  filter: blur(0.4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bnr-mote {
+    animation: none;
+    opacity: 0 !important;
+  }
+}

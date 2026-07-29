@@ -17,12 +17,12 @@ export default function AboutTeaser() {
   const reduceMotion = useReducedMotion();
   const [drift, setDrift] = useState(0);
 
-  // A plain scroll listener rather than Framer's useScroll/useTransform: this
-  // section sits inside <Scene>, which keeps a persistent CSS `perspective`
-  // ancestor around it for its own 3D entrance. Scroll-linked MotionValues
-  // bound via `style` inside such an ancestor stop reaching the DOM after
-  // first paint (see InvitationReveal.tsx for the full writeup) — plain
-  // state + inline styles sidesteps that entirely.
+  // A plain scroll listener rather than Framer's useScroll/useTransform.
+  // This section is wrapped by <StoryStage>, which keeps a transform on an
+  // ancestor for the whole time the section is on screen. Scroll-linked
+  // MotionValues bound via `style` under such an ancestor stop reaching the
+  // DOM after first paint (see InvitationReveal.tsx for the full writeup) —
+  // plain state and inline styles sidestep that entirely.
   useEffect(() => {
     if (reduceMotion) return;
     const frame = frameRef.current;

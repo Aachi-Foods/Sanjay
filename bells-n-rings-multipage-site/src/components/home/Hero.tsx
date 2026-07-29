@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Button from "../ui/Button";
+import AmbientMotes from "../shared/AmbientMotes";
 import {
   HERO_POSTER,
   HERO_POSTER_ALT,
@@ -89,6 +90,10 @@ export default function Hero() {
         className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.3),_transparent_62%)]"
         aria-hidden="true"
       />
+
+      {/* Embers over the backdrop — the one place on the page where they
+          read strongest, against the dark footage. */}
+      <AmbientMotes count={22} />
 
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center px-6 text-center"
