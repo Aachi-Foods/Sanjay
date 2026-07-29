@@ -18,6 +18,7 @@ import entertainmentPhoto from "@/assets/services/entertainment.jpg";
 import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
+import leadershipSummitPhoto from "@/assets/gallery/leadership-summit.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -195,8 +196,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Leadership Summit",
     category: "corporate",
     location: "Hyderabad, Telangana",
-    image: hf("hf_20260722_072232_c201380e-d490-4d19-b4a8-dbc5e52eeae0.png"),
-    imageAlt: "Empty corporate stage with warm uplighting, seating, and minimalist backdrop panels",
+    image: leadershipSummitPhoto,
+    imageAlt:
+      "Panel session under way on a lit stage before a full delegate hall, with a wide LED backdrop, camera position and vision-mixing desk in shot",
     description:
       "A 300-guest leadership summit with custom stage design, AV production, and delegate hospitality.",
   },
