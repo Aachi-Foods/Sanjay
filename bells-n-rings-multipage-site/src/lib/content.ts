@@ -5,15 +5,18 @@
 // anything imported from @/assets is real. The rest are still placeholders —
 // hotlinked stock or generated stand-ins, generic event/wedding imagery
 // rather than literal photos of the ceremony each entry names, and not real
-// BnR events. Keep replacing them with real event photography as it lands. The titles/descriptions are intentionally spread across
-// Hindu, Muslim, Sikh, and Christian ceremonies (see CONTENT.md); match that
-// spread with real photos of each tradition once they're available. Nothing
-// else needs to change since every image goes through next/image.
+// BnR events. Keep replacing them with real event photography as it lands.
+//
+// The titles and descriptions are intentionally spread across Hindu, Muslim,
+// Sikh, and Christian ceremonies (see CONTENT.md); match that spread with
+// real photos of each tradition as they arrive. Nothing else needs changing
+// when one is swapped, since every image goes through next/image.
 
 import type { StaticImageData } from "next/image";
 import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
 import entertainmentPhoto from "@/assets/services/entertainment.jpg";
 import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
+import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -159,8 +162,9 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Temple Town Muhurtham",
     category: "traditional",
     location: "Madurai, Tamil Nadu",
-    image: hf("hf_20260722_044537_6b309dd7-ac38-4864-85f4-eddbeeda524c.png"),
-    imageAlt: "South Indian temple-town muhurtham ceremony with a kolam-lined pathway",
+    image: templeTownPhoto,
+    imageAlt:
+      "Muhurtham under a garlanded pandal beside the temple gopurams, nadaswaram and thavil players seated alongside the couple and a large kolam drawn across the floor",
     description:
       "A muhurtham ceremony honoring family tradition, with kolam-lined pathways and live nadaswaram music.",
   },
