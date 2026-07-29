@@ -23,7 +23,7 @@ import type { Service } from "@/lib/content";
 // the viewport; a card counts as active while it overlaps that band.
 const CENTRE_BAND = "-38% 0px -38% 0px";
 
-function ServiceScrollCard({ service }: { service: Service }) {
+function ServiceHoverCard({ service }: { service: Service }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const [inBand, setInBand] = useState(false);
@@ -59,8 +59,10 @@ function ServiceScrollCard({ service }: { service: Service }) {
     >
       {/* Card face. Opaque and stacked above the panel, so the panel can
           hide completely behind it rather than showing through. */}
-      <div className="relative z-[5] flex h-64 flex-col overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
-        <div className="px-6 pt-6">
+      <div className="relative z-[5] flex flex-col overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
+        {/* Fixed height so every card's photo starts at the same line,
+            whether the title runs to one line or two. */}
+        <div className="flex h-24 flex-col justify-center px-6">
           <h3 className="font-display text-xl leading-tight text-charcoal">
             {service.title}
           </h3>
@@ -69,20 +71,20 @@ function ServiceScrollCard({ service }: { service: Service }) {
           </p>
         </div>
 
-        {/* The photo runs off the bottom of the card and is faded back into
-            the card colour, so the crop reads as deliberate. */}
-        <div className="relative mt-4 min-h-0 flex-1">
+        {/* The whole photo has to be visible, so the box carries the 3:2
+            ratio the photography is shot at and the image is contained
+            rather than cropped — a source at a different ratio letterboxes
+            against the card instead of losing its edges. Nothing is laid
+            over it, and it isn't scaled on hover, since either would hide
+            part of the picture. */}
+        <div className="relative aspect-[3/2] w-full bg-blush-soft">
           <Image
             src={service.image}
             alt={service.imageAlt}
             fill
             loading="lazy"
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ivory to-transparent"
+            className="object-contain"
           />
         </div>
       </div>
@@ -111,11 +113,19 @@ function ServiceScrollCard({ service }: { service: Service }) {
   );
 }
 
-export default function ServiceScrollCards({ services }: { services: Service[] }) {
+export default function ServiceHoverCards({
+  services,
+  className = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+}: {
+  services: Service[];
+  // Column layout is the caller's call — the services page runs three
+  // across, the home page four.
+  className?: string;
+}) {
   return (
-    <div className="grid w-full grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className={`grid w-full gap-x-6 gap-y-4 ${className}`}>
       {services.map((service) => (
-        <ServiceScrollCard key={service.slug} service={service} />
+        <ServiceHoverCard key={service.slug} service={service} />
       ))}
     </div>
   );

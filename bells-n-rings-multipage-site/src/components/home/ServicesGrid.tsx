@@ -1,5 +1,5 @@
 import { SERVICES } from "@/lib/content";
-import ServiceCard from "../services/ServiceCard";
+import ServiceHoverCards from "../services/ServiceHoverCards";
 import Reveal from "../shared/Reveal";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
@@ -17,11 +17,10 @@ export default function ServicesGrid() {
           />
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((service, i) => (
-            <ServiceCard key={service.slug} service={service} delay={i * 0.06} />
-          ))}
-        </div>
+        <ServiceHoverCards
+          services={SERVICES}
+          className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+        />
 
         <div className="mt-14 flex justify-center">
           <Button href="/services" variant="outline">

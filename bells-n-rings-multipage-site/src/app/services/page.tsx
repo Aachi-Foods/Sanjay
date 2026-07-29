@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/ui/PageHeader";
-import ServiceScrollCards from "@/components/services/ServiceScrollCards";
+import ServiceHoverCards from "@/components/services/ServiceHoverCards";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
 import KolamDivider from "@/components/ui/KolamDivider";
 import { SERVICES, PAGE_HEADER_IMAGES } from "@/lib/content";
@@ -23,7 +23,7 @@ export default function ServicesPage() {
       />
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8">
-        <ServiceScrollCards services={SERVICES} />
+        <ServiceHoverCards services={SERVICES} />
       </section>
 
       <KolamDivider />
