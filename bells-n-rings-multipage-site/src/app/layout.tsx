@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CursorFollower from "@/components/ui/CursorFollower";
 import SmoothScroll from "@/components/shared/SmoothScroll";
+import PageTransition from "@/components/shared/PageTransition";
 import { SITE_NAME_FULL, SITE_TAGLINE, SITE_URL } from "@/lib/constants";
 
 const playfair = Playfair_Display({
@@ -60,7 +61,9 @@ export default function RootLayout({
         <SmoothScroll />
         <CursorFollower />
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
       </body>
     </html>
