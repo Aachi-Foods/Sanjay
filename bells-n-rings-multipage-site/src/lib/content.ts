@@ -19,6 +19,8 @@ import venueSelectionPhoto from "@/assets/services/venue-selection.jpg";
 import photographyVideographyPhoto from "@/assets/services/photography-videography.jpg";
 import decorationDesignPhoto from "@/assets/services/decoration-design.jpg";
 import guestManagementPhoto from "@/assets/services/guest-management.jpg";
+import cateringBeveragesPhoto from "@/assets/services/catering-beverages.jpg";
+import logisticsSupportPhoto from "@/assets/services/logistics-support.jpg";
 import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
@@ -110,8 +112,9 @@ export const SERVICES: Service[] = [
     shortDescription: "Delicious food, happy guests",
     longDescription:
       "Menu planning, caterer coordination, traditional and contemporary cuisine, live counters, refreshments, beverages, and guest dining management.",
-    image: hf("hf_20260722_045743_c7852e01-ef15-4e27-98a2-7a22ecd87901.png"),
-    imageAlt: "Elegant South Indian wedding banana-leaf feast spread with brass vessels",
+    image: cateringBeveragesPhoto,
+    imageAlt:
+      "Chefs plating a banana-leaf feast of vadas, idlis, rice and chutneys in brass vessels at an outdoor wedding buffet, while a waiter serves a guest and another carries a tray of juice",
   },
   {
     slug: "entertainment",
@@ -139,8 +142,9 @@ export const SERVICES: Service[] = [
     shortDescription: "On-ground management",
     longDescription:
       "Vendor movement, timelines, transport, setup supervision, technical coordination, event-day operations, and on-ground problem solving.",
-    image: hf("hf_20260722_045807_cbf1a7a0-c716-48f6-82d6-3c3889c36008.png"),
-    imageAlt: "Event production crew setting up string lights and stage rig at dusk",
+    image: logisticsSupportPhoto,
+    imageAlt:
+      "Event operations lead directing his on-ground crew with a tablet and radio beside flight cases and run sheets, as guests in traditional dress pass through a lit garland-draped venue behind him",
   },
 ];
 
