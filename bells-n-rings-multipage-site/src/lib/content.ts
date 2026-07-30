@@ -18,6 +18,7 @@ import entertainmentPhoto from "@/assets/services/entertainment.jpg";
 import venueSelectionPhoto from "@/assets/services/venue-selection.jpg";
 import photographyVideographyPhoto from "@/assets/services/photography-videography.jpg";
 import decorationDesignPhoto from "@/assets/services/decoration-design.jpg";
+import guestManagementPhoto from "@/assets/services/guest-management.jpg";
 import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
@@ -128,8 +129,9 @@ export const SERVICES: Service[] = [
     shortDescription: "Invites, RSVP & coordination",
     longDescription:
       "Invitation coordination, RSVP tracking, guest communication, hospitality, seating support, travel guidance, and event-day assistance.",
-    image: hf("hf_20260722_045748_e03a2010-ba2f-40af-be74-cc3f3ae3a5b0.png"),
-    imageAlt: "Elegant South Indian wedding welcome table with guest name cards and marigold garlands",
+    image: guestManagementPhoto,
+    imageAlt:
+      "Hostesses in gold silk sarees checking in arriving guests with tablets at a welcome desk laid out with invitation cards, gift boxes and floral arrangements",
   },
   {
     slug: "logistics-support",
