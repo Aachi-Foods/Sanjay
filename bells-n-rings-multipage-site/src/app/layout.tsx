@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CursorFollower from "@/components/ui/CursorFollower";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 import { SITE_NAME_FULL, SITE_TAGLINE, SITE_URL } from "@/lib/constants";
 
 const playfair = Playfair_Display({
@@ -56,6 +57,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${parisienne.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
+        <SmoothScroll />
         <CursorFollower />
         <Navbar />
         <main className="flex-1">{children}</main>
