@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
 import ParticleField from "../shared/ParticleField";
-import { fadeUp, fadeUpReduced, staggerContainer, staggerContainerReduced } from "@/lib/motionVariants";
+import { fadeUp, staggerContainer } from "@/lib/motionVariants";
 import {
   HERO_POSTER,
   HERO_POSTER_ALT,
@@ -42,9 +42,19 @@ export default function Hero() {
   // "camera" diving deeper into the page. Distinct from the background
   // parallax below (a different element), so this stays on Framer Motion
   // rather than fighting a second ScrollTrigger for the same scroll range.
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 140]);
-  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.82]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  //
+  // The reduced-motion branch lives in the *ranges* here, not in whether
+  // `style` is applied at all further down — framer-motion's
+  // useReducedMotion can resolve synchronously on the client before
+  // hydration while the server always renders its no-preference default,
+  // so conditionally omitting `style` caused a real hydration mismatch for
+  // anyone with the OS preference on. Both ranges below start at the same
+  // value, so at mount (scroll progress 0) the computed style is identical
+  // either way — nothing to mismatch — and the two only diverge once the
+  // user actually scrolls, safely after hydration.
+  const contentY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [0, 140]);
+  const contentScale = useTransform(scrollYProgress, [0, 1], reduceMotion ? [1, 1] : [1, 0.82]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], reduceMotion ? [1, 1] : [1, 0]);
 
   // Background: moves slower than the page as the hero scrolls past — the
   // classic parallax lag, continuous and scroll-position-tracked, so it's
@@ -87,9 +97,18 @@ export default function Hero() {
           layers on purpose: the outer one is GSAP's scroll-parallax target,
           the inner one carries the CSS Ken Burns scale — both write to
           `transform`, so they need separate elements rather than one
-          fighting over a single inline style. */}
+          fighting over a single inline style.
+
+          The Ken Burns class is applied unconditionally rather than
+          `reduceMotion ? "" : "animate-ken-burns"`: framer-motion's
+          useReducedMotion can resolve synchronously on the client before
+          hydration, while the server always renders the no-preference
+          default — branching the className on it here caused a real
+          hydration mismatch. The global `prefers-reduced-motion` rule in
+          globals.css already neutralizes every animation on the site,
+          this one included, so the class itself doesn't need to change. */}
       <div ref={parallaxRef} className="absolute inset-0">
-        <div className={`absolute inset-0 ${reduceMotion ? "" : "animate-ken-burns"}`}>
+        <div className="absolute inset-0 animate-ken-burns">
           {HERO_VIDEO && !reduceMotion ? (
             <video
               src={videoSrc}
@@ -144,20 +163,16 @@ export default function Hero() {
 
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center px-6 text-center"
-        style={
-          reduceMotion
-            ? undefined
-            : { y: contentY, scale: contentScale, opacity: contentOpacity }
-        }
+        style={{ y: contentY, scale: contentScale, opacity: contentOpacity }}
       >
         <motion.div
           initial="hidden"
           animate="visible"
-          variants={reduceMotion ? staggerContainerReduced() : staggerContainer(0.15, 0.3)}
+          variants={staggerContainer(0.15, 0.3, !!reduceMotion)}
           className="flex flex-wrap items-center justify-center gap-4"
         >
           <motion.div
-            variants={reduceMotion ? fadeUpReduced() : fadeUp(16, 0.8)}
+            variants={fadeUp(16, 0.8, !!reduceMotion)}
             whileHover={reduceMotion ? undefined : { scale: 1.03 }}
             transition={{ duration: 0.3, ease: EASE_OUT }}
             className="inline-block"
@@ -170,7 +185,7 @@ export default function Hero() {
             </Button>
           </motion.div>
           <motion.div
-            variants={reduceMotion ? fadeUpReduced() : fadeUp(16, 0.8)}
+            variants={fadeUp(16, 0.8, !!reduceMotion)}
             whileHover={reduceMotion ? undefined : { scale: 1.03 }}
             transition={{ duration: 0.3, ease: EASE_OUT }}
             className="inline-block"

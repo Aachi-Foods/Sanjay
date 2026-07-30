@@ -1,4 +1,4 @@
-import type { Transition, Variants } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 // Shared vocabulary for the GSAP/Three.js animation pass — soft, decelerating
 // curves throughout. This brand doesn't bounce, so elastic/spring easings
@@ -18,49 +18,66 @@ export const STAGGER = {
   loose: 0.12,
 } as const;
 
-export function fadeUpTransition(delay = 0, duration: number = DURATION.short): Transition {
-  return { duration, delay, ease: EASE_OUT };
-}
+// Reduced motion is folded into the *transition timing* here, not into a
+// differently-shaped `hidden` state picked by the caller. An earlier version
+// of this file exposed `fadeUpReduced`/`staggerContainerReduced` as separate
+// variant objects for callers to branch to — but framer-motion's
+// useReducedMotion can resolve synchronously on the client before hydration
+// while the server always renders its no-preference default, so whichever
+// variant a caller picked could differ between the server-rendered HTML and
+// the client's first paint, a real hydration mismatch for anyone with the
+// OS preference on. Keeping `hidden`'s shape fixed regardless of
+// reduceMotion — and only collapsing the *duration* to near-zero — means
+// there's nothing for server and client to disagree about at mount.
+const INSTANT = 0.01;
 
-// Simple fade + rise. Reduced motion still needs a variant object (Framer
-// Motion has no built-in reduced-motion mode), so callers branch to
-// `fadeUpReduced` instead of this one — see `useReducedMotion`.
-export const fadeUp = (y = 24, duration: number = DURATION.short): Variants => ({
-  hidden: { opacity: 0, y },
-  visible: { opacity: 1, y: 0, transition: { duration, ease: EASE_OUT } },
-});
-
-// Reduced-motion counterpart: same start/end state, no travel — just a
-// slightly quicker cross-fade so content still announces itself as "new."
-export const fadeUpReduced = (duration = 0.4): Variants => ({
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration, ease: "linear" } },
-});
-
-// Wrap a group of `fadeUp` children in this to stagger them in reading
-// order. `staggerChildren` is intentionally the only timing knob here —
-// each child still supplies its own duration/easing via `fadeUp`.
-export const staggerContainer = (
-  stagger: number = STAGGER.base,
-  delayChildren = 0,
+// Simple fade + rise.
+export const fadeUp = (
+  y = 24,
+  duration: number = DURATION.short,
+  reduceMotion = false,
 ): Variants => ({
-  hidden: {},
+  hidden: { opacity: 0, y },
   visible: {
-    transition: { staggerChildren: stagger, delayChildren },
+    opacity: 1,
+    y: 0,
+    transition: reduceMotion
+      ? { duration: INSTANT, ease: "linear" }
+      : { duration, ease: EASE_OUT },
   },
 });
 
-// Reduced motion: children still need *a* container to fade in against
-// (whileInView is set on the parent), but they should arrive together
-// rather than marching in one at a time.
-export const staggerContainerReduced = (): Variants => ({
+// Wrap a group of `fadeUp` children in this to stagger them in reading
+// order. `staggerChildren`/`delayChildren` are the only timing knobs here —
+// each child still supplies its own duration/easing via `fadeUp`. Under
+// reduced motion the stagger collapses to 0 so children arrive together
+// instead of marching in one at a time.
+export const staggerContainer = (
+  stagger: number = STAGGER.base,
+  delayChildren = 0,
+  reduceMotion = false,
+): Variants => ({
   hidden: {},
-  visible: { transition: { staggerChildren: 0 } },
+  visible: {
+    transition: reduceMotion
+      ? { staggerChildren: 0 }
+      : { staggerChildren: stagger, delayChildren },
+  },
 });
 
-export const scaleFade = (fromScale = 0.98): Variants => ({
+export const scaleFade = (
+  fromScale = 0.98,
+  duration: number = DURATION.short,
+  reduceMotion = false,
+): Variants => ({
   hidden: { opacity: 0, scale: fromScale },
-  visible: { opacity: 1, scale: 1, transition: { duration: DURATION.short, ease: EASE_OUT } },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: reduceMotion
+      ? { duration: INSTANT, ease: "linear" }
+      : { duration, ease: EASE_OUT },
+  },
 });
 
 // Standard "once, on first scroll into view" viewport config. Margin is

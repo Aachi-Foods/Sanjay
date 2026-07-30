@@ -51,7 +51,11 @@ export default function BottomUpLetters({
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
   const reduceMotion = useReducedMotion();
-  const play = (!triggerOnView || inView) && !reduceMotion;
+  // Reduced motion still needs `play` to become true — otherwise letters
+  // would sit at `initial` forever — it just needs to happen instantly.
+  // See the `transition`/`initial` note below for why that's collapsed to
+  // near-zero duration rather than skipped by leaving `animate` unset.
+  const play = !triggerOnView || inView;
 
   const text = String(children);
   const effectiveStagger = Math.min(
@@ -92,14 +96,20 @@ export default function BottomUpLetters({
               return (
                 <motion.span
                   key={c}
-                  initial={
-                    reduceMotion ? { opacity: 1 } : { opacity: 0, y: 46 }
-                  }
+                  // Always the same shape regardless of reduceMotion — see
+                  // motionVariants.ts for the full reasoning. Branching this
+                  // on reduceMotion directly (as this used to) can differ
+                  // between the server's default render and the client's
+                  // first paint for real reduced-motion users, since the
+                  // hook can resolve synchronously on the client before
+                  // hydration completes — a real, verified hydration
+                  // mismatch, not a theoretical one.
+                  initial={{ opacity: 0, y: 46 }}
                   animate={play ? { opacity: 1, y: 0 } : undefined}
                   style={{ display: "inline-block", whiteSpace: "pre" }}
                   transition={
                     reduceMotion
-                      ? { duration: 0 }
+                      ? { duration: 0.01 }
                       : {
                           duration: DURATION_S,
                           delay: delay / MS + (at * effectiveStagger) / MS,
