@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
+import useReducedMotion from "@/hooks/useReducedMotion";
+import { fadeUp, staggerContainer, VIEWPORT_ONCE } from "@/lib/motionVariants";
 import {
   CONTACT,
   NAV_LINKS,
@@ -15,12 +20,26 @@ import bnrLogo from "@/assets/bnr-logo.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const reduceMotion = useReducedMotion();
 
   return (
     <footer className="border-t border-gold-soft/40 bg-ivory-deep">
       <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8">
-        <div className="grid gap-10 md:grid-cols-4">
-          <div className="flex flex-col gap-3 md:col-span-2">
+        {/* The one place on the page meant to feel settled rather than
+            eventful: the columns fade up together with a small stagger,
+            once, and nothing below this — the divider and copyright line —
+            animates at all. */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_ONCE}
+          variants={staggerContainer(0.1, 0, !!reduceMotion)}
+          className="grid gap-10 md:grid-cols-4"
+        >
+          <motion.div
+            variants={fadeUp(16, 0.6, !!reduceMotion)}
+            className="flex flex-col gap-3 md:col-span-2"
+          >
             <Link href="/" className="relative block h-24 w-auto">
               <Image
                 src={bnrLogo}
@@ -60,9 +79,9 @@ export default function Footer() {
                 <YoutubeIcon className="h-5 w-5" />
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col gap-3">
+          <motion.div variants={fadeUp(16, 0.6, !!reduceMotion)} className="flex flex-col gap-3">
             <h3 className="font-display text-lg text-charcoal">Quick Links</h3>
             <ul className="flex flex-col gap-2">
               {NAV_LINKS.map((link) => (
@@ -76,9 +95,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col gap-3">
+          <motion.div variants={fadeUp(16, 0.6, !!reduceMotion)} className="flex flex-col gap-3">
             <h3 className="font-display text-lg text-charcoal">Get in Touch</h3>
             <ul className="flex flex-col gap-3 font-sans text-sm text-charcoal-soft">
               <li className="flex items-start gap-2">
@@ -106,8 +125,8 @@ export default function Footer() {
                 </span>
               </li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className="mt-10">
           <GoldDivider />
