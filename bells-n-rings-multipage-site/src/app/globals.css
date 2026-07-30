@@ -88,3 +88,20 @@ body {
 .animate-spin-ring {
   animation: spin-ring 18s linear infinite;
 }
+
+/* Hero background Ken Burns drift — one slow push-in, not a loop. Plain
+   linear timing (no ease) reads as a continuous, unhurried drift rather
+   than a move that visibly starts/stops. Disabled automatically by the
+   prefers-reduced-motion rule above like every other animation here. */
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 20s linear forwards;
+}
