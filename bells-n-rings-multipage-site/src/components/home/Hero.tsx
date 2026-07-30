@@ -25,6 +25,12 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const videoSrc = HERO_VIDEO.startsWith("http")
   ? HERO_VIDEO
   : `${BASE_PATH}${HERO_VIDEO}`;
+// HERO_POSTER is a static import (StaticImageData), already resolved to a
+// correct, content-hashed URL by Next's build — unlike HERO_VIDEO above,
+// it needs no manual basePath handling. Only the raw <video poster> attribute
+// needs the plain string out of it; next/image's own src prop below takes
+// the StaticImageData object directly.
+const posterSrc = HERO_POSTER.src;
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
@@ -112,7 +118,7 @@ export default function Hero() {
           {HERO_VIDEO && !reduceMotion ? (
             <video
               src={videoSrc}
-              poster={HERO_POSTER}
+              poster={posterSrc}
               autoPlay
               muted
               loop

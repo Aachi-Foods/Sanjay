@@ -2,6 +2,8 @@
 // Swap the PLACEHOLDER values for real details whenever they're available —
 // nothing else in the codebase needs to change.
 
+import heroPosterPhoto from "@/assets/hero-poster.jpg";
+
 export const SITE_NAME_PRIMARY = "BnR";
 export const SITE_NAME_SECONDARY = "Event Planners";
 export const SITE_NAME_FULL = `${SITE_NAME_PRIMARY} ${SITE_NAME_SECONDARY}`;
@@ -58,8 +60,7 @@ export const HEADER_NAV_LINKS: NavLink[] = NAV_LINKS.filter(
 // loops on its own is exactly what that setting is meant to stop.
 export const HERO_VIDEO: string = "";
 
-export const HERO_POSTER =
-  "https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044156_e2cb7513-237f-4015-9363-635508cff470.png";
+export const HERO_POSTER = heroPosterPhoto;
 
 export const HERO_POSTER_ALT =
-  "Ornate South Indian wedding mandap at dusk, draped in marigold and jasmine garlands with warm gold string lighting";
+  "Bride and groom smiling at each other beneath a gold-draped temple mandap strung with jasmine and marigold, flanked by family as priests tend the sacred fire and musicians play the nadaswaram";
