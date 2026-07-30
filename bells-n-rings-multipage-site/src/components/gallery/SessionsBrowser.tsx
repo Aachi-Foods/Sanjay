@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import useReducedMotion from "@/hooks/useReducedMotion";
 import type { GalleryItem } from "@/lib/content";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -134,13 +135,25 @@ export default function SessionsBrowser({
                   key={item.slug}
                   type="button"
                   onClick={() => go(i - active)}
-                  className="flex w-full cursor-pointer items-center text-left"
+                  className="relative flex w-full cursor-pointer items-center gap-3 text-left"
                   style={{ height: ROW_HEIGHT }}
                 >
+                  {/* Sliding indicator — a shared layoutId bar rather than an
+                      instant style swap, so the eye can follow it moving to
+                      whichever session becomes active instead of it just
+                      appearing in a new spot. */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="active-session-bar"
+                      transition={{ duration: 0.4, ease: EASE }}
+                      className="h-6 w-[3px] shrink-0 rounded-full bg-gold"
+                    />
+                  )}
                   <motion.span
                     animate={{
                       opacity: isActive ? 1 : Math.max(0.55, 1 - dist * 0.15),
                       color: isActive ? "#c9a84c" : "#f1ead6",
+                      marginLeft: isActive ? 0 : 15,
                     }}
                     transition={{ duration: 0.4, ease: EASE }}
                     className="truncate font-display"
