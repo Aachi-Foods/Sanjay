@@ -67,7 +67,8 @@ export const SERVICES: Service[] = [
     longDescription:
       "Complete event planning from the first concept through schedules, vendors, production, coordination, and final execution.",
     image: eventPlanningPhoto,
-    imageAlt: "Floral wedding arch draped in pink and ivory blooms on a seaside terrace",
+    imageAlt:
+      "Event planner directing on-site setup, pointing toward a rose-covered ceremony arch while her team arranges chairs and dresses the arch behind her",
   },
   {
     slug: "venue-selection",
