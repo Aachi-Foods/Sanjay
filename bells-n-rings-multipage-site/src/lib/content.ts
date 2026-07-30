@@ -16,6 +16,8 @@ import type { StaticImageData } from "next/image";
 import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
 import entertainmentPhoto from "@/assets/services/entertainment.jpg";
 import venueSelectionPhoto from "@/assets/services/venue-selection.jpg";
+import photographyVideographyPhoto from "@/assets/services/photography-videography.jpg";
+import decorationDesignPhoto from "@/assets/services/decoration-design.jpg";
 import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
@@ -87,8 +89,9 @@ export const SERVICES: Service[] = [
     shortDescription: "Custom themes & styling",
     longDescription:
       "Personalized event concepts, décor themes, floral styling, stage design, table styling, lighting, and visual presentation.",
-    image: hf("hf_20260722_045738_f3e7c774-f787-4c8f-9d54-45b71ba4785f.png"),
-    imageAlt: "Ornate South Indian wedding mandap stage with marigold and jasmine garlands",
+    image: decorationDesignPhoto,
+    imageAlt:
+      "Floral mandap draped in deep red and ivory roses with fairy-lit curtains, flanked by trimmed topiaries and gold lanterns leading up marble steps to a heritage palace facade",
   },
   {
     slug: "photography-videography",
@@ -96,8 +99,9 @@ export const SERVICES: Service[] = [
     shortDescription: "Capture every moment",
     longDescription:
       "Coordination of professional photography, traditional videography, candid coverage, cinematic films, and event memories.",
-    image: hf("hf_20260722_045741_cc05897d-211e-433e-91d8-5280d4084082.png"),
-    imageAlt: "Professional camera and video gear beside marigold garlands at a South Indian wedding",
+    image: photographyVideographyPhoto,
+    imageAlt:
+      "Overhead crane cameras and a full videography crew filming a wedding ceremony beneath a floral canopy, with live monitor feeds on either side of the courtyard",
   },
   {
     slug: "catering-beverages",
