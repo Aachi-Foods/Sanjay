@@ -1,17 +1,17 @@
+import { forwardRef } from "react";
+
 /**
  * Hand-drawn line-art leaf sprig used to frame invitation-style sections
  * (Wedding Chakra reference). Pure stroke, no fill, so it stays subtle
  * against the blush/ivory palette.
  */
-export default function FloralAccent({
-  className = "",
-  flip = false,
-}: {
-  className?: string;
-  flip?: boolean;
-}) {
+const FloralAccent = forwardRef<
+  SVGSVGElement,
+  { className?: string; flip?: boolean }
+>(function FloralAccent({ className = "", flip = false }, ref) {
   return (
     <svg
+      ref={ref}
       viewBox="0 0 200 200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -44,4 +44,6 @@ export default function FloralAccent({
       <circle cx="150" cy="20" r="3" stroke="currentColor" strokeWidth="1" />
     </svg>
   );
-}
+});
+
+export default FloralAccent;

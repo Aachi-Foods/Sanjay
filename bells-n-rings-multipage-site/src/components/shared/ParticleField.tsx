@@ -103,7 +103,14 @@ function Drift({ count }: { count: number }) {
   );
 }
 
-export default function ParticleField({ className = "" }: { className?: string }) {
+export default function ParticleField({
+  className = "",
+  density = { desktop: 60, mobile: 15 },
+}: {
+  className?: string;
+  /** Particle counts, kept low always — see the file header for why. */
+  density?: { desktop: number; mobile: number };
+}) {
   const reduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
@@ -143,7 +150,7 @@ export default function ParticleField({ className = "" }: { className?: string }
           gl={{ antialias: false, alpha: true }}
           camera={{ position: [0, 0, 5], fov: 50 }}
         >
-          <Drift count={mobile ? 15 : 60} />
+          <Drift count={mobile ? density.mobile : density.desktop} />
         </Canvas>
       )}
     </div>
