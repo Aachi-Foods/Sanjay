@@ -119,7 +119,8 @@ export const SERVICES: Service[] = [
     longDescription:
       "Coordination of music, DJs, live performers, hosts, traditional entertainment, stage programs, and guest experiences.",
     image: entertainmentPhoto,
-    imageAlt: "DJ mixing on a professional deck at an outdoor evening event",
+    imageAlt:
+      "Guests in glittering formalwear dancing together on a mirrored floor beneath blue stage lighting and hanging metallic decor",
   },
   {
     slug: "guest-management",
