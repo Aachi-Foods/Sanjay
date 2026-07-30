@@ -15,6 +15,7 @@
 import type { StaticImageData } from "next/image";
 import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
 import entertainmentPhoto from "@/assets/services/entertainment.jpg";
+import venueSelectionPhoto from "@/assets/services/venue-selection.jpg";
 import silkJasminePhoto from "@/assets/gallery/silk-jasmine-hindu-wedding.jpg";
 import templeTownPhoto from "@/assets/gallery/temple-town-muhurtham.jpg";
 import nikahReceptionPhoto from "@/assets/gallery/nikah-reception.jpg";
@@ -76,8 +77,9 @@ export const SERVICES: Service[] = [
     shortDescription: "Perfect place for your occasion",
     longDescription:
       "Assistance with researching, shortlisting, visiting, comparing, and finalizing the right venue for the celebration.",
-    image: hf("hf_20260722_045736_20d41710-aeba-4708-89cb-98c3749d91f5.png"),
-    imageAlt: "Grand South Indian heritage wedding venue courtyard with pillared architecture and brass oil lamps",
+    image: venueSelectionPhoto,
+    imageAlt:
+      "Beachfront ceremony aisle scattered with petals between rows of clear chiavari chairs, leading to twin floral columns framed by palm trees and the ocean",
   },
   {
     slug: "decoration-design",
