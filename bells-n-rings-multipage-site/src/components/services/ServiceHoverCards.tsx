@@ -1,9 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useReducedMotion from "@/hooks/useReducedMotion";
 import type { Service } from "@/lib/content";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Hover feature cards: at rest a card shows only its title and photo, with
 // the full description parked out of sight behind it. Pointing at the card
@@ -47,19 +52,31 @@ function ServiceHoverCard({ service }: { service: Service }) {
     return () => observer.disconnect();
   }, [reduceMotion]);
 
+  // `reduceMotion` here is the shared useSyncExternalStore-based hook
+  // (src/hooks/useReducedMotion.ts), not framer-motion's own — that one can
+  // resolve synchronously on the client before hydration while the server
+  // renders its no-preference default, and reading it straight into `open`
+  // caused a real hydration mismatch (confirmed the same way as the earlier
+  // Hero/AboutTeaser fixes). useSyncExternalStore is built for precisely
+  // this "value depends on an environment React can't see during SSR" case
+  // — it matches the server's snapshot for the first client render, then
+  // resyncs immediately after, without a mismatch.
   const open = reduceMotion || hovered || inBand;
 
   return (
     <div
       ref={ref}
       id={service.slug}
+      data-service-card=""
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className="group relative flex scroll-mt-28 flex-col"
     >
       {/* Card face. Opaque and stacked above the panel, so the panel can
-          hide completely behind it rather than showing through. */}
-      <div className="relative z-[5] flex flex-col overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
+          hide completely behind it rather than showing through. Lifts
+          slightly on hover — a plain CSS transition, not Framer, since it
+          only ever needs to ease in one direction and back. */}
+      <div className="relative z-[5] flex flex-col overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory shadow-sm transition-[transform,box-shadow] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-lg">
         {/* Fixed height so every card's photo starts at the same line,
             whether the title runs to one line or two. */}
         <div className="flex h-24 flex-col justify-center px-6">
@@ -69,6 +86,9 @@ function ServiceHoverCard({ service }: { service: Service }) {
           <p className="mt-1 font-sans text-[0.65rem] tracking-[0.15em] text-rose-text uppercase">
             {service.shortDescription}
           </p>
+          {/* Thin gold accent line, echoing garland string — draws in under
+              the title on hover rather than appearing all at once. */}
+          <span className="mt-2 h-px w-0 bg-gold transition-[width] duration-300 ease-out group-hover:w-10" />
         </div>
 
         {/* Filling the card and showing every pixel of every photo cannot
@@ -124,8 +144,63 @@ export default function ServiceHoverCards({
   // across, the home page four.
   className?: string;
 }) {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  // Batched reveal in reading order (left-to-right, row by row), each card
+  // fading and rising in with a slight forward tilt that settles flat — a
+  // restrained bit of 3D depth on the cards themselves, never on the text
+  // blocks elsewhere on the site (see Parallax.tsx for why: rotation on a
+  // tall text element has already caused blurred type and wildly
+  // mis-measured bounding boxes here before). Cards are short and squat, and
+  // the tilt is small, so neither failure mode applies.
+  //
+  // The tilt itself is skipped on mobile (still fades/rises, just flat),
+  // and the whole thing is skipped under reduced motion, where cards are
+  // simply visible from the start — nothing here to animate in.
+  //
+  // A layout effect, not a plain effect: `gsap.set` below is what hides the
+  // cards in the first place (there's no CSS class doing it), so it needs
+  // to run before the browser paints or every card would flash fully
+  // visible for a frame first.
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    if (!grid || reduceMotion) return;
+
+    const cards = gsap.utils.toArray<HTMLElement>(
+      grid.querySelectorAll("[data-service-card]"),
+    );
+    const mobile = window.innerWidth < 768;
+
+    gsap.set(cards, { opacity: 0, y: 20, rotateX: mobile ? 0 : 10 });
+
+    const triggers = ScrollTrigger.batch(cards, {
+      start: "top 88%",
+      once: true,
+      onEnter: (batch) =>
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power2.out",
+          overwrite: true,
+        }),
+    });
+
+    return () => {
+      triggers.forEach((st) => st.kill());
+      gsap.set(cards, { clearProps: "opacity,transform" });
+    };
+  }, [reduceMotion]);
+
   return (
-    <div className={`grid w-full gap-x-6 gap-y-4 ${className}`}>
+    <div
+      ref={gridRef}
+      className={`grid w-full gap-x-6 gap-y-4 ${className}`}
+      style={{ perspective: "1400px" }}
+    >
       {services.map((service) => (
         <ServiceHoverCard key={service.slug} service={service} />
       ))}
