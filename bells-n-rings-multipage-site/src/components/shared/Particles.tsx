@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
+import useReducedMotion from "@/hooks/useReducedMotion";
 
 // Canvas particle field, after Magic UI's Particles. Points of light drift
 // upward and lean away from the cursor, which gives the dark sections a
