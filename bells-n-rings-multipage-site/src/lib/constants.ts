@@ -21,9 +21,9 @@ export const CONTACT = {
   // PLACEHOLDER — no email address was supplied yet.
   email: "hello@bnreventplanners.com",
   emailIsPlaceholder: true,
-  // PLACEHOLDER — no studio address was supplied yet.
-  address: "Studio address to be added — City, State, South India",
-  addressIsPlaceholder: true,
+  address:
+    "NO 1926, I Block, Aishwarya Colony, 34th Street, Anna Nagar West, Chennai, Tamil Nadu, 600040",
+  addressIsPlaceholder: false,
   instagram: "https://www.instagram.com/bellsnringsevents/",
   instagramHandle: "@bellsnringsevents",
   facebook: "https://www.facebook.com/profile.php?id=61585982768528",
@@ -31,7 +31,8 @@ export const CONTACT = {
   youtube: "#",
   youtubeIsPlaceholder: true,
   // Static embed, no API key required.
-  mapEmbedSrc: "https://maps.google.com/maps?q=India&z=11&output=embed",
+  mapEmbedSrc:
+    "https://maps.google.com/maps?q=NO+1926%2C+I+Block%2C+Aishwarya+Colony%2C+34th+Street%2C+Anna+Nagar+West%2C+Chennai%2C+Tamil+Nadu+600040&z=16&output=embed",
 } as const;
 
 export type NavLink = { label: string; href: string };
