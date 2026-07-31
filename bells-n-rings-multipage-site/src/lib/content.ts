@@ -13,6 +13,7 @@
 // when one is swapped, since every image goes through next/image.
 
 import type { StaticImageData } from "next/image";
+import invitationPhoto from "@/assets/services/invitation.jpg";
 import eventPlanningPhoto from "@/assets/services/event-planning.jpg";
 import entertainmentPhoto from "@/assets/services/entertainment.jpg";
 import venueSelectionPhoto from "@/assets/services/venue-selection.jpg";
@@ -45,6 +46,7 @@ function hf(filename: string) {
 }
 
 export type ServiceSlug =
+  | "invitation"
   | "event-planning"
   | "venue-selection"
   | "decoration-design"
@@ -63,9 +65,20 @@ export type Service = {
   imageAlt: string;
 };
 
-// Exactly the 8 services from the brief — wording, order, and naming must
-// not be changed, merged, or reordered.
+// The original 8 services from the brief keep their wording, order, and
+// naming — "Invitation" was added afterward, ahead of them, at the client's
+// request.
 export const SERVICES: Service[] = [
+  {
+    slug: "invitation",
+    title: "Invitation",
+    shortDescription: "Your Celebration Begins Here",
+    longDescription:
+      "Personalized wedding invitation design, digital invites, printed cards, save-the-dates, RSVP management, and matching event stationery created around your theme and style.",
+    image: invitationPhoto,
+    imageAlt:
+      "Bride, groom, and their event planner reviewing gold-foiled wedding invitation card samples together at a table, with a tablet showing digital invitation designs and swatches, ribbon, and wax seals spread out around them",
+  },
   {
     slug: "event-planning",
     title: "Event Planning",

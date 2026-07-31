@@ -12,7 +12,7 @@ export default function ServicesGrid() {
           <SectionHeading
             eyebrow="What We Do"
             title="Celebrations, Planned With Devotion"
-            description="Eight services, one standard of care — from the first concept to the final send-off."
+            description="Nine services, one standard of care — from the first concept to the final send-off."
             className="mb-14"
           />
         </Reveal>

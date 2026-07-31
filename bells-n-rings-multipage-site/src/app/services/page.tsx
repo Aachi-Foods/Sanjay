@@ -9,7 +9,7 @@ import { SERVICES, PAGE_HEADER_IMAGES } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Full-service event planning from BnR Event Planners — event planning, venue selection, decoration & design, photography & videography, catering & beverages, entertainment, guest management, and logistics & support.",
+    "Full-service event planning from BnR Event Planners — invitation design, event planning, venue selection, decoration & design, photography & videography, catering & beverages, entertainment, guest management, and logistics & support.",
 };
 
 export default function ServicesPage() {
@@ -18,7 +18,7 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="What We Do"
         title="Celebrations, Planned With Devotion"
-        description="Eight services, one standard of care. Point at any card to open its full details."
+        description="Nine services, one standard of care. Point at any card to open its full details."
         image={PAGE_HEADER_IMAGES.services}
         imageAlt="Grand South Indian temple gopuram-inspired wedding venue entrance"
       />
