@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Playfair_Display, Parisienne, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -58,6 +59,14 @@ export default function RootLayout({
       className={`${playfair.variable} ${parisienne.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
+        {/* HubSpot tracking code — loads on every page. The contact/enquiry
+            form (InvitationContactForm.tsx) pushes each submission into
+            HubSpot via this script's _hsq queue once it's loaded. */}
+        <Script
+          id="hs-script-loader"
+          src="https://js-na2.hs-scripts.com/245625867.js"
+          strategy="afterInteractive"
+        />
         <SmoothScroll />
         <CursorFollower />
         <Navbar />

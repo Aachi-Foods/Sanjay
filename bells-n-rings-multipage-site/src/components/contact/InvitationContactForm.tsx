@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, Check } from "lucide-react";
 import FloralAccent from "../ui/FloralAccent";
 import { CONTACT } from "@/lib/constants";
+import { identifyToHubSpot } from "@/lib/hubspot";
 
 type FormValues = {
   name: string;
@@ -44,6 +45,19 @@ export default function InvitationContactForm() {
 
   async function onSubmit(data: FormValues) {
     setStatus("idle");
+    // Pushed to HubSpot unconditionally, before the EmailJS attempt below —
+    // capturing the lead shouldn't depend on the internal email notification
+    // succeeding; those are two separate concerns.
+    const [firstname, ...rest] = data.name.trim().split(/\s+/);
+    identifyToHubSpot({
+      email: data.email,
+      firstname,
+      lastname: rest.join(" ") || undefined,
+      phone: data.phone,
+      event_date: data.eventDate,
+      event_type: data.eventType,
+      message: data.message,
+    });
     try {
       if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
         throw new Error("EmailJS environment variables are not configured.");
