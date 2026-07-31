@@ -3,6 +3,7 @@
 // nothing else in the codebase needs to change.
 
 import heroPosterPhoto from "@/assets/hero-poster.jpg";
+import heroPosterMobilePhoto from "@/assets/hero-poster-mobile.jpg";
 
 export const SITE_NAME_PRIMARY = "BnR";
 export const SITE_NAME_SECONDARY = "Event Planners";
@@ -61,6 +62,12 @@ export const HEADER_NAV_LINKS: NavLink[] = NAV_LINKS.filter(
 export const HERO_VIDEO: string = "";
 
 export const HERO_POSTER = heroPosterPhoto;
+
+// A portrait crop of the same mandap, used below the `sm` breakpoint. The
+// landscape photo above centers on the couple when cropped to a phone's
+// aspect ratio, but loses the mandap's full height and the kolam-lined
+// aisle in front of it — this crop keeps the whole scene in frame instead.
+export const HERO_POSTER_MOBILE = heroPosterMobilePhoto;
 
 export const HERO_POSTER_ALT =
   "Bride and groom smiling at each other beneath a gold-draped temple mandap strung with jasmine and marigold, flanked by family as priests tend the sacred fire and musicians play the nadaswaram";

@@ -10,6 +10,7 @@ import ParticleField from "../shared/ParticleField";
 import { fadeUp, staggerContainer } from "@/lib/motionVariants";
 import {
   HERO_POSTER,
+  HERO_POSTER_MOBILE,
   HERO_POSTER_ALT,
   HERO_VIDEO,
 } from "@/lib/constants";
@@ -95,7 +96,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[100dvh] min-h-[620px] w-full items-center justify-center overflow-hidden bg-rose-gold-deep pt-20 md:pt-32"
+      className="relative flex h-[100dvh] min-h-[620px] w-full items-end justify-center overflow-hidden bg-rose-gold-deep pt-20 pb-16 sm:pb-20 md:pt-32"
     >
       {/* Backdrop: the video when one is configured, otherwise the still.
           Reduced motion always gets the still — a hero that loops by itself
@@ -128,14 +129,28 @@ export default function Hero() {
               className="h-full w-full object-cover"
             />
           ) : (
-            <Image
-              src={HERO_POSTER}
-              alt={HERO_POSTER_ALT}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
+            <>
+              {/* Art-directed, not just resized: the portrait crop keeps
+                  the mandap's full height and the kolam-lined aisle in
+                  frame on a phone, where the landscape photo would center
+                  on the couple and lose the rest of the scene. */}
+              <Image
+                src={HERO_POSTER_MOBILE}
+                alt={HERO_POSTER_ALT}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover sm:hidden"
+              />
+              <Image
+                src={HERO_POSTER}
+                alt={HERO_POSTER_ALT}
+                fill
+                priority
+                sizes="100vw"
+                className="hidden object-cover sm:block"
+              />
+            </>
           )}
         </div>
       </div>
@@ -151,13 +166,14 @@ export default function Hero() {
         className="absolute inset-0 bg-gradient-to-b from-charcoal/25 via-transparent to-charcoal/45"
         aria-hidden="true"
       />
-      {/* A soft pool of shade behind the buttons only. The outline button has
-          no fill, so it needs something to sit against on a bright frame —
-          darkening the whole hero to achieve that is what made the picture
-          disappear before. Neutral rather than green, to leave the footage's
-          own colour alone. */}
+      {/* A soft pool of shade behind the buttons only, positioned low to
+          match them sitting near the bottom of the hero now rather than
+          centered. The outline button has no fill, so it needs something to
+          sit against on a bright frame — darkening the whole hero to
+          achieve that is what made the picture disappear before. Neutral
+          rather than green, to leave the footage's own colour alone. */}
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.3),_transparent_62%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_rgba(0,0,0,0.35),_transparent_55%)]"
         aria-hidden="true"
       />
 
