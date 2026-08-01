@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, type FieldError, type UseFormRegisterReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import emailjs from "@emailjs/browser";
 import { motion, useReducedMotion } from "framer-motion";
-import { AlertCircle, Check } from "lucide-react";
+import { AlertCircle, Calendar, Check, Mail, MapPin, MessageSquare, PartyPopper, Phone, User } from "lucide-react";
 import FloralAccent from "../ui/FloralAccent";
+import { AnimatedInput, AnimatedSelect, AnimatedTextarea } from "../ui/AnimatedField";
 import { CONTACT } from "@/lib/constants";
 import { identifyToHubSpot } from "@/lib/hubspot";
 
@@ -13,6 +14,7 @@ type FormValues = {
   name: string;
   email: string;
   phone: string;
+  city: string;
   eventDate: string;
   eventType: string;
   message: string;
@@ -54,6 +56,7 @@ export default function InvitationContactForm() {
       firstname,
       lastname: rest.join(" ") || undefined,
       phone: data.phone,
+      city: data.city,
       event_date: data.eventDate,
       event_type: data.eventType,
       message: data.message,
@@ -69,6 +72,7 @@ export default function InvitationContactForm() {
           name: data.name,
           email: data.email,
           phone: data.phone,
+          city: data.city,
           event_date: data.eventDate,
           event_type: data.eventType,
           message: data.message,
@@ -165,98 +169,77 @@ export default function InvitationContactForm() {
           noValidate
           className="mt-10 flex flex-col gap-6"
         >
-          <Field
+          <AnimatedInput
             label="Name"
             type="text"
             autoComplete="name"
-            registration={register("name", { required: "Please share your name." })}
+            icon={<User className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
             error={errors.name}
+            {...register("name", { required: "Please share your name." })}
           />
-          <Field
+          <AnimatedInput
             label="Email"
             type="email"
             autoComplete="email"
-            registration={register("email", {
+            icon={<Mail className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
+            error={errors.email}
+            {...register("email", {
               required: "Please share your email.",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Please enter a valid email address.",
               },
             })}
-            error={errors.email}
           />
-          <Field
+          <AnimatedInput
             label="Phone"
             type="tel"
             autoComplete="tel"
-            registration={register("phone", {
-              required: "Please share your phone number.",
-            })}
+            icon={<Phone className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
             error={errors.phone}
+            {...register("phone", { required: "Please share your phone number." })}
           />
-          <Field
+          <AnimatedInput
+            label="City"
+            type="text"
+            autoComplete="address-level2"
+            icon={<MapPin className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
+            error={errors.city}
+            {...register("city", { required: "Please share your city." })}
+          />
+          <AnimatedInput
             label="Event Date"
             type="date"
             autoComplete="off"
-            registration={register("eventDate", {
-              required: "Please select your event date.",
-            })}
+            icon={<Calendar className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
             error={errors.eventDate}
+            {...register("eventDate", { required: "Please select your event date." })}
           />
 
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="eventType"
-              className="font-sans text-xs tracking-[0.2em] text-rose-text uppercase"
-            >
-              Event Type
-            </label>
-            <select
-              id="eventType"
-              defaultValue=""
-              aria-invalid={!!errors.eventType}
-              aria-describedby={errors.eventType ? "eventType-error" : undefined}
-              className="min-h-11 border-b border-gold-soft bg-transparent font-sans text-base text-charcoal focus:border-rose-gold-deep focus:outline-none"
-              {...register("eventType", { required: "Please choose an event type." })}
-            >
-              <option value="" disabled>
-                Select an event type
+          <AnimatedSelect
+            label="Event Type"
+            defaultValue=""
+            icon={<PartyPopper className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
+            error={errors.eventType}
+            {...register("eventType", { required: "Please choose an event type." })}
+          >
+            <option value="" disabled>
+              Select an event type
+            </option>
+            {EVENT_TYPES.map((type) => (
+              <option key={type} value={type}>
+                {type}
               </option>
-              {EVENT_TYPES.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-            {errors.eventType && (
-              <p id="eventType-error" className="font-sans text-xs text-red-700">
-                {errors.eventType.message}
-              </p>
-            )}
-          </div>
+            ))}
+          </AnimatedSelect>
 
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="message"
-              className="font-sans text-xs tracking-[0.2em] text-rose-text uppercase"
-            >
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows={4}
-              aria-invalid={!!errors.message}
-              aria-describedby={errors.message ? "message-error" : undefined}
-              className="resize-none border-b border-gold-soft bg-transparent font-sans text-base text-charcoal focus:border-rose-gold-deep focus:outline-none"
-              placeholder="Tell us about your dream celebration..."
-              {...register("message", { required: "Tell us a little about your vision." })}
-            />
-            {errors.message && (
-              <p id="message-error" className="font-sans text-xs text-red-700">
-                {errors.message.message}
-              </p>
-            )}
-          </div>
+          <AnimatedTextarea
+            label="Message"
+            rows={4}
+            icon={<MessageSquare className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
+            error={errors.message}
+            {...register("message", { required: "Tell us a little about your vision." })}
+          />
 
           <button
             type="submit"
@@ -268,43 +251,6 @@ export default function InvitationContactForm() {
         </form>
       </div>
       </div>
-    </div>
-  );
-}
-
-function Field({
-  label,
-  type,
-  autoComplete,
-  registration,
-  error,
-}: {
-  label: string;
-  type: string;
-  autoComplete: string;
-  registration: UseFormRegisterReturn;
-  error?: FieldError;
-}) {
-  const id = registration.name;
-  return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="font-sans text-xs tracking-[0.2em] text-rose-text uppercase">
-        {label}
-      </label>
-      <input
-        id={id}
-        type={type}
-        autoComplete={autoComplete}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className="min-h-11 border-b border-gold-soft bg-transparent font-sans text-base text-charcoal focus:border-rose-gold-deep focus:outline-none"
-        {...registration}
-      />
-      {error && (
-        <p id={`${id}-error`} className="font-sans text-xs text-red-700">
-          {error.message}
-        </p>
-      )}
     </div>
   );
 }
