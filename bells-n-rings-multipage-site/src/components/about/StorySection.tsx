@@ -13,7 +13,7 @@ export default function StorySection() {
         />
         <div className="prose-measure mt-6 flex flex-col gap-4 font-sans text-base text-charcoal-soft">
           <p>
-            BnR Event Planners began with a simple observation: the most
+            BNR Event Planners began with a simple observation: the most
             memorable South Indian celebrations rarely feel
             &ldquo;planned&rdquo; at all. They feel inevitable — as though
             every ritual, every garland, every note of nadaswaram was always
@@ -54,10 +54,10 @@ export default function StorySection() {
       <Reveal className="md:col-span-2">
         <div className="rounded-2xl border border-gold-soft/50 bg-blush-soft/50 px-8 py-10 text-center sm:px-14">
           <h3 className="font-display text-2xl text-charcoal sm:text-3xl">
-            Why BnR?
+            Why BNR?
           </h3>
           <p className="prose-measure mx-auto mt-4 font-sans text-base text-charcoal-soft">
-            At BnR Events, we don&rsquo;t just organize events—we curate
+            At BNR Events, we don&rsquo;t just organize events—we curate
             unforgettable experiences with personalized designs, transparent
             pricing, meticulous planning, and flawless execution, ensuring
             every celebration is truly one of a kind.

@@ -55,7 +55,7 @@ export default function Footer() {
                 href={CONTACT.instagram}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="BnR on Instagram"
+                aria-label="BNR on Instagram"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
               >
                 <InstagramIcon className="h-5 w-5" />
@@ -64,7 +64,7 @@ export default function Footer() {
                 href={CONTACT.facebook}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="BnR on Facebook"
+                aria-label="BNR on Facebook"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
               >
                 <FacebookIcon className="h-5 w-5" />
@@ -73,7 +73,7 @@ export default function Footer() {
                 href={CONTACT.youtube}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="BnR on YouTube"
+                aria-label="BNR on YouTube"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
               >
                 <YoutubeIcon className="h-5 w-5" />

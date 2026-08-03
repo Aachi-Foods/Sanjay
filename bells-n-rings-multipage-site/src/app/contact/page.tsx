@@ -9,7 +9,7 @@ import StoryStage from "@/components/shared/StoryStage";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Enquire with BnR Event Planners about your wedding, traditional ceremony, reception, or corporate event.",
+    "Enquire with BNR Event Planners about your wedding, traditional ceremony, reception, or corporate event.",
 };
 
 export default function ContactPage() {

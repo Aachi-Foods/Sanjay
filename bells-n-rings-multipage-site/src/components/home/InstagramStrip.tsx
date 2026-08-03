@@ -76,7 +76,7 @@ export default function InstagramStrip() {
           >
             <Image
               src={src}
-              alt="Placeholder — BnR Instagram gallery highlight"
+              alt="Placeholder — BNR Instagram gallery highlight"
               fill
               loading="lazy"
               sizes="(min-width: 640px) 16vw, 33vw"

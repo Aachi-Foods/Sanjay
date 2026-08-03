@@ -5,7 +5,7 @@
 // anything imported from @/assets is real. The rest are still placeholders —
 // hotlinked stock or generated stand-ins, generic event/wedding imagery
 // rather than literal photos of the ceremony each entry names, and not real
-// BnR events. Keep replacing them with real event photography as it lands.
+// BNR events. Keep replacing them with real event photography as it lands.
 //
 // The titles and descriptions are intentionally spread across Hindu, Muslim,
 // Sikh, and Christian ceremonies (see CONTENT.md); match that spread with
@@ -317,7 +317,7 @@ export type Testimonial = {
 };
 
 // A deliberate spread across Hindu, Muslim, Sikh, and Christian clients,
-// plus secular corporate events — BnR plans celebrations across every
+// plus secular corporate events — BNR plans celebrations across every
 // faith and tradition, not one in particular.
 export const TESTIMONIALS: Testimonial[] = [
   {
@@ -325,42 +325,42 @@ export const TESTIMONIALS: Testimonial[] = [
     eventType: "Hindu Wedding",
     location: "Chennai",
     quote:
-      "BnR turned our wedding into exactly the celebration we dreamed of — every tradition honored, every ritual detail considered. We simply got to be present with our families.",
+      "BNR turned our wedding into exactly the celebration we dreamed of — every tradition honored, every ritual detail considered. We simply got to be present with our families.",
   },
   {
     name: "Ayesha & Imran",
     eventType: "Nikah",
     location: "Hyderabad",
     quote:
-      "BnR understood exactly how we wanted our nikah and reception to feel — respectful of tradition, warm for our families, and beautifully styled from start to finish.",
+      "BNR understood exactly how we wanted our nikah and reception to feel — respectful of tradition, warm for our families, and beautifully styled from start to finish.",
   },
   {
     name: "Preet & Simran",
     eventType: "Anand Karaj",
     location: "Coimbatore",
     quote:
-      "Our Anand Karaj and sangeet needed a team who understood Sikh traditions properly. BnR got every ritual and every detail exactly right.",
+      "Our Anand Karaj and sangeet needed a team who understood Sikh traditions properly. BNR got every ritual and every detail exactly right.",
   },
   {
     name: "Maria & Thomas",
     eventType: "Christian Wedding",
     location: "Kochi",
     quote:
-      "From the church ceremony to the waterside reception, BnR coordinated every vendor flawlessly. Guests flying in from across the country simply arrived and celebrated.",
+      "From the church ceremony to the waterside reception, BNR coordinated every vendor flawlessly. Guests flying in from across the country simply arrived and celebrated.",
   },
   {
     name: "Arun Kumar, Head of Marketing",
     eventType: "Corporate Event",
     location: "Hyderabad",
     quote:
-      "Our leadership summit needed to feel premium and precise. BnR delivered flawless staging and hospitality without a single hitch.",
+      "Our leadership summit needed to feel premium and precise. BNR delivered flawless staging and hospitality without a single hitch.",
   },
   {
     name: "Divya & Prasanna",
     eventType: "Reception",
     location: "Bengaluru",
     quote:
-      "From the décor to the catering to the entertainment lineup, every vendor BnR brought in was outstanding. Our guests are still talking about it.",
+      "From the décor to the catering to the entertainment lineup, every vendor BNR brought in was outstanding. Our guests are still talking about it.",
   },
 ];
 

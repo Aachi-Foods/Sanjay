@@ -6,7 +6,7 @@ export default function ContactMap() {
   return (
     <div className="overflow-hidden rounded-2xl border border-gold-soft/40">
       <iframe
-        title="BnR Event Planners location"
+        title="BNR Event Planners location"
         src={CONTACT.mapEmbedSrc}
         width="100%"
         height="320"

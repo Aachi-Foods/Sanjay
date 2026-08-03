@@ -13,7 +13,7 @@ const PILLARS = [
     icon: HeartHandshake,
     title: "Personal, Not Prescriptive",
     description:
-      "We design around your story rather than a template, so no two BnR events ever look the same.",
+      "We design around your story rather than a template, so no two BNR events ever look the same.",
   },
   {
     icon: Gem,

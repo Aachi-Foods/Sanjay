@@ -137,7 +137,7 @@ export default function AboutTeaser() {
 
         <Reveal delay={0.35} y={16}>
           <p className="prose-measure font-sans text-base text-charcoal-soft sm:text-lg">
-            BnR Event Planners was founded on a simple belief: your celebration
+            BNR Event Planners was founded on a simple belief: your celebration
             should feel as considered as the traditions it honors — layered,
             personal, and unmistakably yours. From event planning and venue
             selection to décor, catering, and on-ground logistics, we bring the

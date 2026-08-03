@@ -11,7 +11,7 @@ import { PAGE_HEADER_IMAGES } from "@/lib/content";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Meet the team behind BnR Event Planners and the philosophy that shapes every wedding, ceremony, and corporate event we design.",
+    "Meet the team behind BNR Event Planners and the philosophy that shapes every wedding, ceremony, and corporate event we design.",
 };
 
 export default function AboutPage() {
@@ -21,7 +21,7 @@ export default function AboutPage() {
         eyebrow="About Us"
         title="Our Story, Our Team, Our Philosophy"
         image={PAGE_HEADER_IMAGES.about}
-        imageAlt="Placeholder — About BnR Event Planners page banner"
+        imageAlt="Placeholder — About BNR Event Planners page banner"
       />
       <StoryStage depth={32}>
         <StorySection />

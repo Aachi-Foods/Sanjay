@@ -5,10 +5,10 @@
 import heroPosterPhoto from "@/assets/hero-poster.jpg";
 import heroPosterMobilePhoto from "@/assets/hero-poster-mobile.jpg";
 
-export const SITE_NAME_PRIMARY = "BnR";
+export const SITE_NAME_PRIMARY = "BNR";
 export const SITE_NAME_SECONDARY = "Event Planners";
 export const SITE_NAME_FULL = `${SITE_NAME_PRIMARY} ${SITE_NAME_SECONDARY}`;
-export const SITE_MONOGRAM = "BnR";
+export const SITE_MONOGRAM = "BNR";
 
 export const SITE_TAGLINE = "Your Celebration. Our Passion.";
 

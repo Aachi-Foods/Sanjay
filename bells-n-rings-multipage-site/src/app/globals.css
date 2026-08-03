@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand palette — BnR Event Planners, South Indian wedding aesthetic.
+  /* Brand palette — BNR Event Planners, South Indian wedding aesthetic.
      Token names kept from the previous rose-gold theme so every existing
      Tailwind utility class (bg-blush, text-rose-text, etc.) repaints
      automatically instead of needing a repo-wide class rename. */
