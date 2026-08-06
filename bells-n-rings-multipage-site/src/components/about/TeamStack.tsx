@@ -24,17 +24,21 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 // boxes (see InvitationReveal.tsx). The fan-out entrance is a plain
 // `whileInView` variant, not a scroll-linked MotionValue, so it isn't
 // affected by the transform-ancestor bug that broke those.
-const CARD_W = 220; // px — keep in sync with the w-55 class below
+const CARD_W = 184; // px — keep in sync with the w-[184px] class below
 // Sized to the content — anything more just adds dead space under the text.
 const CARD_H = 400; // px — keep in sync with the h-[25rem] class below
 // Slightly wider than the card, so neighbours sit shoulder to shoulder
 // rather than overlapping. Overlapping cards look better but force the
 // text into a narrow column set in from the card's edge (anything wider
 // gets covered), which leaves an obvious gutter down one side and reads as
-// misaligned against the full-width photo above it. Four non-overlapping
-// cards at this size are also the most that clear a 1024px laptop, the
-// narrowest viewport this fan is shown at.
-const X_STEP = 228; // px between adjacent card centres
+// misaligned against the full-width photo above it. Five non-overlapping
+// cards at this size are the most that clear a 1024px laptop, the
+// narrowest viewport this fan is shown at — note the rotated outer cards'
+// *axis-aligned* bounding box is noticeably wider than CARD_W itself
+// (width*cos(theta) + height*sin(theta), from the tall card's own height
+// swinging into the horizontal extent), so the fit check has to account
+// for that rather than just card width times slot count.
+const X_STEP = 192; // px between adjacent card centres
 const ROTATE_STEP = 6; // degrees per slot away from centre
 const ARC_DROP = 26; // px — multiplied by offset² for the arc's sag
 export default function TeamStack({ members }: { members: TeamMember[] }) {
@@ -91,7 +95,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
             <div
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className={`flex h-[25rem] w-55 flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
+              className={`flex h-[25rem] w-[184px] flex-col overflow-hidden rounded-3xl border p-4 transition-transform duration-500 ease-out ${
                 isFeatured
                   ? "border-gold bg-rose-gold-deep shadow-[0_30px_60px_-15px_rgba(26,46,26,0.5)]"
                   : "border-gold-soft/50 bg-ivory shadow-[0_20px_45px_-18px_rgba(26,46,26,0.45)]"

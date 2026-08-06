@@ -32,6 +32,7 @@ import namingCeremonyPhoto from "@/assets/gallery/naming-ceremony.jpg";
 import nischayatharthamPhoto from "@/assets/gallery/nischayathartham-engagement.jpg";
 import aboutBannerPhoto from "@/assets/about/banner.jpg";
 import aboutBannerMobilePhoto from "@/assets/about/banner-mobile.jpg";
+import naveenaPhoto from "@/assets/team/naveena.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -375,8 +376,14 @@ export type TeamMember = {
 
 // The real team roster, replacing the earlier placeholder names/stock
 // photos. TeamStack.tsx (the desktop fan) always spotlights whichever
-// member is first in this list — Balaaji stays first.
+// member is first in this list — Naveena, as Director, leads it now.
 export const TEAM_MEMBERS: TeamMember[] = [
+  {
+    name: "Mrs. Naveena Triphosa Wilfred",
+    role: "Director",
+    bio: "With a passion for creating exceptional celebrations and memorable experiences, our Director leads the brand with a vision of excellence, innovation, and client satisfaction.",
+    image: naveenaPhoto,
+  },
   {
     name: "Balaaji",
     role: "Creative Lead",
