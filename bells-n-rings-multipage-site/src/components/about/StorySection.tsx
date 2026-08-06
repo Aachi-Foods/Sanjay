@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Reveal from "../shared/Reveal";
 import SectionHeading from "../ui/SectionHeading";
+import ourStoryPhoto from "@/assets/about/our-story.jpg";
 
 export default function StorySection() {
   return (
@@ -42,8 +43,8 @@ export default function StorySection() {
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
       >
         <Image
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/hf_20260722_044528_ca62b7d4-82a5-43f9-9103-ece8902011a0.png"
-          alt="Event planner's desk with a hand-sketched floor plan, fabric swatches, and jasmine flowers"
+          src={ourStoryPhoto}
+          alt="Wedding invitation suite, gold-bordered silk saree, jasmine garlands, and a hand-drawn venue floor plan"
           fill
           loading="lazy"
           sizes="(min-width: 768px) 45vw, 100vw"
