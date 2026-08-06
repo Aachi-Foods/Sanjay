@@ -379,7 +379,7 @@ export type TeamMember = {
 // member is first in this list — Naveena, as Director, leads it now.
 export const TEAM_MEMBERS: TeamMember[] = [
   {
-    name: "Mrs. Naveena Triphosa Wilfred",
+    name: "Naveena",
     role: "Director",
     bio: "With a passion for creating exceptional celebrations and memorable experiences, our Director leads the brand with a vision of excellence, innovation, and client satisfaction.",
     image: naveenaPhoto,
