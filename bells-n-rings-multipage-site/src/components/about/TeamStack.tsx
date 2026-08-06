@@ -109,7 +109,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
               }}
             >
               <div
-                className={`relative h-44 w-full shrink-0 overflow-hidden rounded-2xl ${
+                className={`relative h-32 w-full shrink-0 overflow-hidden rounded-2xl ${
                   isFeatured ? "bg-rose-gold" : "bg-blush"
                 }`}
               >
