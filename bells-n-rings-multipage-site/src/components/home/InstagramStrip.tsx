@@ -28,7 +28,6 @@ export default function InstagramStrip() {
 
     const triggers = ScrollTrigger.batch(tiles, {
       start: "top 90%",
-      once: true,
       onEnter: (batch) =>
         gsap.to(batch, {
           opacity: 1,
@@ -36,6 +35,26 @@ export default function InstagramStrip() {
           duration: 0.6,
           stagger: 0.08,
           ease: "power2.out",
+          overwrite: true,
+        }),
+      onEnterBack: (batch) =>
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power2.out",
+          overwrite: true,
+        }),
+      // Tiles fade back out above the trigger band so the reveal replays
+      // on the way back down instead of only firing once.
+      onLeaveBack: (batch) =>
+        gsap.to(batch, {
+          opacity: 0,
+          y: 20,
+          duration: 0.4,
+          stagger: 0.05,
+          ease: "power2.in",
           overwrite: true,
         }),
     });

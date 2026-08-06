@@ -49,7 +49,9 @@ export default function BottomUpLetters({
   as?: "span" | "h1" | "h2" | "h3";
 }) {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
+  // `once: false` — the staircase replays every time the headline re-enters
+  // the viewport (down or back up), rather than only the first time.
+  const inView = useInView(ref, { once: false, margin: "0px 0px -10% 0px" });
   const reduceMotion = useReducedMotion();
   // Reduced motion still needs `play` to become true — otherwise letters
   // would sit at `initial` forever — it just needs to happen instantly.
@@ -105,7 +107,7 @@ export default function BottomUpLetters({
                   // hydration completes — a real, verified hydration
                   // mismatch, not a theoretical one.
                   initial={{ opacity: 0, y: 46 }}
-                  animate={play ? { opacity: 1, y: 0 } : undefined}
+                  animate={play ? { opacity: 1, y: 0 } : { opacity: 0, y: 46 }}
                   style={{ display: "inline-block", whiteSpace: "pre" }}
                   transition={
                     reduceMotion

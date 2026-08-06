@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
 import useReducedMotion from "@/hooks/useReducedMotion";
-import { fadeUp, staggerContainer, VIEWPORT_ONCE } from "@/lib/motionVariants";
+import { fadeUp, staggerContainer, VIEWPORT_REVEAL } from "@/lib/motionVariants";
 import {
   CONTACT,
   NAV_LINKS,
@@ -32,7 +32,7 @@ export default function Footer() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={VIEWPORT_ONCE}
+          viewport={VIEWPORT_REVEAL}
           variants={staggerContainer(0.1, 0, !!reduceMotion)}
           className="grid gap-10 md:grid-cols-4"
         >

@@ -81,7 +81,7 @@ export default function TeamStack({ members }: { members: TeamMember[] }) {
                 : { opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.92 }
             }
             whileInView={{ opacity: 1, x, y, rotate, scale: 1 }}
-            viewport={{ once: true, margin: "0px 0px -80px 0px" }}
+            viewport={{ once: false, margin: "0px 0px -80px 0px" }}
             transition={{
               duration: reduceMotion ? 0.4 : 0.75,
               delay: reduceMotion ? 0 : i * 0.09,

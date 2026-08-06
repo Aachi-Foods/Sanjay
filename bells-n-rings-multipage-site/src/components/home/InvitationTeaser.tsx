@@ -9,7 +9,7 @@ import Button from "../ui/Button";
 import GoldDivider from "../ui/GoldDivider";
 import FloralAccent from "../ui/FloralAccent";
 import ParticleField from "../shared/ParticleField";
-import { fadeUp, staggerContainer, VIEWPORT_ONCE } from "@/lib/motionVariants";
+import { fadeUp, staggerContainer, VIEWPORT_REVEAL } from "@/lib/motionVariants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -71,7 +71,7 @@ export default function InvitationTeaser() {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={VIEWPORT_ONCE}
+        viewport={VIEWPORT_REVEAL}
         variants={staggerContainer(0.12, 0, !!reduceMotion)}
         className="relative mx-auto flex max-w-2xl flex-col items-center gap-6 px-6 text-center"
       >

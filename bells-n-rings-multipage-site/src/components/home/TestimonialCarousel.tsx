@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Quote } from "lucide-react";
 import useReducedMotion from "@/hooks/useReducedMotion";
-import { EASE_OUT, VIEWPORT_ONCE } from "@/lib/motionVariants";
+import { EASE_OUT, VIEWPORT_REVEAL } from "@/lib/motionVariants";
 import { TESTIMONIALS } from "@/lib/content";
 
 export default function TestimonialCarousel() {
@@ -24,7 +24,7 @@ export default function TestimonialCarousel() {
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={VIEWPORT_ONCE}
+      viewport={VIEWPORT_REVEAL}
       transition={{ duration: reduceMotion ? 0.01 : 0.7, ease: EASE_OUT }}
       className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center"
     >

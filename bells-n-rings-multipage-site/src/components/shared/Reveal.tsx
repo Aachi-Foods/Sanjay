@@ -23,7 +23,11 @@ const Reveal = forwardRef<
       // margin on a short mobile screen can leave a section invisible for
       // several scrolls, reading as a blank page. See Scene.tsx for the
       // fuller writeup of this same bug.
-      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
+      //
+      // `once: false` — content replays on every pass, fading back out
+      // when scrolled above and back in on the way both down and up,
+      // rather than only ever animating in the first time it's seen.
+      viewport={{ once: false, margin: "0px 0px -60px 0px" }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
       {...rest}

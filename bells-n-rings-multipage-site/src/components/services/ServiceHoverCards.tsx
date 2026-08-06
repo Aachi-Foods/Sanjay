@@ -176,7 +176,6 @@ export default function ServiceHoverCards({
 
     const triggers = ScrollTrigger.batch(cards, {
       start: "top 88%",
-      once: true,
       onEnter: (batch) =>
         gsap.to(batch, {
           opacity: 1,
@@ -185,6 +184,28 @@ export default function ServiceHoverCards({
           duration: 0.7,
           stagger: 0.08,
           ease: "power2.out",
+          overwrite: true,
+        }),
+      onEnterBack: (batch) =>
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power2.out",
+          overwrite: true,
+        }),
+      // Cards fade back out as they scroll above the trigger band, so the
+      // reveal replays on the way back down instead of only firing once.
+      onLeaveBack: (batch) =>
+        gsap.to(batch, {
+          opacity: 0,
+          y: 20,
+          rotateX: mobile ? 0 : 10,
+          duration: 0.4,
+          stagger: 0.05,
+          ease: "power2.in",
           overwrite: true,
         }),
     });

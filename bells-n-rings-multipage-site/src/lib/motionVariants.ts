@@ -80,7 +80,9 @@ export const scaleFade = (
   },
 });
 
-// Standard "once, on first scroll into view" viewport config. Margin is
-// pulled in from the bottom only — see Reveal.tsx for why a symmetric
-// margin can leave short-viewport content invisible for several scrolls.
-export const VIEWPORT_ONCE = { once: true, margin: "0px 0px -60px 0px" } as const;
+// Standard "replays every time it scrolls into view" viewport config —
+// content fades back out above the fold and re-plays on the way back down,
+// rather than only ever animating in once. Margin is pulled in from the
+// bottom only — see Reveal.tsx for why a symmetric margin can leave
+// short-viewport content invisible for several scrolls.
+export const VIEWPORT_REVEAL = { once: false, margin: "0px 0px -60px 0px" } as const;
