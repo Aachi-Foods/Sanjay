@@ -21,7 +21,7 @@ export default function AboutPage() {
         eyebrow="About Us"
         title="Our Story, Our Team, Our Philosophy"
         image={PAGE_HEADER_IMAGES.about}
-        imageAlt="Placeholder — About BNR Event Planners page banner"
+        imageAlt="The BNR Event Planners team reviewing a mood board of saree swatches, floral garlands, and venue sketches"
       />
       <StoryStage depth={32}>
         <StorySection />

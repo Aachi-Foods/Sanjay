@@ -30,6 +30,7 @@ import anandKarajPhoto from "@/assets/gallery/anand-karaj-sangeet-night.jpg";
 import productLaunchPhoto from "@/assets/gallery/product-launch-gala.jpg";
 import namingCeremonyPhoto from "@/assets/gallery/naming-ceremony.jpg";
 import nischayatharthamPhoto from "@/assets/gallery/nischayathartham-engagement.jpg";
+import aboutBannerPhoto from "@/assets/about/banner.jpg";
 import balaajiPhoto from "@/assets/team/balaaji.jpg";
 import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
@@ -414,5 +415,5 @@ export const INSTAGRAM_STRIP_IMAGES = [
 export const PAGE_HEADER_IMAGES = {
   services: hf("hf_20260722_045729_a3748580-4bb8-45d8-b55b-75683739d218.png"),
   gallery: hf("hf_20260722_044606_9b167a46-dea5-43b2-8f1c-90e1b2352eef.png"),
-  about: hf("hf_20260722_044715_f277e41f-2d15-4a75-a378-db1d39d12eb1.png"),
+  about: aboutBannerPhoto.src,
 };
