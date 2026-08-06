@@ -12,12 +12,14 @@ export default function PageHeader({
   title,
   description,
   image,
+  mobileImage,
   imageAlt,
 }: {
   eyebrow: string;
   title: string;
   description?: string;
   image: string;
+  mobileImage?: string;
   imageAlt: string;
 }) {
   return (
@@ -31,14 +33,35 @@ export default function PageHeader({
         className="absolute -top-[14%] -bottom-[14%] left-0 right-0"
       >
         <div className="relative h-full w-full">
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
+          {mobileImage ? (
+            <>
+              <Image
+                src={mobileImage}
+                alt={imageAlt}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover sm:hidden"
+              />
+              <Image
+                src={image}
+                alt={imageAlt}
+                fill
+                priority
+                sizes="100vw"
+                className="hidden object-cover sm:block"
+              />
+            </>
+          ) : (
+            <Image
+              src={image}
+              alt={imageAlt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+          )}
         </div>
       </Parallax>
 
