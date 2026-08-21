@@ -71,4 +71,4 @@ export const HERO_POSTER = heroPosterPhoto;
 export const HERO_POSTER_MOBILE = heroPosterMobilePhoto;
 
 export const HERO_POSTER_ALT =
-  "Bride and groom smiling at each other beneath a gold-draped temple mandap strung with jasmine and marigold, flanked by family as priests tend the sacred fire and musicians play the nadaswaram";
+  "Bride and groom seated with family beneath a gold-carved temple mandap strung with jasmine and roses, priests tending the sacred fire before an elaborate kolam as musicians play the nadaswaram, with the temple gopuram rising behind them";
