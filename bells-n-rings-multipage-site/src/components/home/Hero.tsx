@@ -6,7 +6,6 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
-import ParticleField from "../shared/ParticleField";
 import useSyncedReducedMotion from "@/hooks/useReducedMotion";
 import { fadeUp, staggerContainer } from "@/lib/motionVariants";
 import {
@@ -184,12 +183,6 @@ export default function Hero() {
         className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_rgba(0,0,0,0.35),_transparent_55%)]"
         aria-hidden="true"
       />
-
-      {/* Ambient gold particle drift — the one Three.js layer on the site,
-          purely atmospheric. Replaces the old cursor-reactive ember canvas
-          here specifically; that canvas version still does its job on the
-          testimonial section. */}
-      <ParticleField />
 
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center px-6 text-center"
