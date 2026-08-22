@@ -60,15 +60,14 @@ export const HEADER_NAV_LINKS: NavLink[] = NAV_LINKS.filter(
 // The same image is used as the video's poster, so it shows while the video
 // buffers and stands in for visitors who prefer reduced motion — a hero that
 // loops on its own is exactly what that setting is meant to stop.
-export const HERO_VIDEO: string = "";
+export const HERO_VIDEO: string = "/videos/hero.mp4";
 
 export const HERO_POSTER = heroPosterPhoto;
 
-// A portrait crop of the same mandap, used below the `sm` breakpoint. The
-// landscape photo above centers on the couple when cropped to a phone's
-// aspect ratio, but loses the mandap's full height and the kolam-lined
-// aisle in front of it — this crop keeps the whole scene in frame instead.
+// A close-up crop of the same couple, used below the `sm` breakpoint —
+// keeps both faces in frame on a phone instead of the wide two-shot
+// shrinking them into the corners.
 export const HERO_POSTER_MOBILE = heroPosterMobilePhoto;
 
 export const HERO_POSTER_ALT =
-  "Bride and groom seated with family beneath a gold-carved temple mandap strung with jasmine and roses, priests tending the sacred fire before an elaborate kolam as musicians play the nadaswaram, with the temple gopuram rising behind them";
+  "Bride and groom smiling at each other beneath string lights and chandeliers at their wedding reception";

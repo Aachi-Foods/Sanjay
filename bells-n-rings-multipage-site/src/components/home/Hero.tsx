@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
 import ParticleField from "../shared/ParticleField";
+import useSyncedReducedMotion from "@/hooks/useReducedMotion";
 import { fadeUp, staggerContainer } from "@/lib/motionVariants";
 import {
   HERO_POSTER,
@@ -39,6 +40,13 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  // Framer's useReducedMotion is safe everywhere else in this file (it only
+  // ever changes animation *ranges*, never which element gets rendered),
+  // but choosing between a <video> and an <img> is exactly the branching-
+  // element-shape case that resolves synchronously on the client before
+  // hydration — a real, verified mismatch. useSyncExternalStore is built to
+  // reconcile that divergence without one, so only this decision uses it.
+  const reduceMotionSynced = useSyncedReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -116,7 +124,7 @@ export default function Hero() {
           this one included, so the class itself doesn't need to change. */}
       <div ref={parallaxRef} className="absolute inset-0">
         <div className="absolute inset-0 animate-ken-burns">
-          {HERO_VIDEO && !reduceMotion ? (
+          {HERO_VIDEO && !reduceMotionSynced ? (
             <video
               src={videoSrc}
               poster={posterSrc}
