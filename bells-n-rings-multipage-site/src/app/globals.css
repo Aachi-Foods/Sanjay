@@ -18,6 +18,12 @@
   --color-charcoal-soft: #5c5952;
   --color-gold: #c9a84c;
   --color-gold-soft: #ddc98a;
+
+  /* Site's signature ease — matches BNR_EASE in lib/motion.ts and the
+     "bnrOut" GSAP CustomEase registered there. Use for any CSS transition
+     or Framer Motion `whileHover` that isn't already going through
+     motionVariants.ts's existing fadeUp/staggerContainer vocabulary. */
+  --ease-bnr: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -104,4 +110,11 @@ body {
 
 .animate-ken-burns {
   animation: ken-burns 20s linear forwards;
+}
+
+/* Pair with <Perspective3D> (components/motion/Perspective3D.tsx): put this
+   on the direct child that should actually sit in 3D space — the card or
+   image being tilted — not on the perspective wrapper itself. */
+.preserve-3d {
+  transform-style: preserve-3d;
 }
