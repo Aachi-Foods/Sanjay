@@ -2,11 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
+import { Perspective3D } from "../motion/Perspective3D";
 import useSyncedReducedMotion from "@/hooks/useReducedMotion";
+import { useTilt } from "@/hooks/useTilt";
 import { fadeUp, staggerContainer } from "@/lib/motionVariants";
 import {
   HERO_POSTER,
@@ -37,7 +39,8 @@ const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const parallaxRef = useRef<HTMLDivElement>(null);
+  const videoLayerRef = useRef<HTMLDivElement>(null);
+  const textLayerRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   // Framer's useReducedMotion is safe everywhere else in this file (it only
   // ever changes animation *ranges*, never which element gets rendered),
@@ -47,56 +50,43 @@ export default function Hero() {
   // reconcile that divergence without one, so only this decision uses it.
   const reduceMotionSynced = useSyncedReducedMotion();
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  // As the story is scrolled past, the heading recedes and dissolves — the
-  // "camera" diving deeper into the page. Distinct from the background
-  // parallax below (a different element), so this stays on Framer Motion
-  // rather than fighting a second ScrollTrigger for the same scroll range.
-  //
-  // The reduced-motion branch lives in the *ranges* here, not in whether
-  // `style` is applied at all further down — framer-motion's
-  // useReducedMotion can resolve synchronously on the client before
-  // hydration while the server always renders its no-preference default,
-  // so conditionally omitting `style` caused a real hydration mismatch for
-  // anyone with the OS preference on. Both ranges below start at the same
-  // value, so at mount (scroll progress 0) the computed style is identical
-  // either way — nothing to mismatch — and the two only diverge once the
-  // user actually scrolls, safely after hydration.
-  const contentY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [0, 140]);
-  const contentScale = useTransform(scrollYProgress, [0, 1], reduceMotion ? [1, 1] : [1, 0.82]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], reduceMotion ? [1, 1] : [1, 0]);
-
-  // Background: moves slower than the page as the hero scrolls past — the
-  // classic parallax lag, continuous and scroll-position-tracked, so it's
-  // GSAP ScrollTrigger rather than Framer here. `scrub: true` ties it
-  // directly to scroll offset with no easing of its own to fight Lenis's.
+  // Parallax split: the video visually lags behind the text/buttons layer
+  // as the hero scrolls past — the classic depth cue. Both layers scrub
+  // against the same ScrollTrigger range, but the video moves noticeably
+  // further (yPercent 15) than the text layer (yPercent 3); the gap between
+  // the two speeds is what reads as parallax, not either absolute value.
+  // GSAP rather than Framer's useScroll here so both tweens share one
+  // ScrollTrigger instance and stay perfectly in sync with each other and
+  // with Lenis (see lib/smooth-scroll.ts).
   useEffect(() => {
     const section = sectionRef.current;
-    const bg = parallaxRef.current;
-    if (!section || !bg || reduceMotion) return;
+    const videoLayer = videoLayerRef.current;
+    const textLayer = textLayerRef.current;
+    if (!section || !videoLayer || !textLayer || reduceMotion) return;
 
-    const tween = gsap.fromTo(
-      bg,
-      { yPercent: 0 },
-      {
-        yPercent: 30,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
+    const setWillChange = (v: "transform" | "auto") => {
+      videoLayer.style.willChange = v;
+    };
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.5,
+        onEnter: () => setWillChange("transform"),
+        onEnterBack: () => setWillChange("transform"),
+        onLeave: () => setWillChange("auto"),
+        onLeaveBack: () => setWillChange("auto"),
       },
-    );
+    });
+    tl.fromTo(videoLayer, { yPercent: 0 }, { yPercent: 15, ease: "none" }, 0);
+    tl.fromTo(textLayer, { yPercent: 0 }, { yPercent: 3, ease: "none" }, 0);
 
     return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
+      tl.scrollTrigger?.kill();
+      tl.kill();
+      setWillChange("auto");
     };
   }, [reduceMotion]);
 
@@ -105,13 +95,13 @@ export default function Hero() {
       ref={sectionRef}
       className="relative flex h-[100dvh] min-h-[620px] w-full items-end justify-center overflow-hidden bg-rose-gold-deep pt-20 pb-16 sm:pb-20 md:pt-32"
     >
-      {/* Backdrop: the video when one is configured, otherwise the still.
-          Reduced motion always gets the still — a hero that loops by itself
-          is the kind of movement that setting exists to stop. Two nested
-          layers on purpose: the outer one is GSAP's scroll-parallax target,
-          the inner one carries the CSS Ken Burns scale — both write to
-          `transform`, so they need separate elements rather than one
-          fighting over a single inline style.
+      {/* Video layer: taller than the viewport (130%, offset -15% from the
+          top) so that scrubbing it up to yPercent 15 never reveals an empty
+          edge at the top or bottom of the hero. Two nested layers on
+          purpose: this outer one is the parallax-scrub target, the inner
+          one carries the CSS Ken Burns scale — both write to `transform`,
+          so they need separate elements rather than one fighting over a
+          single inline style.
 
           The Ken Burns class is applied unconditionally rather than
           `reduceMotion ? "" : "animate-ken-burns"`: framer-motion's
@@ -121,7 +111,10 @@ export default function Hero() {
           hydration mismatch. The global `prefers-reduced-motion` rule in
           globals.css already neutralizes every animation on the site,
           this one included, so the class itself doesn't need to change. */}
-      <div ref={parallaxRef} className="absolute inset-0">
+      <div
+        ref={videoLayerRef}
+        className="absolute inset-x-0 -top-[15%] h-[130%]"
+      >
         <div className="absolute inset-0 animate-ken-burns">
           {HERO_VIDEO && !reduceMotionSynced ? (
             <video
@@ -184,9 +177,17 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <motion.div
-        className="relative z-10 flex flex-col items-center justify-center px-6 text-center"
-        style={{ y: contentY, scale: contentScale, opacity: contentOpacity }}
+      {/* h-full matters here beyond layout: GSAP's yPercent is relative to
+          the target's own box height, so without it this layer's box would
+          only be as tall as the button row and a "yPercent: 3" parallax
+          nudge would be a fraction of a pixel — far too small to read
+          against the video layer's much taller (130%) box at yPercent 15.
+          justify-end (rather than relying on the section's own items-end)
+          replicates the original bottom-aligned button position now that
+          this element has an explicit height of its own. */}
+      <div
+        ref={textLayerRef}
+        className="relative z-10 flex h-full w-full flex-col items-center justify-end px-6 text-center"
       >
         <motion.div
           initial="hidden"
@@ -194,35 +195,73 @@ export default function Hero() {
           variants={staggerContainer(0.15, 0.3, !!reduceMotion)}
           className="flex flex-wrap items-center justify-center gap-4"
         >
-          <motion.div
-            variants={fadeUp(16, 0.8, !!reduceMotion)}
-            whileHover={reduceMotion ? undefined : { scale: 1.03 }}
-            transition={{ duration: 0.3, ease: EASE_OUT }}
-            className="inline-block"
+          <HeroCtaButton
+            href="/services"
+            reduceMotion={!!reduceMotion}
+            buttonClassName="transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(201,168,76,0.55)]"
           >
-            <Button
-              href="/services"
-              className="transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(201,168,76,0.55)]"
-            >
-              Explore Our Services
-            </Button>
-          </motion.div>
-          <motion.div
-            variants={fadeUp(16, 0.8, !!reduceMotion)}
-            whileHover={reduceMotion ? undefined : { scale: 1.03 }}
-            transition={{ duration: 0.3, ease: EASE_OUT }}
-            className="inline-block"
+            Explore Our Services
+          </HeroCtaButton>
+          <HeroCtaButton
+            href="/enquire"
+            variant="outline"
+            reduceMotion={!!reduceMotion}
+            buttonClassName="!border-ivory !text-ivory transition-shadow duration-300 hover:!bg-ivory/10 hover:shadow-[0_0_28px_rgba(250,246,239,0.35)]"
           >
-            <Button
-              href="/enquire"
-              variant="outline"
-              className="!border-ivory !text-ivory transition-shadow duration-300 hover:!bg-ivory/10 hover:shadow-[0_0_28px_rgba(250,246,239,0.35)]"
-            >
-              Get In Touch
-            </Button>
-          </motion.div>
+            Get In Touch
+          </HeroCtaButton>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
+  );
+}
+
+// Cursor-tilt CTA button: tilts toward the pointer (capped at 3deg — tighter
+// than the sitewide 4deg ceiling, since anything larger on a small,
+// frequently-hovered element reads as jittery rather than premium) and
+// lifts slightly toward the viewer on hover. The entrance fade/rise
+// (fadeUp variant) and the tilt are on separate nested elements: the outer
+// motion.div owns the staggered entrance, the inner one owns the
+// pointer-driven tilt, so the two animations never fight over the same
+// `style` object.
+function HeroCtaButton({
+  href,
+  variant,
+  buttonClassName,
+  reduceMotion,
+  children,
+}: {
+  href: string;
+  variant?: "primary" | "outline" | "ghost";
+  buttonClassName?: string;
+  reduceMotion: boolean;
+  children: React.ReactNode;
+}) {
+  const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt({ maxDeg: 3 });
+
+  return (
+    <motion.div
+      variants={fadeUp(16, 0.8, reduceMotion)}
+      className="inline-block"
+    >
+      {/* 800-1000px perspective reads better on small elements like a
+          button than the sitewide default depth — a very large value makes
+          a 3deg tilt on something this size barely register. */}
+      <Perspective3D depth={900}>
+        <motion.div
+          ref={ref as React.RefObject<HTMLDivElement>}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+          whileHover={reduceMotion ? undefined : { z: 10 }}
+          transition={{ duration: 0.3, ease: EASE_OUT }}
+          style={{ rotateX, rotateY }}
+          className="preserve-3d"
+        >
+          <Button href={href} variant={variant} className={buttonClassName}>
+            {children}
+          </Button>
+        </motion.div>
+      </Perspective3D>
+    </motion.div>
   );
 }
