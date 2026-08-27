@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Bells n Rings — Living World Hero (Design Exploration)</title>
+<meta name="description" content="A Three.js 'living world' hero concept for Bells n Rings Event Planners — rolling moss-and-gold terrain, drifting pollen, and a wandering butterfly." />
+
+<style>
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/playfair-display-600.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/playfair-display-500.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Jost";
+    src: url("./fonts/jost-400.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Jost";
+    src: url("./fonts/jost-500.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --blush: #f7dce0;
+    --blush-soft: #fbeaed;
+    --rose-gold: #e8b4b8;
+    --rose-gold-deep: #b76e79;
+    --rose-text: #9a4a55;
+    --rose-gold-button: #8b4a55;
+    --ivory: #fff8f3;
+    --ivory-deep: #fbf1e8;
+    --charcoal: #3a2e32;
+    --charcoal-soft: #6b5a5f;
+    --gold: #c9a961;
+    --gold-soft: #e2cd94;
+    --moss: #7a8f6b;
+    --moss-deep: #4f6046;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-family: "Jost", ui-sans-serif, system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      var(--ivory) 0%,
+      #fdeee1 32%,
+      #f4dfd2 58%,
+      #e9d3c9 78%,
+      #ddc7bd 100%
+    );
+  }
+
+  #scene {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    outline: none;
+  }
+
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 70% at 50% 18%, rgba(58, 46, 50, 0.05), transparent 60%),
+      linear-gradient(180deg, rgba(58, 46, 50, 0.28) 0%, rgba(58, 46, 50, 0.08) 30%, rgba(58, 46, 50, 0.12) 68%, rgba(58, 46, 50, 0.42) 100%);
+  }
+
+  .badge {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 10;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    background: rgba(58, 46, 50, 0.55);
+    border: 1px solid rgba(255, 248, 243, 0.25);
+    padding: 6px 12px;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+  }
+
+  header.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 24px 0;
+    pointer-events: none;
+  }
+  header.nav .wordmark {
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    text-shadow: 0 1px 12px rgba(58, 46, 50, 0.4);
+  }
+
+  main.hero {
+    position: relative;
+    z-index: 5;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 24px 80px;
+  }
+
+  .hero-content {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(26px, 4vw, 34px);
+    color: var(--blush);
+    text-shadow: 0 1px 14px rgba(58, 46, 50, 0.35);
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s forwards;
+  }
+
+  h1 {
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 60px);
+    line-height: 1.12;
+    margin: 0;
+    color: var(--ivory);
+    text-shadow: 0 2px 22px rgba(58, 46, 50, 0.45);
+    opacity: 0;
+    transform: translateY(18px);
+    animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
+  }
+
+  p.tagline {
+    font-family: "Jost", sans-serif;
+    font-weight: 400;
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.6;
+    max-width: 52ch;
+    color: var(--blush-soft);
+    text-shadow: 0 1px 12px rgba(58, 46, 50, 0.35);
+    opacity: 0;
+    transform: translateY(18px);
+    animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.45s forwards;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s forwards;
+  }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Liquid-metal buttons: gradient sheen sheet + cursor-tracked specular highlight */
+  .liquid-btn {
+    --mx: 50%;
+    --my: 50%;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 50px;
+    padding: 0 32px;
+    border-radius: 999px;
+    font-family: "Jost", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+  }
+  .liquid-btn:focus-visible {
+    outline: 2px solid var(--ivory);
+    outline-offset: 3px;
+  }
+  .liquid-btn:hover { transform: translateY(-2px); }
+  .liquid-btn:active { transform: translateY(0) scale(0.98); }
+
+  .liquid-btn.primary {
+    color: var(--ivory);
+    background:
+      radial-gradient(120px 60px at var(--mx) var(--my), rgba(255, 255, 255, 0.55), transparent 60%),
+      linear-gradient(135deg, #9c5763 0%, #8b4a55 42%, #6f3a44 100%);
+    box-shadow: 0 10px 30px -10px rgba(139, 74, 85, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .liquid-btn.primary:hover {
+    box-shadow: 0 16px 38px -12px rgba(139, 74, 85, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+
+  .liquid-btn.secondary {
+    color: var(--charcoal);
+    background:
+      radial-gradient(120px 60px at var(--mx) var(--my), rgba(255, 255, 255, 0.9), transparent 60%),
+      linear-gradient(135deg, #f2e6c9 0%, #e2cd94 45%, #c9a961 100%);
+    box-shadow: 0 10px 30px -12px rgba(201, 169, 97, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+  .liquid-btn.secondary:hover {
+    box-shadow: 0 16px 38px -14px rgba(201, 169, 97, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .liquid-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%);
+    transform: translateX(-120%);
+    mix-blend-mode: overlay;
+  }
+  .liquid-btn:hover::after {
+    animation: sheen 1.1s ease forwards;
+  }
+  @keyframes sheen {
+    to { transform: translateX(120%); }
+  }
+
+  .scroll-cue {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    translate: -50% 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--blush-soft);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .scroll-cue .line {
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(180deg, var(--blush-soft), transparent);
+    animation: cue 2.2s ease-in-out infinite;
+  }
+  @keyframes cue {
+    0%, 100% { transform: scaleY(0.4); transform-origin: top; opacity: 0.4; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  }
+
+  /* Floating mood cards */
+  .mood-card {
+    position: fixed;
+    z-index: 4;
+    width: 132px;
+    aspect-ratio: 3 / 4;
+    border-radius: 14px;
+    padding: 10px;
+    background: rgba(255, 248, 243, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 40px -18px rgba(58, 46, 50, 0.45);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+  }
+  .mood-card svg { width: 100%; height: 100%; }
+  .mood-card.left { top: 22%; left: 5%; }
+  .mood-card.right { bottom: 16%; right: 6%; }
+  @media (max-width: 980px) {
+    .mood-card { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eyebrow, h1, p.tagline, .actions { animation: none; opacity: 1; transform: none; }
+    .scroll-cue .line { animation: none; }
+    .liquid-btn, .liquid-btn:hover { transition: none; transform: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+
+  <div class="badge">Design exploration — living world hero (Sylva-inspired)</div>
+
+  <header class="nav">
+    <span class="wordmark">Bells n Rings</span>
+  </header>
+
+  <aside class="mood-card left" aria-hidden="true">
+    <svg viewBox="0 0 100 100"><g fill="none" stroke="#b76e79" stroke-width="2.2" stroke-linecap="round">
+      <path d="M50 78 C 30 60, 22 40, 38 26 C 46 19, 54 22, 50 34 C 46 22, 54 19, 62 26 C 78 40, 70 60, 50 78 Z" fill="#f7dce0" stroke="#e8b4b8"/>
+      <path d="M50 34 L50 68" stroke="#8b4a55" stroke-width="1.4"/>
+    </g></svg>
+  </aside>
+  <aside class="mood-card right" aria-hidden="true">
+    <svg viewBox="0 0 100 100"><g fill="none" stroke="#c9a961" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="50" cy="34" r="12" fill="#fbeaed" stroke="#e2cd94"/>
+      <path d="M50 46 C 40 60, 40 72, 50 82 C 60 72, 60 60, 50 46 Z" fill="#e2cd94" opacity="0.35"/>
+      <path d="M32 58 Q50 50 68 58" />
+    </g></svg>
+  </aside>
+
+  <main class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">Bells n Rings</span>
+      <h1>Luxury Weddings &amp; Events,<br />Designed to Feel Like a Dream</h1>
+      <p class="tagline">
+        Luxury weddings &amp; events, designed to feel like a dream. From intimate
+        ceremonies to destination celebrations, we plan every detail so you can
+        simply be present.
+      </p>
+      <div class="actions">
+        <a class="liquid-btn primary" href="#begin" data-liquid>Begin Your Story</a>
+        <a class="liquid-btn secondary" href="#work" data-liquid>View Our Work</a>
+      </div>
+    </div>
+  </main>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="line"></span>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
