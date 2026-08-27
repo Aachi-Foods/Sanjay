@@ -1,7 +1,6 @@
 import Hero from "@/components/home/Hero";
 import AboutTeaser from "@/components/home/AboutTeaser";
 import ServicesGrid from "@/components/home/ServicesGrid";
-import FeaturedStories from "@/components/featured-stories/FeaturedStories";
 import GalleryTeaser from "@/components/home/GalleryTeaser";
 import TestimonialCarousel from "@/components/home/TestimonialCarousel";
 import InstagramStrip from "@/components/home/InstagramStrip";
@@ -15,13 +14,10 @@ import KolamDivider from "@/components/ui/KolamDivider";
 // varying `depth` values are the whole point — matching numbers would move
 // everything in lockstep and there would be no depth to see.
 //
-// GalleryTeaser and FeaturedStories are both deliberately left unwrapped.
-// GalleryTeaser pins its browser with `position: sticky`; FeaturedStories
-// pins the whole section via GSAP ScrollTrigger's `pin: true` for its
-// horizontal scrollytelling. Either way, a continuously transformed
-// ancestor becomes the containing block for a fixed/sticky descendant,
-// which breaks the pin — these two already carry the page's most dramatic
-// scroll sequences without StoryStage's added drift.
+// GalleryTeaser is deliberately left unwrapped. It pins its browser with
+// `position: sticky`, and a continuously transformed ancestor becomes the
+// containing block for anything sticky inside it, which breaks the pinning.
+// It already carries the most dramatic scroll sequence on the page.
 export default function HomePage() {
   return (
     <>
@@ -36,8 +32,6 @@ export default function HomePage() {
       <StoryStage depth={18}>
         <ServicesGrid />
       </StoryStage>
-
-      <FeaturedStories />
 
       <GalleryTeaser />
 
