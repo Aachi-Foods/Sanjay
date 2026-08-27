@@ -6,7 +6,6 @@ import TestimonialCarousel from "@/components/home/TestimonialCarousel";
 import InstagramStrip from "@/components/home/InstagramStrip";
 import InvitationTeaser from "@/components/home/InvitationTeaser";
 import StoryStage from "@/components/shared/StoryStage";
-import Particles from "@/components/shared/Particles";
 import KolamDivider from "@/components/ui/KolamDivider";
 
 // Sections drift at different rates as they cross the viewport, so the page
@@ -38,12 +37,7 @@ export default function HomePage() {
       <KolamDivider />
 
       <StoryStage depth={40}>
-        <section className="relative overflow-hidden bg-ivory-deep py-24">
-          <Particles quantity={45} staticity={60} className="opacity-70" />
-          <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8">
-            <TestimonialCarousel />
-          </div>
-        </section>
+        <TestimonialCarousel />
       </StoryStage>
 
       <StoryStage depth={22}>
