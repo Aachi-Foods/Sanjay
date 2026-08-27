@@ -3,65 +3,55 @@
 import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useReducedMotion from "@/hooks/useReducedMotion";
 import { INSTAGRAM_STRIP_IMAGES } from "@/lib/content";
 import { CONTACT } from "@/lib/constants";
 import Reveal from "../shared/Reveal";
 import { InstagramIcon } from "../ui/SocialIcons";
 
-gsap.registerPlugin(ScrollTrigger);
-
+// Deliberately understated relative to the rest of the page — a slow,
+// continuous, non-interactive drift rather than anything scroll-linked or
+// 3D. Luxury sites tend to deprioritize the social-proof grid; this stays
+// the calmest section on the page, not the busiest. No ScrollTrigger here
+// at all (unlike most other sections) since this motion is never tied to
+// scroll position in the first place.
 export default function InstagramStrip() {
-  const gridRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
-  // Same batched-reveal approach as the services grid, minus the 3D tilt —
-  // these tiles are plain photos with no card chrome, so a flat fade/rise
-  // reads as tidier than an added forward lean would here.
+  // The set is duplicated once (not tripled) so translating by exactly one
+  // set-width lands the second copy precisely where the first one started —
+  // an invisible reset point rather than a visible jump. Reduced motion
+  // skips the duplicate entirely; it's only ever needed to sell the loop.
+  const tiles = reduceMotion
+    ? INSTAGRAM_STRIP_IMAGES
+    : [...INSTAGRAM_STRIP_IMAGES, ...INSTAGRAM_STRIP_IMAGES];
+
   useLayoutEffect(() => {
-    const grid = gridRef.current;
-    if (!grid || reduceMotion) return;
+    const marquee = marqueeRef.current;
+    if (!marquee || reduceMotion) return;
 
-    const tiles = gsap.utils.toArray<HTMLElement>(grid.querySelectorAll("[data-insta-tile]"));
-    gsap.set(tiles, { opacity: 0, y: 20 });
+    const setWidth = marquee.scrollWidth / 2;
 
-    const triggers = ScrollTrigger.batch(tiles, {
-      start: "top 90%",
-      onEnter: (batch) =>
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power2.out",
-          overwrite: true,
-        }),
-      onEnterBack: (batch) =>
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power2.out",
-          overwrite: true,
-        }),
-      // Tiles fade back out above the trigger band so the reveal replays
-      // on the way back down instead of only firing once.
-      onLeaveBack: (batch) =>
-        gsap.to(batch, {
-          opacity: 0,
-          y: 20,
-          duration: 0.4,
-          stagger: 0.05,
-          ease: "power2.in",
-          overwrite: true,
-        }),
+    const tween = gsap.to(marquee, {
+      x: -setWidth,
+      duration: 40,
+      ease: "none",
+      repeat: -1,
     });
 
+    // pause()/play() rather than killing and recreating the tween, so
+    // hovering back off resumes from exactly where it left off instead of
+    // restarting or jumping.
+    const pause = () => tween.pause();
+    const resume = () => tween.play();
+    marquee.addEventListener("mouseenter", pause);
+    marquee.addEventListener("mouseleave", resume);
+
     return () => {
-      triggers.forEach((st) => st.kill());
-      gsap.set(tiles, { clearProps: "opacity,transform" });
+      marquee.removeEventListener("mouseenter", pause);
+      marquee.removeEventListener("mouseleave", resume);
+      tween.kill();
     };
   }, [reduceMotion]);
 
@@ -82,28 +72,37 @@ export default function InstagramStrip() {
         </a>
       </Reveal>
 
-      <div ref={gridRef} className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
-        {INSTAGRAM_STRIP_IMAGES.map((src) => (
-          <a
-            key={src}
-            href={CONTACT.instagram}
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label="View on Instagram"
-            data-insta-tile=""
-            className="group relative aspect-square overflow-hidden rounded-lg"
-          >
-            <Image
-              src={src}
-              alt="Placeholder — BNR Instagram gallery highlight"
-              fill
-              loading="lazy"
-              sizes="(min-width: 640px) 16vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-charcoal/0 transition-colors duration-300 group-hover:bg-charcoal/20" />
-          </a>
-        ))}
+      {/* overflow-hidden, not overflow-x-auto — there is nothing here for a
+          touch scroll gesture to capture, so the ambient drift can never
+          fight the page's own vertical scroll. */}
+      <div className="overflow-hidden">
+        <div ref={marqueeRef} className="flex w-max gap-3">
+          {tiles.map((src, i) => (
+            <a
+              key={`${src}-${i}`}
+              href={CONTACT.instagram}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="View on Instagram"
+              // Duplicated tiles are a visual echo of the same 6 posts, not
+              // a second set of distinct content — hidden from assistive
+              // tech so the feed doesn't announce every post twice.
+              aria-hidden={i >= INSTAGRAM_STRIP_IMAGES.length || undefined}
+              tabIndex={i >= INSTAGRAM_STRIP_IMAGES.length ? -1 : undefined}
+              className="group relative h-40 w-40 shrink-0 overflow-hidden rounded-lg"
+            >
+              <Image
+                src={src}
+                alt="Placeholder — BNR Instagram gallery highlight"
+                fill
+                loading="lazy"
+                sizes="160px"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-charcoal/0 transition-colors duration-300 group-hover:bg-charcoal/20" />
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );
