@@ -8,6 +8,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Reveal from "../shared/Reveal";
 import BottomUpLetters from "../shared/BottomUpLetters";
 import Button from "../ui/Button";
+import AccentDivider from "../ui/AccentDivider";
+import { Perspective3D } from "../motion/Perspective3D";
+import { registerBnrEase } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,8 +24,11 @@ function mapRange(value: number, inMin: number, inMax: number, outMin: number, o
 }
 
 export default function AboutTeaser() {
+  const sectionRef = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const clipRef = useRef<HTMLDivElement>(null);
+  const imageWrapRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<SVGLineElement>(null);
   const reduceMotion = useReducedMotion();
   const [drift, setDrift] = useState(0);
 
@@ -88,36 +94,134 @@ export default function AboutTeaser() {
     };
   }, [reduceMotion]);
 
+  // Slow-orbit presence on the photo: a subtle scroll-scrubbed rotateY and
+  // scale as the whole section crosses the viewport (not just on entry, like
+  // the curtain reveal above — this one tracks scroll position for the
+  // section's entire time on screen). Targets its own wrapper rather than
+  // clipRef, so this transform and the clip-path curtain never fight over
+  // the same element's style. will-change is toggled on/off with the
+  // ScrollTrigger's active range rather than left on permanently.
+  useEffect(() => {
+    const section = sectionRef.current;
+    const imageWrap = imageWrapRef.current;
+    if (!section || !imageWrap || reduceMotion) return;
+
+    const setWillChange = (v: "transform" | "auto") => {
+      imageWrap.style.willChange = v;
+    };
+
+    const tween = gsap.fromTo(
+      imageWrap,
+      { rotateY: -4, scale: 1.0 },
+      {
+        rotateY: 4,
+        scale: 1.04,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.6,
+          onEnter: () => setWillChange("transform"),
+          onEnterBack: () => setWillChange("transform"),
+          onLeave: () => setWillChange("auto"),
+          onLeaveBack: () => setWillChange("auto"),
+        },
+      },
+    );
+
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+      setWillChange("auto");
+    };
+  }, [reduceMotion]);
+
+  // Divider draw-in: a one-shot stroke-dashoffset reveal timed to follow the
+  // heading immediately after, not a scrub — it plays once as the section
+  // comes into view and never rewinds on a scroll back up (toggleActions'
+  // last three actions are all "none"). Left as its own ScrollTrigger rather
+  // than merged into the heading's timeline: BottomUpLetters drives the
+  // heading via Framer's useInView, not GSAP, so there's no shared timeline
+  // to join without rewriting an already-tested, site-wide component. The
+  // divider sits just after the heading in the DOM and triggers at the same
+  // "meaningfully in view" threshold, which keeps the two in rhythm without
+  // coupling them directly.
+  useLayoutEffect(() => {
+    const line = dividerRef.current;
+    if (!line) return;
+
+    const length = line.getTotalLength();
+
+    if (reduceMotion) {
+      gsap.set(line, { strokeDasharray: length, strokeDashoffset: 0 });
+      return;
+    }
+
+    registerBnrEase();
+    gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+
+    const tween = gsap.to(line, {
+      strokeDashoffset: 0,
+      duration: 1.0,
+      ease: "bnrOut",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
+  }, [reduceMotion]);
+
   return (
-    <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 sm:px-8 md:grid-cols-2 md:items-center md:gap-16">
+    <section
+      ref={sectionRef}
+      className="mx-auto grid max-w-7xl gap-12 px-6 py-24 sm:px-8 md:grid-cols-2 md:items-center md:gap-16"
+    >
       <div
         ref={frameRef}
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
       >
-        <div ref={clipRef} className="absolute inset-0">
-          {/* Oversized and offset by the scroll drift, so the photo still
-              parallaxes inside its frame while the curtain draws back.
-              Applied unconditionally rather than `reduceMotion ? undefined
-              : {...}` — that branch can differ between the server's
-              default render and the client's first paint for real
-              reduced-motion users (see the Ken Burns fix in Hero.tsx for
-              the full writeup), causing a real hydration mismatch. `drift`
-              starts at 0 and the effect above never updates it under
-              reduced motion, so this is already static for those users;
-              it just doesn't need a second, riskier way to say so. */}
+        {/* overflow-hidden stays on frameRef (above), the outermost box —
+            so the rotateY/scale orbit below is clipped to the rounded
+            frame no matter which nested element it's actually applied to. */}
+        <Perspective3D depth={1000} className="absolute inset-0">
           <div
-            className="absolute inset-0"
-            style={{ transform: `translateY(${drift}px) scale(1.12)` }}
+            ref={imageWrapRef}
+            className="preserve-3d absolute inset-0"
+            style={{ backfaceVisibility: "hidden" }}
           >
-            <Image
-              src={PHOTO_SRC}
-              alt={PHOTO_ALT}
-              fill
-              sizes="(min-width: 768px) 45vw, 100vw"
-              className="object-cover"
-            />
+            <div ref={clipRef} className="absolute inset-0">
+              {/* Oversized and offset by the scroll drift, so the photo still
+                  parallaxes inside its frame while the curtain draws back.
+                  Applied unconditionally rather than `reduceMotion ? undefined
+                  : {...}` — that branch can differ between the server's
+                  default render and the client's first paint for real
+                  reduced-motion users (see the Ken Burns fix in Hero.tsx for
+                  the full writeup), causing a real hydration mismatch. `drift`
+                  starts at 0 and the effect above never updates it under
+                  reduced motion, so this is already static for those users;
+                  it just doesn't need a second, riskier way to say so. */}
+              <div
+                className="absolute inset-0"
+                style={{ transform: `translateY(${drift}px) scale(1.12)` }}
+              >
+                <Image
+                  src={PHOTO_SRC}
+                  alt={PHOTO_ALT}
+                  fill
+                  sizes="(min-width: 768px) 45vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        </Perspective3D>
       </div>
 
       <div className="flex flex-col items-start gap-4 text-left">
@@ -134,6 +238,8 @@ export default function AboutTeaser() {
         >
           Every Celebration Deserves Devoted Planning
         </BottomUpLetters>
+
+        <AccentDivider ref={dividerRef} />
 
         <Reveal delay={0.35} y={16}>
           <p className="prose-measure font-sans text-base text-charcoal-soft sm:text-lg">
