@@ -301,6 +301,25 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
 ];
 
+// The five stories behind the homepage's pinned horizontal Featured
+// Stories section — a curated spread across categories and regions, pulled
+// from the same real, already-published GALLERY_ITEMS above rather than
+// invented case studies, so the section launches with real project photos
+// and copy instead of placeholder content. Sourced by slug (not a slice)
+// so this list's order is independent of GALLERY_ITEMS' own ordering and
+// survives that array being reordered or extended later.
+const FEATURED_STORY_SLUGS = [
+  "silk-and-jasmine-hindu-wedding",
+  "temple-town-muhurtham",
+  "nikah-reception",
+  "corporate-leadership-summit",
+  "palace-grounds-wedding",
+] as const;
+
+export const FEATURED_STORIES: GalleryItem[] = FEATURED_STORY_SLUGS.map(
+  (slug) => GALLERY_ITEMS.find((item) => item.slug === slug)!,
+);
+
 export const GALLERY_FILTERS: {
   label: string;
   value: GalleryCategorySlug | "all";
