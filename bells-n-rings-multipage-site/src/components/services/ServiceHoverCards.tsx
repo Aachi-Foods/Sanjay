@@ -6,9 +6,24 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useReducedMotion from "@/hooks/useReducedMotion";
+import { BNR_EASE, LIFT_MAX_Z, registerBnrEase } from "@/lib/motion";
+import { Perspective3D } from "../motion/Perspective3D";
 import type { Service } from "@/lib/content";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Approximates Tailwind's shadow-sm at rest; the hover shadow is gold-tinted
+// to rgb(201, 168, 76) — the same hue as --color-gold (#c9a84c) — since the
+// palette has no rgb-triplet variable to reference for an alpha-blended
+// shadow. Both strings share the same shape (four lengths, one rgba color)
+// so Framer's box-shadow interpolation tweens smoothly between them instead
+// of hard-cutting.
+const BASE_SHADOW = "0px 1px 2px 0px rgba(20, 20, 20, 0.05)";
+const HOVER_SHADOW = "0px 24px 48px -12px rgba(201, 168, 76, 0.35)";
+// Under the sitewide LIFT_MAX_Z (32) ceiling — a card is a large, frequently
+// hovered element, so it sits further under the ceiling than something
+// small like a button.
+const CARD_LIFT_Z = LIFT_MAX_Z - 8;
 
 // Hover feature cards: at rest a card shows only its title and photo, with
 // the full description parked out of sight behind it. Pointing at the card
@@ -28,11 +43,33 @@ gsap.registerPlugin(ScrollTrigger);
 // the viewport; a card counts as active while it overlaps that band.
 const CENTRE_BAND = "-38% 0px -38% 0px";
 
-function ServiceHoverCard({ service }: { service: Service }) {
+function ServiceHoverCard({
+  service,
+  isHovered,
+  isDimmed,
+  onHoverStart,
+  onHoverEnd,
+}: {
+  service: Service;
+  isHovered: boolean;
+  isDimmed: boolean;
+  onHoverStart: () => void;
+  onHoverEnd: () => void;
+}) {
   const ref = useRef<HTMLDivElement>(null);
+  const faceRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const [inBand, setInBand] = useState(false);
-  const [hovered, setHovered] = useState(false);
+
+  // will-change is only useful while this card or a sibling is actually
+  // mid-transform (the lift itself, or the recede triggered by a sibling's
+  // lift) — toggled off the rest of the time rather than left on
+  // permanently.
+  useEffect(() => {
+    const face = faceRef.current;
+    if (!face) return;
+    face.style.willChange = isHovered || isDimmed ? "transform" : "auto";
+  }, [isHovered, isDimmed]);
 
   useEffect(() => {
     const el = ref.current;
@@ -61,22 +98,48 @@ function ServiceHoverCard({ service }: { service: Service }) {
   // this "value depends on an environment React can't see during SSR" case
   // — it matches the server's snapshot for the first client render, then
   // resyncs immediately after, without a mismatch.
-  const open = reduceMotion || hovered || inBand;
+  const open = reduceMotion || isHovered || inBand;
+
+  // Hover treatment: this card lifts forward (scale + translateZ + a
+  // gold-tinted shadow) while any *other* card being hovered instead sends
+  // this one into isDimmed (scale down, dim slightly) — the "hero card
+  // among peers" read. Both states share one transition so a fast diagonal
+  // sweep across the grid always eases consistently rather than the lift
+  // and the recede drifting at different rates. Reduced motion keeps the
+  // shadow-deepen as a static highlight but drops the scale/translateZ
+  // motion entirely.
+  const faceAnimate = reduceMotion
+    ? {
+        scale: isHovered ? 1.01 : 1,
+        z: 0,
+        boxShadow: isHovered ? HOVER_SHADOW : BASE_SHADOW,
+      }
+    : isHovered
+      ? { scale: 1.03, z: CARD_LIFT_Z, boxShadow: HOVER_SHADOW, opacity: 1 }
+      : isDimmed
+        ? { scale: 0.98, z: 0, boxShadow: BASE_SHADOW, opacity: 0.9 }
+        : { scale: 1, z: 0, boxShadow: BASE_SHADOW, opacity: 1 };
 
   return (
     <div
       ref={ref}
       id={service.slug}
       data-service-card=""
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="group relative flex scroll-mt-28 flex-col"
+      onMouseEnter={onHoverStart}
+      onMouseLeave={onHoverEnd}
+      className="preserve-3d group relative flex scroll-mt-28 flex-col"
     >
       {/* Card face. Opaque and stacked above the panel, so the panel can
-          hide completely behind it rather than showing through. Lifts
-          slightly on hover — a plain CSS transition, not Framer, since it
-          only ever needs to ease in one direction and back. */}
-      <div className="relative z-[5] flex flex-col overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory shadow-sm transition-[transform,box-shadow] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-lg">
+          hide completely behind it rather than showing through. The lift
+          itself is now Framer-driven (faceAnimate above) rather than a
+          plain CSS hover transition, since it also has to react to a
+          *sibling* card being hovered, not just its own hover state. */}
+      <motion.div
+        ref={faceRef}
+        animate={faceAnimate}
+        transition={{ ease: BNR_EASE, duration: 0.35 }}
+        className="relative z-[5] flex flex-col overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory"
+      >
         {/* Fixed height so every card's photo starts at the same line,
             whether the title runs to one line or two. */}
         <div className="flex h-24 flex-col justify-center px-6">
@@ -97,19 +160,28 @@ function ServiceHoverCard({ service }: { service: Service }) {
             either one letterboxes the others. The box fills instead, which
             is what makes the grid read as even — the crop is centred, and
             at 4:3 it is the majority of the photos that need none at all.
-            Nothing is laid over the photo and it isn't scaled on hover,
-            since either would hide part of it. */}
+            The image's own Ken Burns zoom (on this card's own hover only,
+            never when it's merely open via inBand/reduced-motion) lives on
+            an inner wrapper so it never fights the outer card-face's own
+            lift transform above — two different transform contexts, one
+            slow and ambient, one immediate. */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-blush-soft">
-          <Image
-            src={service.image}
-            alt={service.imageAlt}
-            fill
-            loading="lazy"
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover object-center"
-          />
+          <motion.div
+            className="absolute inset-0"
+            animate={{ scale: !reduceMotion && isHovered ? 1.08 : 1 }}
+            transition={{ ease: BNR_EASE, duration: isHovered ? 1.2 : 0.8 }}
+          >
+            <Image
+              src={service.image}
+              alt={service.imageAlt}
+              fill
+              loading="lazy"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover object-center"
+            />
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Detail drawer. Parked at -100% of its own height, which lands it
           exactly behind the card, then slides down into the reserved space
@@ -146,18 +218,21 @@ export default function ServiceHoverCards({
 }) {
   const gridRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  // Hover state tracked at the grid level (not per-card in isolation) so
+  // every other card can react to any one card being hovered — the lifted
+  // card vs. its receding peers. `onHoverEnd` only clears the id if it
+  // still matches the card that's leaving, which protects against a fast
+  // diagonal sweep firing a new card's enter before the old one's leave.
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
 
-  // Batched reveal in reading order (left-to-right, row by row), each card
-  // fading and rising in with a slight forward tilt that settles flat — a
-  // restrained bit of 3D depth on the cards themselves, never on the text
-  // blocks elsewhere on the site (see Parallax.tsx for why: rotation on a
-  // tall text element has already caused blurred type and wildly
-  // mis-measured bounding boxes here before). Cards are short and squat, and
-  // the tilt is small, so neither failure mode applies.
-  //
-  // The tilt itself is skipped on mobile (still fades/rises, just flat),
-  // and the whole thing is skipped under reduced motion, where cards are
-  // simply visible from the start — nothing here to animate in.
+  // Cards emerge from behind the screen plane (translateZ -40 -> 0) rather
+  // than sliding up — a depth entrance, not the vertical-slide fade used
+  // elsewhere on the site, and deliberately one-shot (toggleActions' last
+  // three actions are all "none") rather than replaying on every scroll
+  // pass like Reveal/BottomUpLetters do. That only reads as real depth
+  // because the cards already sit inside the shared Perspective3D context
+  // below — translateZ with no perspective ancestor would just look like
+  // "fades in slightly smaller."
   //
   // A layout effect, not a plain effect: `gsap.set` below is what hides the
   // cards in the first place (there's no CSS class doing it), so it needs
@@ -167,64 +242,55 @@ export default function ServiceHoverCards({
     const grid = gridRef.current;
     if (!grid || reduceMotion) return;
 
+    registerBnrEase();
+
     const cards = gsap.utils.toArray<HTMLElement>(
       grid.querySelectorAll("[data-service-card]"),
     );
-    const mobile = window.innerWidth < 768;
 
-    gsap.set(cards, { opacity: 0, y: 20, rotateX: mobile ? 0 : 10 });
+    gsap.set(cards, { opacity: 0, z: -40 });
 
-    const triggers = ScrollTrigger.batch(cards, {
-      start: "top 88%",
-      onEnter: (batch) =>
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: "power2.out",
-          overwrite: true,
-        }),
-      onEnterBack: (batch) =>
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: "power2.out",
-          overwrite: true,
-        }),
-      // Cards fade back out as they scroll above the trigger band, so the
-      // reveal replays on the way back down instead of only firing once.
-      onLeaveBack: (batch) =>
-        gsap.to(batch, {
-          opacity: 0,
-          y: 20,
-          rotateX: mobile ? 0 : 10,
-          duration: 0.4,
-          stagger: 0.05,
-          ease: "power2.in",
-          overwrite: true,
-        }),
+    const tween = gsap.to(cards, {
+      opacity: 1,
+      z: 0,
+      duration: 0.8,
+      ease: "bnrOut",
+      stagger: { each: 0.08, grid: "auto", from: "start" },
+      scrollTrigger: {
+        trigger: grid,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
     });
 
     return () => {
-      triggers.forEach((st) => st.kill());
+      tween.scrollTrigger?.kill();
+      tween.kill();
       gsap.set(cards, { clearProps: "opacity,transform" });
     };
   }, [reduceMotion]);
 
   return (
-    <div
-      ref={gridRef}
-      className={`grid w-full gap-x-6 gap-y-4 ${className}`}
-      style={{ perspective: "1400px" }}
-    >
-      {services.map((service) => (
-        <ServiceHoverCard key={service.slug} service={service} />
-      ))}
-    </div>
+    <Perspective3D depth={1400} className="w-full">
+      <div
+        ref={gridRef}
+        className={`preserve-3d grid w-full gap-x-6 gap-y-4 ${className}`}
+      >
+        {services.map((service) => (
+          <ServiceHoverCard
+            key={service.slug}
+            service={service}
+            isHovered={hoveredSlug === service.slug}
+            isDimmed={hoveredSlug !== null && hoveredSlug !== service.slug}
+            onHoverStart={() => setHoveredSlug(service.slug)}
+            onHoverEnd={() =>
+              setHoveredSlug((current) =>
+                current === service.slug ? null : current,
+              )
+            }
+          />
+        ))}
+      </div>
+    </Perspective3D>
   );
 }
