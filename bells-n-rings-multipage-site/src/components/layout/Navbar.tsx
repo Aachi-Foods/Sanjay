@@ -57,7 +57,7 @@ export default function Navbar() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-30 transition-colors duration-300 ${
-          solid ? "bg-ivory/95 shadow-sm backdrop-blur-sm" : "bg-transparent"
+          solid ? "bg-ivory/95 shadow-gold-sm backdrop-blur-sm" : "bg-transparent"
         }`}
       >
         {/* Row 1: centered logo, with the mobile menu trigger pinned to the right */}

@@ -174,7 +174,7 @@ export default function SessionsBrowser({
               {prevItem && (
                 <motion.div
                   key={`prev-${prevItem.slug}`}
-                  className="absolute left-0 top-10 h-[min(19rem,29vh)] w-[19rem] overflow-hidden rounded-2xl shadow-2xl"
+                  className="absolute left-0 top-10 h-[min(19rem,29vh)] w-[19rem] overflow-hidden rounded-2xl shadow-gold-lg"
                   initial={{ opacity: 0, x: -40, rotate: TILT.back, scale: 0.7 }}
                   animate={{ opacity: 0.55, x: 0, rotate: TILT.back, scale: 0.78, filter: "blur(3px)" }}
                   exit={{ opacity: 0, x: -40, scale: 0.7 }}
@@ -192,7 +192,7 @@ export default function SessionsBrowser({
 
               <motion.div
                 key={`active-${current.slug}`}
-                className="absolute left-1/5 top-0 h-[min(27rem,42vh)] w-[31rem] overflow-hidden rounded-3xl shadow-2xl"
+                className="absolute left-1/5 top-0 h-[min(27rem,42vh)] w-[31rem] overflow-hidden rounded-3xl shadow-gold-lg"
                 initial={{ opacity: 0, scale: 0.85, rotate: 0 }}
                 animate={{ opacity: 1, scale: 1, rotate: 3, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 0.85 }}
@@ -212,7 +212,7 @@ export default function SessionsBrowser({
               {nextItem && (
                 <motion.div
                   key={`next-${nextItem.slug}`}
-                  className="absolute right-0 top-16 h-[min(19rem,29vh)] w-[19rem] overflow-hidden rounded-2xl shadow-2xl"
+                  className="absolute right-0 top-16 h-[min(19rem,29vh)] w-[19rem] overflow-hidden rounded-2xl shadow-gold-lg"
                   initial={{ opacity: 0, x: 40, rotate: TILT.front, scale: 0.7 }}
                   animate={{ opacity: 0.5, x: 0, rotate: TILT.front, scale: 0.74, filter: "blur(4px)" }}
                   exit={{ opacity: 0, x: 40, scale: 0.7 }}

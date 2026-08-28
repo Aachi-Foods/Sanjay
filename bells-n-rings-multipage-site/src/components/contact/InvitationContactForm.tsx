@@ -89,7 +89,7 @@ export default function InvitationContactForm() {
 
   if (status === "success") {
     return (
-      <div className="relative overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory px-8 py-16 text-center shadow-sm sm:px-14">
+      <div className="relative overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory px-8 py-16 text-center shadow-gold-sm sm:px-14">
         <FloralAccent className="pointer-events-none absolute -left-4 -top-4 h-28 w-28 text-rose-gold-deep/40" />
         <FloralAccent flip className="pointer-events-none absolute -bottom-4 -right-4 h-28 w-28 text-rose-gold-deep/40" />
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blush text-rose-text">

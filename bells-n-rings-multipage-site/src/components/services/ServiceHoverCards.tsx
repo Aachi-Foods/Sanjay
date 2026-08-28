@@ -6,20 +6,24 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useReducedMotion from "@/hooks/useReducedMotion";
-import { BNR_EASE, LIFT_MAX_Z, registerBnrEase } from "@/lib/motion";
+import {
+  BNR_EASE,
+  LIFT_MAX_Z,
+  SHADOW_GOLD_LG,
+  SHADOW_GOLD_SM,
+  registerBnrEase,
+} from "@/lib/motion";
 import { Perspective3D } from "../motion/Perspective3D";
 import type { Service } from "@/lib/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Approximates Tailwind's shadow-sm at rest; the hover shadow is gold-tinted
-// to rgb(201, 168, 76) — the same hue as --color-gold (#c9a84c) — since the
-// palette has no rgb-triplet variable to reference for an alpha-blended
-// shadow. Both strings share the same shape (four lengths, one rgba color)
-// so Framer's box-shadow interpolation tweens smoothly between them instead
-// of hard-cutting.
-const BASE_SHADOW = "0px 1px 2px 0px rgba(20, 20, 20, 0.05)";
-const HOVER_SHADOW = "0px 24px 48px -12px rgba(201, 168, 76, 0.35)";
+// The sitewide gold shadow tiers, not a locally hand-picked pair — sm at
+// rest, lg on hover/lift. Both strings share the same shape (four lengths,
+// one rgba color) so Framer's box-shadow interpolation tweens smoothly
+// between them instead of hard-cutting.
+const BASE_SHADOW = SHADOW_GOLD_SM;
+const HOVER_SHADOW = SHADOW_GOLD_LG;
 // Under the sitewide LIFT_MAX_Z (32) ceiling — a card is a large, frequently
 // hovered element, so it sits further under the ceiling than something
 // small like a button.

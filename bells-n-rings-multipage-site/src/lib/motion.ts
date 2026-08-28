@@ -41,3 +41,16 @@ export function registerBnrEase() {
 // hardcoding new degree/px values per component.
 export const TILT_MAX_DEG = 4;
 export const LIFT_MAX_Z = 32;
+
+// --- Gold-tinted shadow tiers ------------------------------------------
+// The same three tiers as --shadow-gold-sm/md/lg in globals.css, as
+// literal strings rather than var() references. Most components should
+// reach for the shadow-gold-sm/md/lg Tailwind classes directly; these
+// exist only for the cases that can't use a class — Framer Motion's
+// `animate` prop interpolates box-shadow by parsing the numbers out of
+// the string, which it can't do through an opaque var() reference, so
+// anything animating a shadow via Framer needs the resolved value here
+// instead. Keep both places in sync if either changes.
+export const SHADOW_GOLD_SM = "0 8px 16px -4px rgba(201, 168, 76, 0.25)";
+export const SHADOW_GOLD_MD = "0 16px 32px -8px rgba(201, 168, 76, 0.3)";
+export const SHADOW_GOLD_LG = "0 24px 48px -12px rgba(201, 168, 76, 0.35)";

@@ -18,12 +18,27 @@
   --color-charcoal-soft: #5c5952;
   --color-gold: #c9a84c;
   --color-gold-soft: #ddc98a;
+  /* Raw triplet of --color-gold (#c9a84c), for rgba()'s alpha channel —
+     rgba() needs components, not a hex value, and --color-gold itself is
+     hex. Every shadow on the site should be built from this rather than a
+     separately hand-picked gold value per component. */
+  --color-gold-rgb: 201, 168, 76;
 
   /* Site's signature ease — matches BNR_EASE in lib/motion.ts and the
      "bnrOut" GSAP CustomEase registered there. Use for any CSS transition
      or Framer Motion `whileHover` that isn't already going through
      motionVariants.ts's existing fadeUp/staggerContainer vocabulary. */
   --ease-bnr: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Three tiers replacing Tailwind's default black/gray shadow-sm/md/lg/xl
+     wherever this site actually needs a shadow — sm for small chrome
+     (buttons, footer links, form panels), md for cards, lg for the
+     biggest lifted/hovered states (service card hover, mobile drawer,
+     gallery stack). Declared in @theme below too, which is what turns
+     these into real shadow-gold-sm/md/lg utility classes. */
+  --shadow-gold-sm: 0 8px 16px -4px rgba(var(--color-gold-rgb), 0.25);
+  --shadow-gold-md: 0 16px 32px -8px rgba(var(--color-gold-rgb), 0.3);
+  --shadow-gold-lg: 0 24px 48px -12px rgba(var(--color-gold-rgb), 0.35);
 }
 
 @theme inline {
@@ -43,6 +58,13 @@
   --font-display: var(--font-playfair);
   --font-script: var(--font-parisienne);
   --font-sans: var(--font-dm-sans);
+
+  /* Tailwind v4 maps --shadow-* theme keys to shadow-* utilities directly —
+     shadow-gold-sm/md/lg below are real utility classes, not arbitrary
+     values, once these are declared here. */
+  --shadow-gold-sm: var(--shadow-gold-sm);
+  --shadow-gold-md: var(--shadow-gold-md);
+  --shadow-gold-lg: var(--shadow-gold-lg);
 }
 
 html {

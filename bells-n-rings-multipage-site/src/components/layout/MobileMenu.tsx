@@ -34,7 +34,7 @@ export default function MobileMenu({
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
-            className="fixed inset-y-0 right-0 z-50 flex w-[82vw] max-w-sm flex-col gap-8 bg-ivory px-8 py-10 shadow-xl md:hidden"
+            className="fixed inset-y-0 right-0 z-50 flex w-[82vw] max-w-sm flex-col gap-8 bg-ivory px-8 py-10 shadow-gold-lg md:hidden"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}

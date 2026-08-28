@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
 import useReducedMotion from "@/hooks/useReducedMotion";
+import { useTilt } from "@/hooks/useTilt";
+import { BNR_EASE } from "@/lib/motion";
 import { fadeUp, staggerContainer, VIEWPORT_REVEAL } from "@/lib/motionVariants";
 import {
   CONTACT,
@@ -16,6 +18,7 @@ import {
 } from "@/lib/constants";
 import GoldDivider from "../ui/GoldDivider";
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "../ui/SocialIcons";
+import { Perspective3D } from "../motion/Perspective3D";
 import bnrLogo from "@/assets/bnr-logo.png";
 
 export default function Footer() {
@@ -86,12 +89,11 @@ export default function Footer() {
             <ul className="flex flex-col gap-2">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <FooterNavLink
                     href={link.href}
-                    className="font-sans text-sm text-charcoal-soft transition-colors hover:text-rose-text"
-                  >
-                    {link.label}
-                  </Link>
+                    label={link.label}
+                    reduceMotion={!!reduceMotion}
+                  />
                 </li>
               ))}
             </ul>
@@ -137,5 +139,50 @@ export default function Footer() {
         </p>
       </div>
     </footer>
+  );
+}
+
+// A lighter echo of the hero/CTA button tilt, scoped to the footer's
+// primary site-nav links only ("Quick Links") — not the "Get in Touch"
+// contact rows, the social icon circles, or the copyright line below,
+// which all stay plain color-transition hovers. Tilting every link in a
+// dense footer column, right down to legal text, reads as overdone; a
+// handful of primary nav items get the premium treatment, everything else
+// stays quiet. Tighter than the button version (2deg vs 3deg, 5px lift vs
+// 10px) since these are text-sized targets, not button-sized — the full
+// button intensity on something this small looks jittery rather than
+// premium. inline-block on both wrapper layers keeps this layout-neutral
+// inside the existing flex-col/gap-2 list — no line-height or spacing
+// change versus the plain <Link> this replaces.
+function FooterNavLink({
+  href,
+  label,
+  reduceMotion,
+}: {
+  href: string;
+  label: string;
+  reduceMotion: boolean;
+}) {
+  const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt({ maxDeg: 2 });
+
+  return (
+    <Perspective3D depth={600} className="inline-block">
+      <motion.div
+        ref={ref as React.RefObject<HTMLDivElement>}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        whileHover={reduceMotion ? undefined : { z: 5 }}
+        transition={{ duration: 0.3, ease: BNR_EASE }}
+        style={{ rotateX, rotateY }}
+        className="preserve-3d inline-block"
+      >
+        <Link
+          href={href}
+          className="font-sans text-sm text-charcoal-soft transition-colors hover:text-rose-text"
+        >
+          {label}
+        </Link>
+      </motion.div>
+    </Perspective3D>
   );
 }
