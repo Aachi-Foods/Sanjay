@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
 import { Perspective3D } from "../motion/Perspective3D";
+import ParticleField from "../shared/ParticleField";
 import useSyncedReducedMotion from "@/hooks/useReducedMotion";
 import { useTilt } from "@/hooks/useTilt";
 import { fadeUp, staggerContainer } from "@/lib/motionVariants";
@@ -175,6 +176,20 @@ export default function Hero() {
       <div
         className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_rgba(0,0,0,0.35),_transparent_55%)]"
         aria-hidden="true"
+      />
+
+      {/* Ambient marigold drift, layered over the footage like the tint
+          gradients above it rather than literally behind the opaque video
+          — a low, unhurried density (kept well under the CTA band's own
+          ParticleField instance) so it reads as atmosphere behind the
+          heading/buttons, never competing with either. Cursor parallax is
+          the one thing this instance turns on that the CTA band's doesn't
+          — a hero is where a visitor's mouse is most likely to be resting
+          and moving idly before they've committed to scrolling. */}
+      <ParticleField
+        density={{ desktop: 20, mobile: 10 }}
+        enableParallax
+        className="z-[1]"
       />
 
       {/* h-full matters here beyond layout: GSAP's yPercent is relative to

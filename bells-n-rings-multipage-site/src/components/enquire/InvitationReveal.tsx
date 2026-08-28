@@ -9,6 +9,8 @@ import InvitationContactForm from "../contact/InvitationContactForm";
 import FloralAccent from "../ui/FloralAccent";
 import GoldDivider from "../ui/GoldDivider";
 import Reveal from "../shared/Reveal";
+import { Perspective3D } from "../motion/Perspective3D";
+import ParticleField from "../shared/ParticleField";
 import bnrLogo from "@/assets/bnr-logo.png";
 
 function mapRange(value: number, inMin: number, inMax: number, outMin: number, outMax: number) {
@@ -85,10 +87,47 @@ export default function InvitationReveal() {
   const leftRotate = mapRange(progress, 0, 0.55, 0, -112);
   const rightRotate = mapRange(progress, 0, 0.55, 0, 112);
   const doorsOpacity = mapRange(progress, 0.45, 0.65, 1, 0);
-  const coverOpacity = mapRange(progress, 0, 0.15, 1, 0);
-  const coverScale = mapRange(progress, 0, 0.15, 1, 0.55);
   const hintOpacity = mapRange(progress, 0, 0.1, 1, 0);
   const doorsVisible = doorsOpacity > 0.01;
+
+  // The "You're Invited" card's own exit: a real 3D fold, hinged at the top
+  // edge, rather than the shrink+fade this replaced. Starts a beat after
+  // scroll begins (0.05) so the resting card is legible for a moment first,
+  // and spans a wide enough slice of the pin's scroll distance (to 0.4) to
+  // read as a deliberate ~700ms-feeling motion rather than a snap — tuned by
+  // scrubbing at a normal scroll speed, not picked blind.
+  const FOLD_START = 0.05;
+  const FOLD_END = 0.4;
+  const cardRotateX = mapRange(progress, FOLD_START, FOLD_END, 0, -112);
+  // The fold's own 0-1 progress, independent of the overall pin progress —
+  // everything else about the card (its fade-out, its growing shadow, the
+  // form preview cross-fading in behind it) is timed off this instead of
+  // the raw scroll value, so those relationships hold even if FOLD_START/
+  // FOLD_END above are ever retuned.
+  const foldFraction = mapRange(progress, FOLD_START, FOLD_END, 0, 1);
+  // Card fades out only in the fold's final stretch — past ~75deg of
+  // rotation it's edge-on and unreadable anyway, so holding full opacity
+  // that long keeps the logo crisp for as much of the fold as possible
+  // instead of dissolving while it's still readable.
+  const cardOpacity = mapRange(foldFraction, 0.75, 1, 1, 0);
+  // Shadow grows and drops as the card tips back, selling the sense of it
+  // lifting off the page rather than just rotating in place.
+  const cardShadowBlur = 24 + foldFraction * 56; // 24px -> 80px
+  const cardShadowY = 14 + foldFraction * 46; // 14px -> 60px
+  const cardShadowAlpha = 0.22 + foldFraction * 0.26; // 0.22 -> 0.48
+  const cardShadow = `0 ${cardShadowY.toFixed(1)}px ${cardShadowBlur.toFixed(1)}px -12px rgba(26, 46, 26, ${cardShadowAlpha.toFixed(2)})`;
+  // The real, fully interactive form still lives in normal document flow
+  // below this pinned section (see the long comment above this component
+  // for why — a form embedded in this overflow-hidden 100dvh box gets its
+  // Send button clipped unreachable on phones). This preview reuses the
+  // form's own "Get in Touch" heading, decorative and non-interactive, so
+  // scrolling past the fold reads as the form arriving underneath the card
+  // rather than a dead gap before the real section further down begins.
+  const formPreviewOpacity = mapRange(foldFraction, 0.6, 0.85, 0, 1);
+  // The idle bob/tilt is a "resting invitation" detail for before the user
+  // starts scrolling — once the fold begins, it settles to neutral instead
+  // of continuing to loop underneath the scroll-driven rotation.
+  const cardIsIdle = progress < 0.02;
 
   return (
     <>
@@ -107,6 +146,16 @@ export default function InvitationReveal() {
           animate={{ x: [0, -20, 0], y: [0, 18, 0] }}
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
         />
+
+        {/* Denser than the hero's instance — this page is the "candlelight/
+            festival" close of the funnel, not an ambient backdrop to a
+            video. Sits with the other undated-z-index ambient layers above
+            (the two blur glows), so it's always beneath the doors (z-10),
+            the form preview (z-10), and the card (z-20) — it can never sit
+            on top of or interfere with the fold. No cursor parallax here:
+            the fold itself already owns the sense of depth in this scene,
+            and stacking a second depth cue on top would compete with it. */}
+        <ParticleField density={{ desktop: 35, mobile: 18 }} />
 
         {doorsVisible && (
           <div
@@ -135,19 +184,54 @@ export default function InvitationReveal() {
                 <FloralAccent flip className="h-24 w-24 text-rose-gold-deep/35 sm:h-32 sm:w-32" />
               </div>
             </div>
+          </div>
+        )}
 
-            <div
-              style={{ opacity: coverOpacity, transform: `scale(${coverScale})`, perspective: 1400 }}
-              className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
-            >
+        {/* Non-interactive preview of the real form's own heading, centred
+            exactly where the card sits so it reads as "underneath" it.
+            Deliberately NOT nested inside the doorsVisible block above —
+            that block unmounts once the doors finish fading out around
+            65% through the pin, which is well before this preview is done
+            bridging into the real form section below. Never becomes the
+            actual form itself — see the comment above formPreviewOpacity
+            for why. */}
+        <div
+          aria-hidden="true"
+          data-invite-form-preview=""
+          style={{ opacity: formPreviewOpacity }}
+          className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 text-center"
+        >
+          <span className="font-script text-4xl text-rose-text sm:text-5xl">
+            Get in Touch
+          </span>
+          <p className="font-sans text-sm text-charcoal-soft">
+            Share a few details and we&rsquo;ll begin crafting your celebration.
+          </p>
+        </div>
+
+        {cardOpacity > 0.01 && (
+          <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+            <Perspective3D depth={1400}>
               <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                  rotateZ: [-2.5, 2.5, -2.5],
+                data-invite-fold-card=""
+                animate={
+                  cardIsIdle
+                    ? { y: [0, -10, 0], rotateZ: [-2.5, 2.5, -2.5] }
+                    : { y: 0, rotateZ: 0 }
+                }
+                transition={
+                  cardIsIdle
+                    ? { duration: 6, repeat: Infinity, ease: "easeInOut" }
+                    : { duration: 0.3, ease: "easeOut" }
+                }
+                style={{
+                  rotateX: cardRotateX,
+                  opacity: cardOpacity,
+                  transformOrigin: "top center",
+                  backfaceVisibility: "hidden",
+                  boxShadow: cardShadow,
                 }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                style={{ transformStyle: "preserve-3d" }}
-                className="flex w-72 flex-col items-center gap-4 rounded-3xl border border-gold bg-ivory px-8 py-10 text-center shadow-[0_30px_60px_-15px_rgba(26,46,26,0.45)] sm:w-80 sm:px-10 sm:py-12"
+                className="preserve-3d flex w-72 flex-col items-center gap-4 rounded-3xl border border-gold bg-ivory px-8 py-10 text-center sm:w-80 sm:px-10 sm:py-12"
               >
                 <div className="relative w-32 sm:w-36">
                   <Image src={bnrLogo} alt={SITE_NAME_FULL} className="h-auto w-full object-contain" />
@@ -160,7 +244,7 @@ export default function InvitationReveal() {
                   Scroll down to begin your enquiry
                 </p>
               </motion.div>
-            </div>
+            </Perspective3D>
           </div>
         )}
 

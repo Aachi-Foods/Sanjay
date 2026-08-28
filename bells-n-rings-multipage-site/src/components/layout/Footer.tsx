@@ -102,24 +102,31 @@ export default function Footer() {
           <motion.div variants={fadeUp(16, 0.6, !!reduceMotion)} className="flex flex-col gap-3">
             <h3 className="font-display text-lg text-charcoal">Get in Touch</h3>
             <ul className="flex flex-col gap-3 font-sans text-sm text-charcoal-soft">
-              <li className="flex items-start gap-2">
+              <li className="flex min-w-0 items-start gap-2">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-rose-text" strokeWidth={1.5} aria-hidden="true" />
-                <a href={CONTACT.phoneHref} className="hover:text-rose-text">
+                <a href={CONTACT.phoneHref} className="min-w-0 break-words hover:text-rose-text">
                   {CONTACT.phone}
                 </a>
               </li>
-              <li className="flex items-start gap-2">
+              <li className="flex min-w-0 items-start gap-2">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-rose-text" strokeWidth={1.5} aria-hidden="true" />
-                <a href={`mailto:${CONTACT.email}`} className="hover:text-rose-text">
+                {/* The address wraps fine on its own spaces, but this email
+                    has no spaces or hyphens for the browser to break on —
+                    at the footer's narrow tablet-width column (md:grid-cols-4,
+                    ~150px per track around 768px) an unbroken 27-char string
+                    ran past the column and off the right edge of the
+                    viewport with nothing to catch it. break-words lets it
+                    wrap mid-token as a last resort instead of overflowing. */}
+                <a href={`mailto:${CONTACT.email}`} className="min-w-0 break-words hover:text-rose-text">
                   {CONTACT.email}
                   {CONTACT.emailIsPlaceholder && (
                     <span className="ml-1 text-xs text-charcoal-soft/70">(placeholder)</span>
                   )}
                 </a>
               </li>
-              <li className="flex items-start gap-2">
+              <li className="flex min-w-0 items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-rose-text" strokeWidth={1.5} aria-hidden="true" />
-                <span>
+                <span className="min-w-0 break-words">
                   {CONTACT.address}
                   {CONTACT.addressIsPlaceholder && (
                     <span className="ml-1 text-xs text-charcoal-soft/70">(placeholder)</span>

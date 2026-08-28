@@ -329,7 +329,16 @@ export default function ServiceHoverCards({
       z: 0,
       duration: 0.8,
       ease: "bnrOut",
-      stagger: { each: 0.08, grid: "auto", from: "start" },
+      // Plain index-order stagger, not GSAP's grid:"auto" distance-based
+      // fan — that computes each card's stagger delay from its Euclidean
+      // distance to the origin corner, which reads as a diagonal wave on
+      // anything wider than 2 columns (confirmed live: on the 4-column
+      // homepage grid it fired index order 0,1,4,2,5,8,3,6,7 — row 1's
+      // first card jumping ahead of row 0's last two). The services array
+      // itself is already laid out row-major, so firing in plain array
+      // order is exactly "row-by-row, left to right" on every breakpoint,
+      // with no grid geometry to get wrong.
+      stagger: { each: 0.08, from: "start" },
       scrollTrigger: {
         trigger: grid,
         start: "top 80%",
