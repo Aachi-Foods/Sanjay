@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useReducedMotion from "@/hooks/useReducedMotion";
+import { useTilt } from "@/hooks/useTilt";
 import {
   BNR_EASE,
   LIFT_MAX_Z,
@@ -28,6 +29,16 @@ const HOVER_SHADOW = SHADOW_GOLD_LG;
 // hovered element, so it sits further under the ceiling than something
 // small like a button.
 const CARD_LIFT_Z = LIFT_MAX_Z - 8;
+// Top of the 2-6deg ceiling audited in MOTION-AUDIT.md — a magnetic
+// cursor-tracking tilt on an element this large reads best at the upper
+// end of the band, unlike the tighter buttons/footer links.
+const CARD_TILT_MAX_DEG = 6;
+// Single warm-gold glow for every card rather than per-category colors —
+// services have no existing category taxonomy of their own (unlike
+// GalleryItem elsewhere in the codebase) to theme against, and inventing
+// one would be a content decision, not a motion one.
+const GLOW_GRADIENT =
+  "radial-gradient(circle, rgba(201, 168, 76, 0.45), transparent 70%)";
 
 // Hover feature cards: at rest a card shows only its title and photo, with
 // the full description parked out of sight behind it. Pointing at the card
@@ -60,10 +71,31 @@ function ServiceHoverCard({
   onHoverStart: () => void;
   onHoverEnd: () => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
   const faceRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const [inBand, setInBand] = useState(false);
+
+  // Cursor position is measured against the outer card div — which never
+  // itself rotates — rather than the face that actually tilts. Measuring
+  // against a rotating element creates a feedback loop: near the edges of
+  // a large element at a large max angle (this card is ~390px at a full
+  // 6deg, the top of the ceiling), the rotated surface visually shifts out
+  // from under a cursor sitting at a fixed screen position, which fires a
+  // leave, resets rotation toward 0, brings the surface back under the
+  // cursor, and re-fires enter — a flicker right at the edges, which is
+  // exactly where a magnetic tilt is most likely to get tested. Confirmed
+  // live: measuring off the face itself reproduced the flicker at every
+  // edge; measuring off the never-rotated outer div does not, regardless
+  // of how close to the ceiling the rotation gets. useTilt already guards
+  // touch (pointer: coarse) and reduced motion internally, so neither
+  // needs handling again here.
+  const {
+    ref: outerRef,
+    rotateX,
+    rotateY,
+    onMouseMove: onTiltMouseMove,
+    onMouseLeave: onTiltMouseLeave,
+  } = useTilt({ maxDeg: CARD_TILT_MAX_DEG });
 
   // will-change is only useful while this card or a sibling is actually
   // mid-transform (the lift itself, or the recede triggered by a sibling's
@@ -76,7 +108,7 @@ function ServiceHoverCard({
   }, [isHovered, isDimmed]);
 
   useEffect(() => {
-    const el = ref.current;
+    const el = outerRef.current;
     // Reduced motion gets every panel open and static, so nothing depends on
     // pointing or scrolling to become readable.
     if (!el || reduceMotion) return;
@@ -91,7 +123,7 @@ function ServiceHoverCard({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [reduceMotion]);
+  }, [reduceMotion, outerRef]);
 
   // `reduceMotion` here is the shared useSyncExternalStore-based hook
   // (src/hooks/useReducedMotion.ts), not framer-motion's own — that one can
@@ -107,11 +139,8 @@ function ServiceHoverCard({
   // Hover treatment: this card lifts forward (scale + translateZ + a
   // gold-tinted shadow) while any *other* card being hovered instead sends
   // this one into isDimmed (scale down, dim slightly) — the "hero card
-  // among peers" read. Both states share one transition so a fast diagonal
-  // sweep across the grid always eases consistently rather than the lift
-  // and the recede drifting at different rates. Reduced motion keeps the
-  // shadow-deepen as a static highlight but drops the scale/translateZ
-  // motion entirely.
+  // among peers" read. Reduced motion keeps the shadow-deepen as a static
+  // highlight but drops the scale/translateZ motion entirely.
   const faceAnimate = reduceMotion
     ? {
         scale: isHovered ? 1.01 : 1,
@@ -124,24 +153,57 @@ function ServiceHoverCard({
         ? { scale: 0.98, z: 0, boxShadow: BASE_SHADOW, opacity: 0.9 }
         : { scale: 1, z: 0, boxShadow: BASE_SHADOW, opacity: 1 };
 
+  // Asymmetric so hovering in reads as immediate and un-hovering reads as
+  // settling rather than snapping back. isDimmed keeps the original 0.35s
+  // deliberately, not the new faster/slower pair — that's a reaction to a
+  // *sibling* being hovered, not this card's own hover in/out, and several
+  // cards' states change at once during a fast diagonal sweep across the
+  // grid; giving isDimmed its own separate duration would have those cards
+  // drifting at a different rate than the one actually being hovered.
+  const faceDuration = isHovered ? 0.3 : isDimmed ? 0.35 : 0.4;
+
   return (
     <div
-      ref={ref}
+      ref={outerRef as React.RefObject<HTMLDivElement>}
       id={service.slug}
       data-service-card=""
       onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
+      onMouseMove={onTiltMouseMove}
+      onMouseLeave={() => {
+        onHoverEnd();
+        onTiltMouseLeave();
+      }}
       className="preserve-3d group relative flex scroll-mt-28 flex-col"
     >
+      {/* Soft warm-gold glow behind the card, visible only on this card's
+          own hover — sits behind the face in DOM order (no z-index needed,
+          the face's own z-[5] already stacks above it) and bleeds past the
+          card's own edges via the negative inset. pointer-events-none so
+          it can never intercept clicks on a neighboring card even where
+          the blur overlaps the grid gap. */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-6 rounded-[2rem] blur-2xl"
+        style={{ background: GLOW_GRADIENT }}
+        animate={{ opacity: !reduceMotion && isHovered ? 1 : 0 }}
+        transition={{ ease: BNR_EASE, duration: faceDuration }}
+      />
+
       {/* Card face. Opaque and stacked above the panel, so the panel can
           hide completely behind it rather than showing through. The lift
           itself is now Framer-driven (faceAnimate above) rather than a
           plain CSS hover transition, since it also has to react to a
-          *sibling* card being hovered, not just its own hover state. */}
+          *sibling* card being hovered, not just its own hover state.
+          rotateX/rotateY come from useTilt as live spring-driven motion
+          values passed via `style`, composing with the animate-driven
+          scale/z/boxShadow above into one transform — Framer owns both,
+          unlike the GSAP-vs-Framer splits used elsewhere in this codebase,
+          so there's nothing here to fight over the same element. */}
       <motion.div
         ref={faceRef}
         animate={faceAnimate}
-        transition={{ ease: BNR_EASE, duration: 0.35 }}
+        style={{ rotateX, rotateY }}
+        transition={{ ease: BNR_EASE, duration: faceDuration }}
         className="relative z-[5] flex flex-col overflow-hidden rounded-3xl border border-gold-soft/50 bg-ivory"
       >
         {/* Fixed height so every card's photo starts at the same line,
@@ -172,7 +234,7 @@ function ServiceHoverCard({
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-blush-soft">
           <motion.div
             className="absolute inset-0"
-            animate={{ scale: !reduceMotion && isHovered ? 1.08 : 1 }}
+            animate={{ scale: !reduceMotion && isHovered ? 1.06 : 1 }}
             transition={{ ease: BNR_EASE, duration: isHovered ? 1.2 : 0.8 }}
           >
             <Image
