@@ -229,7 +229,7 @@ export default function ServiceHoverCards({
   // diagonal sweep firing a new card's enter before the old one's leave.
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
 
-  // Cards emerge from behind the screen plane (translateZ -40 -> 0) rather
+  // Cards emerge from behind the screen plane (translateZ -36 -> 0) rather
   // than sliding up — a depth entrance, not the vertical-slide fade used
   // elsewhere on the site, and deliberately one-shot (toggleActions' last
   // three actions are all "none") rather than replaying on every scroll
@@ -237,6 +237,14 @@ export default function ServiceHoverCards({
   // because the cards already sit inside the shared Perspective3D context
   // below — translateZ with no perspective ancestor would just look like
   // "fades in slightly smaller."
+  //
+  // -36 rather than the original -40: at exactly the sitewide 20-40px
+  // ceiling's edge, paired with the opacity fade from 0, this read as
+  // perceptibly deeper than the raw px value alone suggests — a
+  // near-invisible element is easy to also read as "further away," so the
+  // two together compound rather than being independent. -36 keeps the
+  // entrance clearly inside the ceiling with a small margin rather than
+  // sitting exactly on the boundary.
   //
   // A layout effect, not a plain effect: `gsap.set` below is what hides the
   // cards in the first place (there's no CSS class doing it), so it needs
@@ -252,7 +260,7 @@ export default function ServiceHoverCards({
       grid.querySelectorAll("[data-service-card]"),
     );
 
-    gsap.set(cards, { opacity: 0, z: -40 });
+    gsap.set(cards, { opacity: 0, z: -36 });
 
     const tween = gsap.to(cards, {
       opacity: 1,
