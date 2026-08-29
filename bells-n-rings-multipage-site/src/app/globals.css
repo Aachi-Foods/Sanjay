@@ -69,20 +69,11 @@
 
 html {
   background: #000;
-  /* Belt-and-suspenders: vertical scroll should never expose horizontal
-     scroll room. Nothing on this site is meant to overflow the viewport
-     width — the one deliberately wide element (the About page's team fan,
-     TeamStack.tsx) is already sized to fit within its container at every
-     breakpoint it renders at, so this never clips it. This exists to catch
-     the next accidental overflow (a long unbroken string, a mistuned
-     transform) before it becomes a real scrollable page edge. */
-  overflow-x: hidden;
 }
 
 body {
   background: var(--color-ivory);
   color: var(--color-charcoal);
-  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
