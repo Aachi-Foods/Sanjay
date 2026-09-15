@@ -15,9 +15,9 @@ export const SITE_TAGLINE = "Your Celebration. Our Passion.";
 export const SITE_URL = "https://bellsnringsevents.example.com";
 
 export const CONTACT = {
-  phone: "89396 27959",
-  phoneHref: "tel:+918939627959",
-  whatsappHref: "https://wa.me/918939627959",
+  phone: "84282 77999",
+  phoneHref: "tel:+918428277999",
+  whatsappHref: "https://wa.me/918428277999",
   // PLACEHOLDER — no email address was supplied yet.
   email: "hello@bnreventplanners.com",
   emailIsPlaceholder: true,

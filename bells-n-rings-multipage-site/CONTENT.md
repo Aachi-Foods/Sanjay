@@ -8,7 +8,7 @@ point to exactly where each piece lives in the codebase.
 
 | Item | Current value | Status |
 | --- | --- | --- |
-| Phone | `+91 89396 27959` | Live — confirm still correct |
+| Phone | `+91 84282 77999` | Live — confirm still correct |
 | WhatsApp | derived from the phone number above | Live — confirm the number accepts WhatsApp |
 | Email | `hello@bnreventplanners.com` | **Placeholder — needs a real inbox** |
 | Studio address | "Studio address to be added — City, State, South India" | **Placeholder — needs full street address** |
