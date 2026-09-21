@@ -36,9 +36,19 @@ The enquiry form (`src/components/contact/InvitationContactForm.tsx`) sends
 mail client-side via [EmailJS](https://www.emailjs.com/), so it works from a
 static export with no backend.
 
-1. Create a free EmailJS account and add an Email Service (e.g. Gmail).
+Every submission is meant to land in **care@aachifoods.com** — that address
+is set once, in code, as `ENQUIRY_NOTIFICATION_EMAIL` in
+`src/lib/constants.ts`, and passed to EmailJS as a `to_email` template
+variable on every send. To make that actually deliver mail:
+
+1. Create a free EmailJS account (whoever manages `care@aachifoods.com`
+   should own this account, since step 2 requires verifying that inbox) and
+   add an Email Service (e.g. Gmail) connected to `care@aachifoods.com`.
 2. Create an Email Template with variables: `name`, `email`, `phone`,
-   `event_date`, `event_type`, `message`.
+   `event_date`, `event_type`, `message`, `to_email` — and set the
+   template's **To Email** field to `{{to_email}}` (not a fixed address).
+   That's what makes the destination controlled from `constants.ts` rather
+   than needing to be kept in sync with the EmailJS dashboard by hand.
 3. Copy your Service ID, Template ID, and Public Key.
 4. Create a `.env.local` file in this folder:
 
@@ -52,8 +62,15 @@ static export with no backend.
    error asking visitors to reach out by phone or email directly — nothing
    fails silently.
 
+If `care@aachifoods.com` should ever change, only `constants.ts` needs
+editing — the EmailJS template's `{{to_email}}` field doesn't need to change.
+
 When deploying to Vercel or Netlify, add the same three variables in the
-project's environment variable settings.
+project's environment variable settings. For the GitHub Pages deploy this
+repo actually uses, there's no environment-variable UI — the three values
+need to be baked in at build time instead (a `.env.local` alongside this
+README when the static export is built, or added directly as
+`NEXT_PUBLIC_*` values in `next.config.ts`'s `env` block).
 
 ## Building for production
 
