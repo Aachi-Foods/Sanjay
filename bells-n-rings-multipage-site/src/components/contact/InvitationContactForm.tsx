@@ -155,8 +155,9 @@ export default function InvitationContactForm() {
           >
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
             <span>
-              We couldn&apos;t send your enquiry right now. Please try again, or
-              reach us directly at{" "}
+              Your enquiry details have been noted, but our confirmation
+              email couldn&apos;t be sent. To be safe, please also reach us
+              directly at{" "}
               <a href={CONTACT.phoneHref} className="underline">
                 {CONTACT.phone}
               </a>{" "}
