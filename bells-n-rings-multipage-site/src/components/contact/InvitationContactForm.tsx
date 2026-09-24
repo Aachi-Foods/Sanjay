@@ -20,12 +20,26 @@ type FormValues = {
   message: string;
 };
 
+// Must exactly match the "What Type of Event" dropdown's option labels in
+// HubSpot (portal 245625867, Contact properties) — that property only
+// accepts its 7 predefined values and silently drops anything else, which
+// is exactly what happened when this list still had "Traditional Ceremony"
+// and "Other" (neither exists in HubSpot's dropdown; every submission
+// choosing one of those two got its event type dropped, confirmed against
+// a real submitted contact showing an empty "What Type of Event" column).
+// That HubSpot property already has real historical data from other lead
+// sources (hundreds of existing Wedding/Reception/etc. contacts), so this
+// list conforms to HubSpot's canonical set rather than the other way
+// around. If this ever needs to change, the HubSpot dropdown's option
+// labels are the source of truth to match, not this array.
 const EVENT_TYPES = [
   "Wedding",
   "Reception",
-  "Traditional Ceremony",
+  "Engagement",
+  "Birthday",
   "Corporate Event",
-  "Other",
+  "Baby Shower",
+  "Puberty Ceremony",
 ];
 
 // Set these in .env.local (see README.md) to enable live email delivery via
