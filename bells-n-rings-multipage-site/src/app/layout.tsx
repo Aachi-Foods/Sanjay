@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CursorFollower from "@/components/ui/CursorFollower";
+import FloatingWhatsAppButton from "@/components/ui/FloatingWhatsAppButton";
 import SmoothScroll from "@/components/shared/SmoothScroll";
 import PageTransition from "@/components/shared/PageTransition";
 import { SITE_NAME_FULL, SITE_TAGLINE, SITE_URL } from "@/lib/constants";
@@ -74,6 +75,7 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
+        <FloatingWhatsAppButton />
       </body>
     </html>
   );
