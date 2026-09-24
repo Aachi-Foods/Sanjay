@@ -16,7 +16,16 @@ type FormValues = {
   phone: string;
   city: string;
   eventDate: string;
-  eventType: string;
+  // Named after HubSpot's real internal property name (portal 245625867),
+  // not the more natural "eventType", so the rendered <select>'s DOM `name`
+  // attribute — which react-hook-form derives directly from this key —
+  // already matches what HubSpot expects. This also satisfies HubSpot's
+  // separate, automatic "non-HubSpot form" capture (Marketing > Forms),
+  // which independently guesses a Contact property per field from its raw
+  // DOM `name` attribute and was failing on the old "eventType" (guessed
+  // as "event_type", not a real property) even after the explicit
+  // identifyToHubSpot() call below was already fixed.
+  what_type_of_event: string;
   message: string;
 };
 
@@ -72,13 +81,7 @@ export default function InvitationContactForm() {
       phone: data.phone,
       city: data.city,
       event_date: data.eventDate,
-      // HubSpot silently drops any property whose key doesn't exactly
-      // match its *internal name* in the portal — "event_type" never
-      // matched, since the "What Type of Event" custom property's real
-      // internal name (confirmed directly in the portal's property
-      // settings) is "what_type_of_event", not the shorter guess this
-      // used before.
-      what_type_of_event: data.eventType,
+      what_type_of_event: data.what_type_of_event,
       message: data.message,
     });
     try {
@@ -94,7 +97,7 @@ export default function InvitationContactForm() {
           phone: data.phone,
           city: data.city,
           event_date: data.eventDate,
-          event_type: data.eventType,
+          event_type: data.what_type_of_event,
           message: data.message,
         },
         { publicKey: PUBLIC_KEY },
@@ -241,8 +244,8 @@ export default function InvitationContactForm() {
             label="Event Type"
             defaultValue=""
             icon={<PartyPopper className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />}
-            error={errors.eventType}
-            {...register("eventType", { required: "Please choose an event type." })}
+            error={errors.what_type_of_event}
+            {...register("what_type_of_event", { required: "Please choose an event type." })}
           >
             <option value="" disabled>
               Select an event type
