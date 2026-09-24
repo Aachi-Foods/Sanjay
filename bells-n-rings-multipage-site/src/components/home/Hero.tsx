@@ -42,6 +42,7 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoLayerRef = useRef<HTMLDivElement>(null);
   const textLayerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
   // Framer's useReducedMotion is safe everywhere else in this file (it only
   // ever changes animation *ranges*, never which element gets rendered),
@@ -91,6 +92,58 @@ export default function Hero() {
     };
   }, [reduceMotion]);
 
+  // `autoPlay` alone is a request, not a guarantee — mobile browsers can
+  // (and do) silently reject video.play()'s returned promise even with the
+  // muted+playsInline combo present, most often when the video hasn't
+  // buffered enough yet on a slow connection or the browser's autoplay
+  // heuristic is in a mood. That leaves the element sitting frozen on its
+  // poster frame with no visible error, which reads exactly like "the video
+  // doesn't play" on mobile even though nothing actually failed loudly.
+  //
+  // Handled two ways: call .play() explicitly once metadata is ready rather
+  // than trusting the attribute alone, and — if the browser still rejects
+  // it — retry once on the visitor's first tap/scroll anywhere on the page,
+  // since a play() call made inside a real user-gesture handler is exempt
+  // from autoplay restrictions that block an unprompted one.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || reduceMotionSynced) return;
+
+    let cancelled = false;
+
+    const attemptPlay = () => {
+      const p = video.play();
+      // Older browsers can return undefined instead of a Promise.
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          if (cancelled) return;
+          const retryOnInteraction = () => {
+            video.play().catch(() => {});
+          };
+          window.addEventListener("pointerdown", retryOnInteraction, {
+            once: true,
+            passive: true,
+          });
+          window.addEventListener("touchstart", retryOnInteraction, {
+            once: true,
+            passive: true,
+          });
+        });
+      }
+    };
+
+    if (video.readyState >= 2) {
+      attemptPlay();
+    } else {
+      video.addEventListener("loadeddata", attemptPlay, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      video.removeEventListener("loadeddata", attemptPlay);
+    };
+  }, [reduceMotionSynced]);
+
   return (
     <section
       ref={sectionRef}
@@ -119,13 +172,21 @@ export default function Hero() {
         <div className="absolute inset-0 animate-ken-burns">
           {HERO_VIDEO && !reduceMotionSynced ? (
             <video
+              ref={videoRef}
               src={videoSrc}
               poster={posterSrc}
               autoPlay
               muted
               loop
               playsInline
-              preload="metadata"
+              // "auto" rather than "metadata" — on a slow mobile
+              // connection, "metadata" only fetches enough to know the
+              // video's dimensions/duration and then waits, so the browser
+              // has nothing buffered to actually start playing from when
+              // autoPlay fires. "auto" tells it to start buffering real
+              // frames immediately, which is what autoplay needs to
+              // succeed promptly instead of sitting on the poster frame.
+              preload="auto"
               aria-label={HERO_POSTER_ALT}
               className="h-full w-full object-cover"
             />
