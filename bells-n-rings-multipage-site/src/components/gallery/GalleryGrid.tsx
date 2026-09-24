@@ -170,7 +170,17 @@ export default function GalleryGrid() {
                     type="button"
                     id={item.slug}
                     onClick={() => goTo(globalIndex, 0)}
-                    className="relative block aspect-[4/5] w-full scroll-mt-24 overflow-hidden rounded-2xl text-left cursor-pointer transition-transform duration-500 ease-out hover:-translate-y-1"
+                    // 4:3 rather than the taller 4:5 this used to be — the
+                    // gallery's source photos are all close to a 1.13:1
+                    // ratio (near-square, 1335x1178 for the local set), so a
+                    // 4:5 (0.8) box was narrower than every photo and
+                    // object-cover cropped hard from the *sides*, cutting
+                    // people standing at the edges of group shots out of
+                    // frame entirely. 4:3 (1.33) sits close enough to the
+                    // real ratio that object-cover only trims a little off
+                    // the top/bottom instead — matches the lightbox view
+                    // below, which already uses this same ratio.
+                    className="relative block aspect-[4/3] w-full scroll-mt-24 overflow-hidden rounded-2xl text-left cursor-pointer transition-transform duration-500 ease-out hover:-translate-y-1"
                   >
                     <Image
                       src={item.image}
