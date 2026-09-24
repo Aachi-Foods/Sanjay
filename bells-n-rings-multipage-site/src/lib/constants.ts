@@ -18,9 +18,8 @@ export const CONTACT = {
   phone: "84282 77999",
   phoneHref: "tel:+918428277999",
   whatsappHref: "https://wa.me/918428277999",
-  // PLACEHOLDER — no email address was supplied yet.
-  email: "hello@bnreventplanners.com",
-  emailIsPlaceholder: true,
+  email: "info@bnreventplanner.com",
+  emailIsPlaceholder: false,
   address:
     "NO 1926, I Block, Aishwarya Colony, 34th Street, Anna Nagar West, Chennai, Tamil Nadu, 600040",
   addressIsPlaceholder: false,

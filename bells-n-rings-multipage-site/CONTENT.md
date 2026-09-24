@@ -10,7 +10,7 @@ point to exactly where each piece lives in the codebase.
 | --- | --- | --- |
 | Phone | `+91 84282 77999` | Live — confirm still correct |
 | WhatsApp | derived from the phone number above | Live — confirm the number accepts WhatsApp |
-| Email | `hello@bnreventplanners.com` | **Placeholder — needs a real inbox** |
+| Email | `info@bnreventplanner.com` | Live — confirm still correct |
 | Studio address | "Studio address to be added — City, State, South India" | **Placeholder — needs full street address** |
 | Instagram | `instagram.com/bellsnringsevents` | Live — confirm handle |
 | Facebook | linked profile | Live — confirm page |
