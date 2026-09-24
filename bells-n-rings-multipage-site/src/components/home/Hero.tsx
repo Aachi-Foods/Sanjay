@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Play } from "lucide-react";
 import Button from "../ui/Button";
 import { Perspective3D } from "../motion/Perspective3D";
 import ParticleField from "../shared/ParticleField";
@@ -96,30 +95,20 @@ export default function Hero() {
   // `autoPlay` alone is a request, not a guarantee — mobile browsers (and
   // some mobile browsers' own data-saving modes, which are stricter than
   // stock Chrome/Safari and outside this site's control entirely) can
-  // silently refuse to ever start it, even with muted+playsInline present
-  // and even after retrying on the visitor's first tap elsewhere on the
-  // page. Since there's no way to detect *which* of those is happening
-  // from here, this doesn't rely on any single approach working: it keeps
-  // retrying on interaction for as long as the video hasn't actually
-  // started (the `playing` event, not just a resolved play() promise,
-  // since that can resolve without pixels ever moving on some browsers),
-  // and — if a few seconds pass with still nothing — surfaces a small,
-  // unmissable tap-to-play control. A direct tap on that button calls
-  // .play() from inside its own click handler, which every browser's
-  // autoplay policy exempts unconditionally; there's no browser-side
-  // reason left for that to fail.
-  const [needsTapToPlay, setNeedsTapToPlay] = useState(false);
-
+  // silently refuse to ever start it, even with muted+playsInline present.
+  // No visible UI for this — a tap-to-play button was tried and rejected
+  // as too visually intrusive for something that, on most devices, never
+  // needs to appear at all. Instead this keeps quietly retrying .play() on
+  // the visitor's very first interaction with the page (any tap, anywhere)
+  // for as long as the video hasn't actually started (the `playing` event,
+  // not just a resolved play() promise, since that can resolve without
+  // pixels ever moving on some browsers) — a play() call made inside a
+  // real user-gesture handler is exempt from the autoplay restrictions
+  // that silently blocked the unprompted one, so this is as automatic as
+  // it's possible to make it without a browser-enforced tap.
   useEffect(() => {
     const video = videoRef.current;
     if (!video || reduceMotionSynced) return;
-
-    let settled = false;
-    const onPlaying = () => {
-      settled = true;
-      setNeedsTapToPlay(false);
-    };
-    video.addEventListener("playing", onPlaying);
 
     const attemptPlay = () => {
       video.play().catch(() => {});
@@ -131,22 +120,23 @@ export default function Hero() {
 
     // Not `{ once: true }` — a single tap that fails to actually start
     // playback (still buffering, say) shouldn't be the only chance this
-    // gets; every interaction keeps trying until `playing` actually fires.
+    // gets; every interaction keeps trying until `playing` actually fires,
+    // at which point these are torn down since they've done their job.
     const retryOnInteraction = () => attemptPlay();
     window.addEventListener("pointerdown", retryOnInteraction, { passive: true });
     window.addEventListener("touchstart", retryOnInteraction, { passive: true });
-
-    const fallbackTimer = window.setTimeout(() => {
-      if (!settled) setNeedsTapToPlay(true);
-    }, 2500);
-
-    return () => {
-      video.removeEventListener("playing", onPlaying);
-      video.removeEventListener("loadeddata", attemptPlay);
-      video.removeEventListener("canplay", attemptPlay);
+    const onPlaying = () => {
       window.removeEventListener("pointerdown", retryOnInteraction);
       window.removeEventListener("touchstart", retryOnInteraction);
-      window.clearTimeout(fallbackTimer);
+    };
+    video.addEventListener("playing", onPlaying);
+
+    return () => {
+      video.removeEventListener("loadeddata", attemptPlay);
+      video.removeEventListener("canplay", attemptPlay);
+      video.removeEventListener("playing", onPlaying);
+      window.removeEventListener("pointerdown", retryOnInteraction);
+      window.removeEventListener("touchstart", retryOnInteraction);
     };
   }, [reduceMotionSynced]);
 
@@ -222,29 +212,6 @@ export default function Hero() {
           )}
         </div>
       </div>
-
-      {/* Guaranteed-to-work fallback: only rendered once the effect above
-          has waited a couple seconds and confirmed the video still hasn't
-          actually started. A tap here calls .play() from directly inside
-          this button's own click handler — the one thing no browser's
-          autoplay policy can block, regardless of what's blocking the
-          automatic attempts on this particular visitor's device. */}
-      {needsTapToPlay && (
-        <motion.button
-          type="button"
-          onClick={() => {
-            videoRef.current?.play().catch(() => {});
-            setNeedsTapToPlay(false);
-          }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, ease: EASE_OUT }}
-          aria-label="Play background video"
-          className="absolute left-1/2 top-1/2 z-20 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-ivory/90 text-rose-gold-deep shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-transform hover:scale-105"
-        >
-          <Play className="ml-1 h-7 w-7" strokeWidth={1.75} fill="currentColor" aria-hidden="true" />
-        </motion.button>
-      )}
 
       {/* Just enough tint to keep the buttons legible over the footage —
           previously a 60% green wash sat on top of a backdrop already dimmed
@@ -357,7 +324,18 @@ function HeroCtaButton({
           ref={ref as React.RefObject<HTMLDivElement>}
           onMouseMove={onMouseMove}
           onMouseLeave={onMouseLeave}
-          whileHover={reduceMotion ? undefined : { z: 10 }}
+          // A fixed-shape { z } object rather than switching to `undefined`
+          // under reduced motion — Framer Motion adds a tabIndex to make a
+          // non-natively-interactive element like this div keyboard-
+          // reachable whenever whileHover/whileTap are present, so toggling
+          // their *presence* based on reduceMotion (which resolves
+          // synchronously on the client before hydration, while the server
+          // always renders the no-preference default) produced a real,
+          // verified hydration mismatch on this exact pattern elsewhere in
+          // this codebase (FloatingWhatsAppButton.tsx). Varying the value
+          // instead of the shape keeps the tabIndex decision identical on
+          // server and client.
+          whileHover={{ z: reduceMotion ? 0 : 10 }}
           transition={{ duration: 0.3, ease: EASE_OUT }}
           style={{ rotateX, rotateY }}
           className="preserve-3d"
