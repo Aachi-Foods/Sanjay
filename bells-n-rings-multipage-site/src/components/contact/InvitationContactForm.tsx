@@ -58,7 +58,13 @@ export default function InvitationContactForm() {
       phone: data.phone,
       city: data.city,
       event_date: data.eventDate,
-      event_type: data.eventType,
+      // HubSpot silently drops any property whose key doesn't exactly
+      // match its *internal name* in the portal — "event_type" never
+      // matched, since the "What Type of Event" custom property's real
+      // internal name (confirmed directly in the portal's property
+      // settings) is "what_type_of_event", not the shorter guess this
+      // used before.
+      what_type_of_event: data.eventType,
       message: data.message,
     });
     try {
