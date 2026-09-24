@@ -34,15 +34,6 @@ export const CONTACT = {
     "https://maps.google.com/maps?q=NO+1926%2C+I+Block%2C+Aishwarya+Colony%2C+34th+Street%2C+Anna+Nagar+West%2C+Chennai%2C+Tamil+Nadu+600040&z=16&output=embed",
 } as const;
 
-// Internal inbox that receives every enquiry-form submission (separate from
-// CONTACT.email above, which is the address shown publicly to visitors) —
-// passed to EmailJS as the `to_email` template variable in
-// InvitationContactForm.tsx. See README.md's "Contact form — EmailJS setup"
-// section for what has to be true on the EmailJS side (an Email Service +
-// Template configured, with the template's "To Email" field set to
-// {{to_email}}) before this actually delivers anything.
-export const ENQUIRY_NOTIFICATION_EMAIL = "care@aachifoods.com";
-
 export type NavLink = { label: string; href: string };
 
 export const NAV_LINKS: NavLink[] = [

@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, Calendar, Check, Mail, MapPin, MessageSquare, PartyPopper, Phone, User } from "lucide-react";
 import FloralAccent from "../ui/FloralAccent";
 import { AnimatedInput, AnimatedSelect, AnimatedTextarea } from "../ui/AnimatedField";
-import { CONTACT, ENQUIRY_NOTIFICATION_EMAIL } from "@/lib/constants";
+import { CONTACT } from "@/lib/constants";
 import { identifyToHubSpot } from "@/lib/hubspot";
 
 type FormValues = {
@@ -76,11 +76,6 @@ export default function InvitationContactForm() {
           event_date: data.eventDate,
           event_type: data.eventType,
           message: data.message,
-          // Read by the EmailJS template's "To Email" field (set to
-          // {{to_email}} there, not hardcoded) so the destination inbox is
-          // controlled from here rather than duplicated in the EmailJS
-          // dashboard.
-          to_email: ENQUIRY_NOTIFICATION_EMAIL,
         },
         { publicKey: PUBLIC_KEY },
       );
