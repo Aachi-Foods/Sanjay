@@ -4,10 +4,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import emailjs from "@emailjs/browser";
 import { motion, useReducedMotion } from "framer-motion";
-import { AlertCircle, Calendar, Check, Mail, MapPin, MessageSquare, PartyPopper, Phone, User } from "lucide-react";
+import { Calendar, Check, Mail, MapPin, MessageSquare, PartyPopper, Phone, User } from "lucide-react";
 import FloralAccent from "../ui/FloralAccent";
 import { AnimatedInput, AnimatedSelect, AnimatedTextarea } from "../ui/AnimatedField";
-import { CONTACT } from "@/lib/constants";
 import { identifyToHubSpot } from "@/lib/hubspot";
 
 type FormValues = {
@@ -65,14 +64,14 @@ export default function InvitationContactForm() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "success">("idle");
   const reduceMotion = useReducedMotion();
 
   async function onSubmit(data: FormValues) {
-    setStatus("idle");
     // Pushed to HubSpot unconditionally, before the EmailJS attempt below —
-    // capturing the lead shouldn't depend on the internal email notification
-    // succeeding; those are two separate concerns.
+    // this is the enquiry's real capture path and always succeeds
+    // synchronously (see hubspot.ts), so the visitor-facing outcome below
+    // doesn't wait on or depend on it.
     const [firstname, ...rest] = data.name.trim().split(/\s+/);
     identifyToHubSpot({
       email: data.email,
@@ -84,30 +83,32 @@ export default function InvitationContactForm() {
       what_type_of_event: data.what_type_of_event,
       message: data.message,
     });
-    try {
-      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-        throw new Error("EmailJS environment variables are not configured.");
+    // EmailJS only sends an internal copy of the enquiry by email — it's
+    // not how the enquiry itself gets captured (HubSpot, above, already
+    // did that), so a visitor never needs to see or act on this failing.
+    // Until real credentials are set (see README.md), this always no-ops.
+    if (SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
+      try {
+        await emailjs.send(
+          SERVICE_ID,
+          TEMPLATE_ID,
+          {
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            city: data.city,
+            event_date: data.eventDate,
+            event_type: data.what_type_of_event,
+            message: data.message,
+          },
+          { publicKey: PUBLIC_KEY },
+        );
+      } catch (err) {
+        console.error("EmailJS confirmation copy failed to send:", err);
       }
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          city: data.city,
-          event_date: data.eventDate,
-          event_type: data.what_type_of_event,
-          message: data.message,
-        },
-        { publicKey: PUBLIC_KEY },
-      );
-      setStatus("success");
-      reset();
-    } catch (err) {
-      console.error("Contact form submission failed:", err);
-      setStatus("error");
     }
+    setStatus("success");
+    reset();
   }
 
   if (status === "success") {
@@ -165,28 +166,6 @@ export default function InvitationContactForm() {
         <p className="mt-3 text-center font-sans text-sm text-charcoal-soft">
           Share a few details and we&apos;ll begin crafting your celebration.
         </p>
-
-        {status === "error" && (
-          <div
-            role="alert"
-            className="mt-6 flex items-start gap-3 rounded-xl border border-red-700/30 bg-red-50 px-4 py-3 text-sm text-red-800"
-          >
-            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-            <span>
-              Your enquiry details have been noted, but our confirmation
-              email couldn&apos;t be sent. To be safe, please also reach us
-              directly at{" "}
-              <a href={CONTACT.phoneHref} className="underline">
-                {CONTACT.phone}
-              </a>{" "}
-              or{" "}
-              <a href={`mailto:${CONTACT.email}`} className="underline">
-                {CONTACT.email}
-              </a>
-              .
-            </span>
-          </div>
-        )}
 
         <form
           onSubmit={handleSubmit(onSubmit)}
