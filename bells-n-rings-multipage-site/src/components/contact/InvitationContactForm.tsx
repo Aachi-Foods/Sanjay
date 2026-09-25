@@ -123,8 +123,8 @@ export default function InvitationContactForm() {
           Thank You for the Invitation
         </h2>
         <p className="prose-measure mx-auto mt-3 font-sans text-sm text-charcoal-soft sm:text-base">
-          We&apos;ve received your enquiry and will be in touch within 48 hours to
-          start planning your celebration.
+          We&apos;ve received your enquiry and our team will be contacting you
+          to start planning your celebration.
         </p>
       </div>
     );
