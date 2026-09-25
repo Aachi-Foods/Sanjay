@@ -1,6 +1,6 @@
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
-import { FacebookIcon, InstagramIcon, YoutubeIcon } from "../ui/SocialIcons";
+import { FacebookIcon, InstagramIcon, PinterestIcon, YoutubeIcon } from "../ui/SocialIcons";
 import ContactMap from "./ContactMap";
 
 export default function ContactInfo() {
@@ -56,6 +56,15 @@ export default function ContactInfo() {
           className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
         >
           <FacebookIcon className="h-5 w-5" />
+        </a>
+        <a
+          href={CONTACT.pinterest}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label="BNR on Pinterest"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-gold-soft/60 text-charcoal transition-colors hover:bg-blush-soft hover:text-rose-text"
+        >
+          <PinterestIcon className="h-5 w-5" />
         </a>
         <a
           href={CONTACT.youtube}

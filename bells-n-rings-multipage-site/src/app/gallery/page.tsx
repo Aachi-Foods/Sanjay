@@ -9,7 +9,7 @@ import { PAGE_HEADER_IMAGES } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "A gallery of weddings, receptions, traditional ceremonies, and corporate events planned by BNR Event Planners.",
+    "A gallery of weddings, receptions, traditional ceremonies, and corporate events planned by BNR Event Planner.",
 };
 
 export default function GalleryPage() {

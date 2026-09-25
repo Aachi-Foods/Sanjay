@@ -11,7 +11,7 @@ import { PAGE_HEADER_IMAGES } from "@/lib/content";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Meet the team behind BNR Event Planners and the philosophy that shapes every wedding, ceremony, and corporate event we design.",
+    "Meet the team behind BNR Event Planner and the philosophy that shapes every wedding, ceremony, and corporate event we design.",
 };
 
 export default function AboutPage() {
@@ -22,7 +22,7 @@ export default function AboutPage() {
         title="Our Story, Our Team, Our Philosophy"
         image={PAGE_HEADER_IMAGES.about}
         mobileImage={PAGE_HEADER_IMAGES.aboutMobile}
-        imageAlt="The BNR Event Planners team reviewing a mood board of saree swatches, floral garlands, and venue sketches"
+        imageAlt="The BNR Event Planner team reviewing a mood board of saree swatches, floral garlands, and venue sketches"
       />
       <StoryStage depth={32}>
         <StorySection />

@@ -58,3 +58,21 @@ export function YoutubeIcon({ className = "h-5 w-5" }: IconProps) {
     </svg>
   );
 }
+
+export function PinterestIcon({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.5 19c.6-2.4 1.4-5.6 1.9-7.7M11 8.6c-.4 1.6.6 3.1 2.3 3.1 2 0 3.4-1.8 3.4-4 0-1.8-1.5-3.2-3.6-3.2-2.6 0-4.3 1.9-4.3 4 0 .8.3 1.6.8 2" />
+    </svg>
+  );
+}

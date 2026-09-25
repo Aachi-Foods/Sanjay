@@ -6,7 +6,7 @@ import heroPosterPhoto from "@/assets/hero-poster.jpg";
 import heroPosterMobilePhoto from "@/assets/hero-poster-mobile.jpg";
 
 export const SITE_NAME_PRIMARY = "BNR";
-export const SITE_NAME_SECONDARY = "Event Planners";
+export const SITE_NAME_SECONDARY = "Event Planner";
 export const SITE_NAME_FULL = `${SITE_NAME_PRIMARY} ${SITE_NAME_SECONDARY}`;
 export const SITE_MONOGRAM = "BNR";
 
@@ -26,6 +26,7 @@ export const CONTACT = {
   instagram: "https://www.instagram.com/bellsnringsevents/",
   instagramHandle: "@bellsnringsevents",
   facebook: "https://www.facebook.com/profile.php?id=61585982768528",
+  pinterest: "https://in.pinterest.com/bellsnringseventplanners/",
   // PLACEHOLDER — no channel URL was supplied yet.
   youtube: "#",
   youtubeIsPlaceholder: true,

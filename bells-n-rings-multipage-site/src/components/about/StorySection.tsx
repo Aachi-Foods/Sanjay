@@ -45,7 +45,7 @@ export default function StorySection() {
           className="prose-measure mt-6 flex flex-col gap-4 font-sans text-base text-charcoal-soft"
         >
           <motion.p variants={fadeUp(16, 0.5, reduceMotion)}>
-            BNR Event Planners began with a simple observation: the most
+            BNR Event Planner began with a simple observation: the most
             memorable South Indian celebrations rarely feel
             &ldquo;planned&rdquo; at all. They feel inevitable — as though
             every ritual, every garland, every note of nadaswaram was always
