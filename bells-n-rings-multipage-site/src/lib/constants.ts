@@ -27,9 +27,8 @@ export const CONTACT = {
   instagramHandle: "@bnreventplanner",
   facebook: "https://www.facebook.com/profile.php?id=61585982768528",
   pinterest: "https://in.pinterest.com/bellsnringseventplanners/",
-  // PLACEHOLDER — no channel URL was supplied yet.
-  youtube: "#",
-  youtubeIsPlaceholder: true,
+  youtube: "https://www.youtube.com/@BellsnRingsEventPlanners",
+  youtubeIsPlaceholder: false,
   // Static embed, no API key required.
   mapEmbedSrc:
     "https://maps.google.com/maps?q=NO+1926%2C+I+Block%2C+Aishwarya+Colony%2C+34th+Street%2C+Anna+Nagar+West%2C+Chennai%2C+Tamil+Nadu+600040&z=16&output=embed",

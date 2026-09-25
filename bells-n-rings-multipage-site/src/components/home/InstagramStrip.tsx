@@ -1,59 +1,58 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
-import Image from "next/image";
-import gsap from "gsap";
-import useReducedMotion from "@/hooks/useReducedMotion";
-import { INSTAGRAM_STRIP_IMAGES } from "@/lib/content";
+import { useEffect, useRef } from "react";
 import { CONTACT } from "@/lib/constants";
 import Reveal from "../shared/Reveal";
 import { InstagramIcon } from "../ui/SocialIcons";
 
-// Deliberately understated relative to the rest of the page — a slow,
-// continuous, non-interactive drift rather than anything scroll-linked or
-// 3D. Luxury sites tend to deprioritize the social-proof grid; this stays
-// the calmest section on the page, not the busiest. No ScrollTrigger here
-// at all (unlike most other sections) since this motion is never tied to
-// scroll position in the first place.
+declare global {
+  interface Window {
+    instgrm?: { Embeds: { process: () => void } };
+  }
+}
+
+// Real reels from @bnreventplanner, embedded via Instagram's own oEmbed
+// widget rather than pulled through the API — this is a static export with
+// no backend to hold/refresh the access token the Graph API needs, and
+// re-fetching a live feed client-side would need one anyway. Swap/extend
+// this list whenever there are newer reels worth featuring.
+const REEL_URLS = [
+  "https://www.instagram.com/reel/DdeOqPFgRiE/",
+  "https://www.instagram.com/reel/DdBzFCjDWfi/",
+  "https://www.instagram.com/reel/Dc0gHXzlJ0b/",
+  "https://www.instagram.com/reel/Da2mOEtD9hr/",
+  "https://www.instagram.com/reel/DaDdNxAjHMN/",
+  "https://www.instagram.com/reel/DZWMYvzlP5T/",
+  "https://www.instagram.com/reel/DZSRyX8kRyj/",
+  "https://www.instagram.com/reel/DYojuX8DLYG/",
+];
+
+const EMBED_SCRIPT_SRC = "https://www.instagram.com/embed.js";
+
 export default function InstagramStrip() {
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
+  // Each embed starts as a plain <blockquote> and Instagram's own script
+  // rewrites it into the actual rendered card (iframe, thumbnail, caption).
+  // That rewrite only happens once per script load, so a mount after the
+  // very first one (e.g. returning to this page) has to explicitly ask the
+  // already-loaded script to process the new blockquotes — it won't do so
+  // on its own a second time.
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // The set is duplicated once (not tripled) so translating by exactly one
-  // set-width lands the second copy precisely where the first one started —
-  // an invisible reset point rather than a visible jump. Reduced motion
-  // skips the duplicate entirely; it's only ever needed to sell the loop.
-  const tiles = reduceMotion
-    ? INSTAGRAM_STRIP_IMAGES
-    : [...INSTAGRAM_STRIP_IMAGES, ...INSTAGRAM_STRIP_IMAGES];
-
-  useLayoutEffect(() => {
-    const marquee = marqueeRef.current;
-    if (!marquee || reduceMotion) return;
-
-    const setWidth = marquee.scrollWidth / 2;
-
-    const tween = gsap.to(marquee, {
-      x: -setWidth,
-      duration: 40,
-      ease: "none",
-      repeat: -1,
-    });
-
-    // pause()/play() rather than killing and recreating the tween, so
-    // hovering back off resumes from exactly where it left off instead of
-    // restarting or jumping.
-    const pause = () => tween.pause();
-    const resume = () => tween.play();
-    marquee.addEventListener("mouseenter", pause);
-    marquee.addEventListener("mouseleave", resume);
-
-    return () => {
-      marquee.removeEventListener("mouseenter", pause);
-      marquee.removeEventListener("mouseleave", resume);
-      tween.kill();
-    };
-  }, [reduceMotion]);
+  useEffect(() => {
+    if (window.instgrm) {
+      window.instgrm.Embeds.process();
+      return;
+    }
+    const existing = document.querySelector<HTMLScriptElement>(`script[src="${EMBED_SCRIPT_SRC}"]`);
+    if (existing) {
+      existing.addEventListener("load", () => window.instgrm?.Embeds.process());
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = EMBED_SCRIPT_SRC;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
@@ -72,35 +71,35 @@ export default function InstagramStrip() {
         </a>
       </Reveal>
 
-      {/* overflow-hidden, not overflow-x-auto — there is nothing here for a
-          touch scroll gesture to capture, so the ambient drift can never
-          fight the page's own vertical scroll. */}
-      <div className="overflow-hidden">
-        <div ref={marqueeRef} className="flex w-max gap-3">
-          {tiles.map((src, i) => (
-            <a
-              key={`${src}-${i}`}
-              href={CONTACT.instagram}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="View on Instagram"
-              // Duplicated tiles are a visual echo of the same 6 posts, not
-              // a second set of distinct content — hidden from assistive
-              // tech so the feed doesn't announce every post twice.
-              aria-hidden={i >= INSTAGRAM_STRIP_IMAGES.length || undefined}
-              tabIndex={i >= INSTAGRAM_STRIP_IMAGES.length ? -1 : undefined}
-              className="group relative h-40 w-40 shrink-0 overflow-hidden rounded-lg"
-            >
-              <Image
-                src={src}
-                alt="Placeholder — BNR Instagram gallery highlight"
-                fill
-                loading="lazy"
-                sizes="160px"
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-charcoal/0 transition-colors duration-300 group-hover:bg-charcoal/20" />
-            </a>
+      {/* Real Instagram embeds resize themselves asynchronously once their
+          iframe loads, which fights a continuously-transformed marquee (the
+          old version of this section auto-scrolled static placeholder
+          photos) — a native horizontal scroll snap sidesteps that instead
+          of fighting it. */}
+      <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:px-0">
+        <div ref={containerRef} className="flex w-max snap-x snap-mandatory gap-4 pb-2">
+          {REEL_URLS.map((url) => (
+            <div key={url} className="shrink-0 snap-start">
+              <blockquote
+                className="instagram-media"
+                data-instgrm-permalink={url}
+                data-instgrm-version="14"
+                style={{
+                  background: "#FFF",
+                  border: 0,
+                  borderRadius: "12px",
+                  margin: 0,
+                  width: 328,
+                  minWidth: 328,
+                }}
+              >
+                {/* Instagram's script replaces this once it loads; it's the
+                    fallback for a slow connection or a blocked script. */}
+                <a href={url} target="_blank" rel="noreferrer noopener">
+                  View this reel on Instagram
+                </a>
+              </blockquote>
+            </div>
           ))}
         </div>
       </div>

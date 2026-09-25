@@ -38,10 +38,6 @@ import dhanasekarPhoto from "@/assets/team/dhanasekar.jpg";
 import sairamPhoto from "@/assets/team/sairam.jpg";
 import revathiPhoto from "@/assets/team/revathi.jpg";
 
-function unsplash(id: string, w = 1600) {
-  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
-}
-
 const HF_CDN =
   "https://d8j0ntlcm91z4.cloudfront.net/user_3FFtmdb1eNHE0E6WzeaGlZLlGyF/";
 function hf(filename: string) {
@@ -408,15 +404,6 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Revathi manages on-ground hospitality, guest experience, and client service to deliver smooth, memorable interactions.",
     image: revathiPhoto,
   },
-];
-
-export const INSTAGRAM_STRIP_IMAGES = [
-  unsplash("photo-1519741497674-611481863552", 600),
-  unsplash("photo-1527529482837-4698179dc6ce", 600),
-  unsplash("photo-1530103862676-de8c9debad1d", 600),
-  unsplash("photo-1511578314322-379afb476865", 600),
-  unsplash("photo-1522673607200-164d1b6ce486", 600),
-  unsplash("photo-1464366400600-7168b8af9bc3", 600),
 ];
 
 // Interior page banner imagery (About, Services, Gallery, Contact).
