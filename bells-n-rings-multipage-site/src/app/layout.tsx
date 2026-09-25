@@ -36,6 +36,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME_FULL}`,
   },
   description: SITE_TAGLINE,
+  manifest: "/site.webmanifest",
   openGraph: {
     type: "website",
     title: `${SITE_NAME_FULL} | South India's Premier Event Planners`,
