@@ -64,20 +64,10 @@ export type Service = {
   imageAlt: string;
 };
 
-// The original 8 services from the brief keep their wording, order, and
-// naming — "Invitation" was added afterward, ahead of them, at the client's
-// request.
+// The original 8 services from the brief keep their wording and naming —
+// "Invitation" was added afterward, at the client's request, and now sits
+// third in display order rather than first.
 export const SERVICES: Service[] = [
-  {
-    slug: "invitation",
-    title: "Invitation",
-    shortDescription: "Your Celebration Begins Here",
-    longDescription:
-      "Personalized wedding invitation design, digital invites, printed cards, save-the-dates, RSVP management, and matching event stationery created around your theme and style.",
-    image: invitationPhoto,
-    imageAlt:
-      "Bride, groom, and their event planner reviewing gold-foiled wedding invitation card samples together at a table, with a tablet showing digital invitation designs and swatches, ribbon, and wax seals spread out around them",
-  },
   {
     slug: "event-planning",
     title: "Event Planning",
@@ -97,6 +87,16 @@ export const SERVICES: Service[] = [
     image: venueSelectionPhoto,
     imageAlt:
       "Beachfront ceremony aisle scattered with petals between rows of clear chiavari chairs, leading to twin floral columns framed by palm trees and the ocean",
+  },
+  {
+    slug: "invitation",
+    title: "Invitation",
+    shortDescription: "Your Celebration Begins Here",
+    longDescription:
+      "Personalized wedding invitation design, digital invites, printed cards, save-the-dates, RSVP management, and matching event stationery created around your theme and style.",
+    image: invitationPhoto,
+    imageAlt:
+      "Bride, groom, and their event planner reviewing gold-foiled wedding invitation card samples together at a table, with a tablet showing digital invitation designs and swatches, ribbon, and wax seals spread out around them",
   },
   {
     slug: "decoration-design",
