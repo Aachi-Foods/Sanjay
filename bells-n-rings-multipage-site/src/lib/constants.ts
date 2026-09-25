@@ -23,8 +23,8 @@ export const CONTACT = {
   address:
     "NO 1926, I Block, Aishwarya Colony, 34th Street, Anna Nagar West, Chennai, Tamil Nadu, 600040",
   addressIsPlaceholder: false,
-  instagram: "https://www.instagram.com/bellsnringsevents/",
-  instagramHandle: "@bellsnringsevents",
+  instagram: "https://www.instagram.com/bnreventplanner/",
+  instagramHandle: "@bnreventplanner",
   facebook: "https://www.facebook.com/profile.php?id=61585982768528",
   pinterest: "https://in.pinterest.com/bellsnringseventplanners/",
   // PLACEHOLDER — no channel URL was supplied yet.
