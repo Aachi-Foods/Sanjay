@@ -10,6 +10,14 @@ import SmoothScroll from "@/components/shared/SmoothScroll";
 import PageTransition from "@/components/shared/PageTransition";
 import { SITE_NAME_FULL, SITE_TAGLINE, SITE_URL } from "@/lib/constants";
 
+// Metadata fields like `manifest` are plain strings, not routed through
+// Next's own asset pipeline the way <Image> or the icon file conventions
+// are — on GitHub Pages (basePath "/Sanjay") an unprefixed "/site.webmanifest"
+// resolves to the wrong origin-root path and 404s, unlike every other
+// asset reference on the page. See Hero.tsx for the same env var used for
+// the same reason.
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
@@ -36,7 +44,18 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME_FULL}`,
   },
   description: SITE_TAGLINE,
-  manifest: "/site.webmanifest",
+  // Every one of Next's file-convention icons (favicon.ico, icon.png,
+  // apple-icon.png in app/) either drops its <link> tag entirely once
+  // basePath is set (favicon.ico) or gets served at an unpredictable
+  // build-hashed URL that can't be referenced here (icon.png, apple-icon.png)
+  // — so icon.png/apple-icon.png live in public/ as plain, stable files and
+  // every icon is declared explicitly here instead, all with the basePath
+  // that plain metadata strings don't get automatically.
+  icons: {
+    icon: `${BASE_PATH}/icon.png`,
+    shortcut: `${BASE_PATH}/favicon.ico`,
+    apple: `${BASE_PATH}/apple-icon.png`,
+  },
   openGraph: {
     type: "website",
     title: `${SITE_NAME_FULL} | South India's Premier Event Planners`,
