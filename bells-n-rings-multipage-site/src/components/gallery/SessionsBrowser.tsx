@@ -12,8 +12,13 @@ const ROW_HEIGHT = 56;
 const VISIBLE_ROWS = 7;
 const LIST_HEIGHT = ROW_HEIGHT * VISIBLE_ROWS;
 // How much extra scroll (as a fraction of the viewport height) each session
-// past the first one adds to the pinned section, in full-screen mode.
-const SCROLL_PER_ITEM_VH = 38;
+// past the first one adds to the pinned section, in full-screen mode. Was
+// 38 — on the /gallery page's 10 items that meant ~480vh, nearly five full
+// screens where the page visually looks the same while it's actually
+// advancing, which reads as "scrolling stopped working" to a visitor
+// scrolling normally. Roughly halved so the same effect plays out over
+// ~2-2.5 screens instead.
+const SCROLL_PER_ITEM_VH = 19;
 
 // Deterministic tilt angles (no Math.random — must match between server and
 // client render) cycled per stacking depth, echoing the scattered, slightly
