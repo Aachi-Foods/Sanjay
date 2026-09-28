@@ -4,7 +4,7 @@ import { Playfair_Display, Parisienne, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import CursorFollower from "@/components/ui/CursorFollower";
+import SplashCursor from "@/components/ui/SplashCursor";
 import FloatingWhatsAppButton from "@/components/ui/FloatingWhatsAppButton";
 import SmoothScroll from "@/components/shared/SmoothScroll";
 import PageTransition from "@/components/shared/PageTransition";
@@ -89,7 +89,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <SmoothScroll />
-        <CursorFollower />
+        <SplashCursor COLOR="#c9a84c" />
         <Navbar />
         <main className="flex-1">
           <PageTransition>{children}</PageTransition>
